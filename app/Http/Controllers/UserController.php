@@ -18,16 +18,16 @@ class UserController extends Controller
     public function login(Request $request)
     {
        
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('CD_ETAB', 'password');
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $typeClass = $user->typeClass;
-            return redirect()->intended('/user/rapport')->withCookie(cookie('typeClass', $typeClass));
+            $LL_CYCLE = $user->LL_CYCLE;
+            return redirect()->intended('/user/rapport')->withCookie(cookie('LL_CYCLE', $LL_CYCLE));
       
         } else {
             return back()->withErrors([
-                'email' => 'The provided credentials do not match our records.',
+                'CD_ETAB' => 'The provided credentials do not match our records.',
             ]);
         }
     }
@@ -40,12 +40,12 @@ class UserController extends Controller
 
     // Handle the registration form submission
     public function register(Request $request)
-    {
+    { 
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string||max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'typeClass' => 'required',
+            'LL_CYCLE' => 'required',
             
         ]);
 
@@ -53,7 +53,7 @@ class UserController extends Controller
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => bcrypt($validatedData['password']),
-            'typeClass' => $validatedData['typeClass'],
+            'LL_CYCLE' => $validatedData['LL_CYCLE'],
         ]);
 
         Auth::login($user);
@@ -79,17 +79,17 @@ class UserController extends Controller
     }
     else{
     $user = Auth::user();
-    $typeClass = $user->typeClass;
-    return view('auth.rapport', ['typeClass' => $typeClass]);
+    $LL_CYCLE = $user->LL_CYCLE;
+    return view('auth.rapport', ['LL_CYCLE' => $LL_CYCLE]);
 }
 }
 public function dashboard()
 {
     $user = Auth::user();
-    $name = $user->name;
-    $typeClass = $user->typeClass;
+    $NOM_ETABL = $user->NOM_ETABL;
+    $LL_CYCLE = $user->LL_CYCLE;
 
-    return view('auth.dashboard', ['name' => $name,'typeClass' => $typeClass]);
+    return view('auth.dashboard', ['NOM_ETABL' => $NOM_ETABL,'LL_CYCLE' => $LL_CYCLE]);
 }
 
     
