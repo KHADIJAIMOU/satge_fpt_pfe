@@ -11,31 +11,37 @@ class UserController extends Controller
     // Show the login form
     public function showLoginForm()
     {
-        return view('auth.login');
+        return view('auth.user.login');
     }
 
     // Handle the login form submission
     public function login(Request $request)
-    {
-       
-        $credentials = $request->only('CD_ETAB', 'password');
-
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            $LL_CYCLE = $user->LL_CYCLE;
-            return redirect()->intended('/user/rapport')->withCookie(cookie('LL_CYCLE', $LL_CYCLE));
-      
-        } else {
-            return back()->withErrors([
-                'CD_ETAB' => 'The provided credentials do not match our records.',
-            ]);
+{
+    $CD_ETAB = $request->input('CD_ETAB');
+    $password = $request->input('password');
+    
+    $users = User::where('CD_ETAB', $CD_ETAB)->get();
+    
+    if ($users->isNotEmpty()) {
+        foreach ($users as $user) {
+            if ($password=== $user->password){
+                Auth::login($user);
+                $LL_CYCLE = $user->LL_CYCLE;
+                return redirect()->intended('/user/rapport')->withCookie(cookie('LL_CYCLE', $LL_CYCLE));
+            }
         }
     }
+    
+    return back()->withErrors([
+        'CD_ETAB' => 'The provided credentials do not match our records.',
+    ]);
+}
+
 
     // Show the registration form
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        return view('auth.user.register');
     }
 
     // Handle the registration form submission
@@ -78,9 +84,15 @@ class UserController extends Controller
         return redirect()->route('user.login');
     }
     else{
-    $user = Auth::user();
-    $LL_CYCLE = $user->LL_CYCLE;
-    return view('auth.rapport', ['LL_CYCLE' => $LL_CYCLE]);
+
+        $user = Auth::user();
+        $LL_CYCLE = $user->LL_CYCLE;
+        
+        $CD_ETAB = $user->CD_ETAB;
+        $users = User::where('CD_ETAB', $CD_ETAB)->get();
+    
+    $NetabFr = $user->NetabFr;
+        return view('auth.user.rapport',compact('LL_CYCLE', 'NetabFr','users'));  
 }
 }
 public function dashboard()
@@ -89,7 +101,7 @@ public function dashboard()
     $NOM_ETABL = $user->NOM_ETABL;
     $LL_CYCLE = $user->LL_CYCLE;
 
-    return view('auth.dashboard', ['NOM_ETABL' => $NOM_ETABL,'LL_CYCLE' => $LL_CYCLE]);
+    return view('auth.user.dashboard', ['NOM_ETABL' => $NOM_ETABL,'LL_CYCLE' => $LL_CYCLE]);
 }
 
     

@@ -1,0 +1,77 @@
+@import url(https://fonts.googleapis.com/earlyaccess/amiri.css);
+    @import url(https://fonts.googleapis.com/earlyaccess/scheherazade.css);
+
+    html {
+        background-color: #ffffff;
+
+    }
+
+    #Formulaire {
+        background-color: #ffffff;
+        margin: 20px auto;
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 40px;
+        width: 70%;
+        min-width: 300px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    input {
+        padding: 10px;
+        width: 100%;
+        font-size: 17px;
+        font-family: Raleway;
+        border: 1px solid #a09f9f;
+    }
+
+    /* Mark input boxes that gets an error on validation: */
+    input.invalid {
+        background-color: #fadada;
+    }
+
+    /* Hide all etapes by default: */
+    .tab {
+        display: none;
+    }
+
+    button {
+        background-color: #4ea851;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 17px;
+        font-family: Raleway;
+        cursor: pointer;
+    }
+
+    button:hover {
+        opacity: 0.8;
+    }
+
+    #ButtonPrece {
+        background-color: #bbb8b8;
+    }
+
+    /* Make circles that indicate the etapes of the form: */
+    .etape {
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: #bbb8b8;
+        border: none;
+        border-radius: 50%;
+        display: inline-block;
+        opacity: 0.5;
+    }
+
+    .etape.active {
+        opacity: 1;
+    }
+
+    /* Mark the etapes that are finished and valid: */
+    .etape.finish {
+        background-color: #4ea851;
+    }
