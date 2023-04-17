@@ -18,6 +18,18 @@ return new class extends Migration
             ->constrained()
             ->cascadeOnDelete();
         $table->string('date')->nullable();
+        $table->string('absenceFirstPrimaire')->nullable();
+        $table->string('totalFirstPrimaire')->nullable();
+        $table->string('absenceSecondPrimaire')->nullable();
+        $table->string('totalSecondPrimaire')->nullable();
+        $table->string('absenceThirdPrimaire')->nullable();
+        $table->string('totalThirdPrimaire')->nullable();
+        $table->string('absenceFourthPrimaire')->nullable();
+        $table->string('totalFourthPrimaire')->nullable();
+        $table->string('absenceFifthPrimaire')->nullable();
+        $table->string('totalFifthPrimaire')->nullable();
+        $table->string('absenceSixthPrimaire')->nullable();
+        $table->string('totalSixthPrimaire')->nullable();
         $table->integer('absenceFirstCollege')->nullable();
         $table->integer('totalFirstCollege')->nullable();
         $table->integer('absenceSecondCollege')->nullable();
@@ -30,6 +42,14 @@ return new class extends Migration
         $table->integer('totalSecondLycee')->nullable();
         $table->integer('absenceThirdLycee')->nullable();
         $table->integer('totalThirdLycee')->nullable();
+        $table->integer('absenceFirstComptabiliteGeneral')->nullable();
+        $table->integer('totalFirstComptabiliteGeneral')->nullable();
+        $table->integer('absenceSecondComptabiliteGeneral')->nullable();
+        $table->integer('totalSecondComptabiliteGeneral')->nullable();
+        $table->integer('absenceFirstManagementCommercial')->nullable();
+        $table->integer('totalFirstManagementCommercial')->nullable();
+        $table->integer('absenceSecondManagementCommercial')->nullable();
+        $table->integer('totalSecondManagementCommercial')->nullable();
         $table->integer('nbEmployee')->nullable();
         $table->integer('nbAbsenceEmployee')->nullable();
         $table->integer('nbRetardEmployee')->nullable();
