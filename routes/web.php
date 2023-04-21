@@ -31,5 +31,5 @@ Route::get('/user/rapport/{id}', [RapportController::class, 'show'])->name('rapp
 Route::get('/user/rapport/{id}/edit', [RapportController::class, 'edit'])->name('rapport.edit');
 Route::put('/user/rapport/{id}', [RapportController::class, 'update'])->name('rapport.update');
 Route::delete('/user/rapport/{id}', [RapportController::class, 'destroy'])->name('rapport.destroy');*/
-Route::resource('/rapport', RapportController::class);
+Route::resource('/user/rapport', RapportController::class);
 Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');

@@ -14,6 +14,7 @@ class Rapport extends Model
     protected $fillable = [
     'users_id',
         'date',
+        'typeClass',
         'absenceFirstPrimaire',
         'totalFirstPrimaire',
         'absenceSecondPrimaire',
@@ -78,5 +79,7 @@ class Rapport extends Model
         'quality',
         'quantity',
         'presentRevision',
+        'adressIp',
+        'mac_address',
 
     ];}

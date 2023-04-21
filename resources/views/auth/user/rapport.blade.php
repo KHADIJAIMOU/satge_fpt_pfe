@@ -1,26 +1,132 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
-
-
-
 <head>
-    <link rel="stylesheet" href="{{ asset('css/formuliare.css') }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <style>
+    @import url(https://fonts.googleapis.com/earlyaccess/amiri.css);
+    @import url(https://fonts.googleapis.com/earlyaccess/scheherazade.css);
+
+    html {
+        background-color: #ffffff;
+
+    }
+
+    #regForm {
+        background-color: #ffffff;
+        margin: 20px auto;
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 40px;
+        width: 70%;
+        min-width: 300px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    input {
+        padding: 10px;
+        width: 100%;
+        font-size: 17px;
+        font-family: Raleway;
+        border: 1px solid #aaaaaa;
+    }
+
+    /* Mark input boxes that gets an error on validation: */
+    input.invalid {
+        background-color: #ffdddd;
+    }
+
+    /* Hide all steps by default: */
+    .tab {
+        display: none;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 17px;
+        font-family: Raleway;
+        cursor: pointer;
+    }
+
+    button:hover {
+        opacity: 0.8;
+    }
+
+    #prevBtn {
+        background-color: #bbbbbb;
+    }
+
+    /* Make circles that indicate the steps of the form: */
+    .step {
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: #bbbbbb;
+        border: none;
+        border-radius: 50%;
+        display: inline-block;
+        opacity: 0.5;
+    }
+
+    .step.active {
+        opacity: 1;
+    }
+
+    /* Mark the steps that are finished and valid: */
+    .step.finish {
+        background-color: #4CAF50;
+    }
+    </style>
+
 </head>
 
 <body>
 
-    <p>Type Class: </p>
-    @foreach($users as $user)
-    <p>{{ $user->LL_CYCLE }}</p>
-@endforeach
 
+@php
+$user = Auth::user();
+$NOM_ETABL = $user->NOM_ETABL;
+    $text = "";
+    $count = count($users);
+    foreach($users as $key => $user) {
+        $text .= $user->LL_CYCLE;
+        if($key !== $count - 1) {
+            $text .= " + ";
+        }
+    }
+   
 
-    <form id="Formulaire" action="{{ route('rapport.store') }}" method="post" enctype="multipart/form-data">
+@endphp
+<center>
+    <br>
+    
+<div>Etablissement: {{$NOM_ETABL}} </div>
+<br>
+
+<div>Type: {{$text}} </div>
+<br>
+
+</center>
+<center>
+    <form   onsubmit="return validateForms()" method="POST" action="{{ route('user.logout') }}">
+        @csrf
+        <button class='btn btn-danger' onclick="this.closest('form').submit();">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            {{ __('Se déconnecter') }}
+        </button>
+    </form>
+</center>
+    <form id="regForm" action="{{ route('rapport.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
         <center>
             <div class="row mb-4">
@@ -36,8 +142,8 @@
                     style="font-family:'Amiri', serif;color: #333;text-align: center;text-transform: uppercase;margin-bottom: 20px;font-size: 26px;">
                     مسك المعطيات التربوية الخاصة بسير المؤسسة تربويا وإداريا </h6>
             </center>
-            <!-- One "etapeFormulaire" for each etape in the form: -->
-            <div class="etapeFormulaire">
+            <!-- One "tab" for each step in the form: -->
+            <div class="tab">
                 <div class="card" style="width: auto;padding:20px;margin-top:50px;margin-bottom:50px;">
 
                     <p style="text-align: right;">
@@ -45,11 +151,12 @@
                     </p>
 
                     <p><input required type="date" placeholder=""  name="date"></p>
+                    <p><input  required type="hidden" placeholder=""   name="typeClass" value="{{$text}}"></p>
                 </div>
             </div>
 
             @foreach ($users->unique('LL_CYCLE') as $user)
-                <div class="etapeFormulaire">
+                <div class="tab">
                     <center>
                         <div class="card-header" style="background-color:#B9F2CD;border-radius: 10px;">
                             مواظبة التلاميذ
@@ -402,8 +509,6 @@
                                 </label>
                                 <p><input required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceSecondLycee"></p>
-
-
                                 <label class=" col-form-label" style="text-align: right;">
                                     مجموع تلاميذ الأولى بكالوريا
 
@@ -431,7 +536,7 @@
             </div>
             @endforeach
 
-            <div class="etapeFormulaire">
+            <div class="tab">
                 <center>
                     <div class="card-header" style="background-color:#B9F2CD;border-radius: 10px;">
                         مواظبة الأطر
@@ -469,7 +574,7 @@
             </div>
 
 
-            <div class="etapeFormulaire">
+            <div class="tab">
                 <center>
                     <div class="card-header" style="background-color:#B9F2CD;border-radius: 10px;">
                         الدعم التربوي والتعويض
@@ -502,10 +607,23 @@
                                 name="nbSeanceComponser"></p>
 
                     </div>
+                    <div id="lycee-div">
+                        <br><br>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+    
+                            <label class=" col-form-label" style="text-align: right;">الحاضرون في حصة المراجعة
+    
+                            </label>
+                            <p><input required placeholder="" type="number" oninput="this.className = ''"  min="0" max="400" name="presentRevision"></p>
+    
+    
+                        </div>
+                    </div>
+                    <br>
                 </div>
             </div>
 
-            <div class="etapeFormulaire">
+            <div class="tab">
                 <center>
                     <div class="card-header" style="background-color:#F6DEC0;border-radius: 10px;">
                         الاجتماعات المنجزة
@@ -534,14 +652,14 @@
                             <tbody>
                                 <tr>
                                     <td>طبيعة الاجتماع</td>
-                                    <td><input type="checkbox" name="renionEffectuerConseilAdministratif" value="1"  ></td>
-                                    <td><input type="checkbox" name="renionEffectuerConseilsDepartementaux" value="1"  ></td>
-                                    <td><input type="checkbox" name="renionEffectuerConseilsPedagogiqueTa3limi" value="1"  ></td>
-                                    <td><input type="checkbox" name="renionEffectuerConseilsPedagogiqueTrbaoui" value="1"  ></td>
-                                    <td><input type="checkbox" name="renionEffectuerConseilDeGestion" value="1"  ></td>
-                                    <td><input type="checkbox" name="renionEffectuerRenionAssociationSoutienScolaire" value="1"  ></td>
-                                    <td><input type="checkbox" name="renionEffectuerAutreRenion" value="1"   ></td>
-                                    <td><input type="checkbox" name="renionEffectuerRien" value="1"  ></td>
+                                    <td><input type="checkbox" name="renionEffectuerConseilAdministratif" onclick="checkRien()" value="oui"  ></td>
+                                    <td><input type="checkbox" name="renionEffectuerConseilsDepartementaux" onclick="checkRien()" value="oui"  ></td>
+                                    <td><input type="checkbox" name="renionEffectuerConseilsPedagogiqueTa3limi" onclick="checkRien()" value="oui"  ></td>
+                                    <td><input type="checkbox" name="renionEffectuerConseilsPedagogiqueTrbaoui" onclick="checkRien()" value="oui"  ></td>
+                                    <td><input type="checkbox" name="renionEffectuerConseilDeGestion" value="oui" onclick="checkRien()" ></td>
+                                    <td><input type="checkbox" name="renionEffectuerRenionAssociationSoutienScolaire" value="oui" onclick="checkRien()"  ></td>
+                                    <td><input type="checkbox" name="renionEffectuerAutreRenion" value="oui" onclick="checkRien()"  ></td>
+                                    <td><input type="checkbox" name="renionEffectuerRien" value="oui"  onclick="uncheckOthers()" ></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -561,9 +679,9 @@
                     <br>
                     <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
 
-                        <input type="checkbox" name="activiteEffectuerIntégrée" value="1"> <label>أنشطة مندمجة</label>
-                        <input type="checkbox" name="activiteEffectuerParallel" value="1"><label>أنشطة موازية</label>
-                        <input type="checkbox" name="activiteEffectuerRien" value="1"><label>لا شيء</label>
+                        <input type="checkbox" name="activiteEffectuerIntégrée" value="oui" onclick="checkRienSecond()" > <label>أنشطة مندمجة</label>
+                        <input type="checkbox" name="activiteEffectuerParallel" value="oui" onclick="checkRienSecond()" ><label>أنشطة موازية</label>
+                        <input type="checkbox" name="activiteEffectuerRien" value="oui"  onclick="uncheckOthersSecond()"><label>لا شيء</label>
                     </div>
                 </div>
                 <center>
@@ -576,8 +694,7 @@
                 <div id="lycee-div">
                     <br>
                     <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
-                        <textarea id="rapportActiviteEffectuer" name="rapportActiviteEffectuer" style="width: 100%">
-                        </textarea>
+                        <textarea required id="rapportActiviteEffectuer" name="rapportActiviteEffectuer" style="width: 100%"></textarea>
                     </div>
                 </div>
                 <center>
@@ -590,8 +707,7 @@
                 <div id="lycee-div">
                     <br>
                     <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
-                        <textarea id="rapportVisit" name="rapportVisit" style="width: 100%">
-                        </textarea>
+                        <textarea required id="rapportVisit" name="rapportVisit" style="width: 100%"></textarea>
                     </div>
                 </div>
                 <center>
@@ -604,8 +720,7 @@
                 <div id="lycee-div">
                     <br>
                     <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
-                        <textarea id="rapportAccidentScolaire" name="rapportAccidentScolaire" style="width: 100%">
-                        </textarea>
+                        <textarea required id="rapportAccidentScolaire" name="rapportAccidentScolaire" style="width: 100%"></textarea>
                     </div>
                 </div>
                 <center>
@@ -618,8 +733,7 @@
                 <div id="lycee-div">
                     <br>
                     <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
-                        <textarea id="different " name="different" style="width: 100%">
-                        </textarea>
+                        <textarea required id="different " oninput="this.className = ''" name="different" style="width: 100%"></textarea>
                     </div>
                 </div>
                 <center>
@@ -633,14 +747,13 @@
                     <br>
                     <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
 
-                        <input type="radio" name="classInterieur" value="1"> <label>نعم</label>
-                        <input type="radio" name="classInterieur" value="0"><label>لا</label>
+                        <input type="radio" name="classInterieur" value="oui" onclick="showDiv(this)" > <label>نعم</label>
+                        <input type="radio" name="classInterieur" value="non" onclick="showDiv(this)"><label>لا</label>
 
                     </div>
                 </div>
             </div>
-
-            <div class="etapeFormulaire">
+            <div  id="div1" style="display:none;">
                 <center>
                     <div class="card-header" style="background-color:#B9F2CD;border-radius: 10px;">
                         القسم الداخلي </div>
@@ -740,22 +853,11 @@
 
                     </div>
                 </div>
-                <div id="lycee-div">
-                    <br><br>
-                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+                              </div>
+              <div  id="div2" style="display:none;">
+              </div>
 
-                        <label class=" col-form-label" style="text-align: right;">الحاضرون في حصة المراجعة
-
-                        </label>
-                        <p><input required placeholder="" type="number" oninput="this.className = ''" name="presentRevision"></p>
-
-
-                    </div>
-                </div>
-                <br>
-
-
-            </div>
+            
         </div>
     </div>
             </div>
@@ -764,79 +866,153 @@
 
             <div style="overflow:auto;">
                 <div style="float:right;">
-                    <button type="button" id="ButtonPrece" onclick="suivatPrec(-1)">السابق</button>
-                    <button type="button" id="ButtonSuivant" onclick="suivatPrec(1)">التالي</button>
+                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">السابق</button>
+                    <button type="button" id="nextBtn" onclick="nextPrev(1)">التالي</button>
                 </div>
             </div>
-            <!-- Circles which indicates the etapes of the form: -->
+            <!-- Circles which indicates the steps of the form: -->
             <div style="text-align:center;margin-top:40px;">
-                <span class="etape"></span>
-                <span class="etape"></span>
-                <span class="etape"></span>
-                <span class="etape"></span>
-                <span class="etape"></span>
-                <span class="etape"></span>
-                <span class="etape"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
 
 
             </div>
     </form>
 </body>
 <script>
-var FirstFormEtap = 0; 
-
-VoirFormMultiStep(FirstFormEtap); 
-
-function VoirFormMultiStep(indice) {
-    var var1 = document.getElementsByClassName("etapeFormulaire");
-    var1[indice].style.display = "block";
-    if (indice == 0) {
-        document.getElementById("ButtonPrece").style.display = "none";
-    } else {
-        document.getElementById("ButtonPrece").style.display = "inline";
-    }
-    if (indice == (var1.length - 1)) {
-        document.getElementById("ButtonSuivant").innerHTML = "حفظ";
-    } else {
-        document.getElementById("ButtonSuivant").innerHTML = "التالي";
-    }
-    fixerEtapeIndice(n)
-}
-
-function suivatPrec(indice) {
-    var var1 = document.getElementsByClassName("etapeFormulaire");
-    if (indice == 1 && !validationFormulaire()) return false;
-    var1[FirstFormEtap].style.display = "none";
-    FirstFormEtap = FirstFormEtap + indice;
-    if (FirstFormEtap >= var1.length) {
-        document.getElementById("Formulaire").submit();
-        return false;
-    }
-    VoirFormMultiStep(FirstFormEtap);
-}
-
-function validationFormulaire() {
-    var var1, var2, i, valider = true;
-    var1 = document.getElementsByClassName("etapeFormulaire");
-    var2 = var1[FirstFormEtap].getElementsByTagName("input");
-    for (i = 0; i < var2.length; i++) {
-        if (var2[i].value == "") {
-            var2[i].className += " invalid";
-            valider = false;
+  /*  var renionEffectuerRienCheckbox = document.querySelector('input[name="renionEffectuerRien"]');
+renionEffectuerRienCheckbox.addEventListener('change', function() {
+    if (this.checked) {
+        // If the "renionEffectuerRien" checkbox is checked, loop through all the other checkboxes and uncheck them
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]:not([name="renionEffectuerRien"])');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = false;
         }
     }
-    if (valider) {
-        document.getElementsByClassName("etape")[FirstFormEtap].className += " finish";
+});*/
+function checkRien() {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    var rienCheckbox = document.querySelector('input[name="renionEffectuerRien"]');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].name !== 'renionEffectuerRien' && checkboxes[i].checked) {
+            rienCheckbox.checked = false;
+            return;
+        }
     }
-    return valider; 
 }
 
-function fixerEtapeIndice(indice) {
-    var i, var1 = document.getElementsByClassName("etape");
-    for (i = 0; i < var1.length; i++) {
-        var1[i].className = var1[i].className.replace(" active", "");
+function uncheckOthers() {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    var rienCheckbox = document.querySelector('input[name="renionEffectuerRien"]');
+    if (rienCheckbox.checked) {
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].name !== 'renionEffectuerRien') {
+                checkboxes[i].checked = false;
+            }
+        }
     }
-    var1[indice].className += " active";
+}
+function checkRienSecond() {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    var rienCheckbox = document.querySelector('input[name="activiteEffectuerRien"]');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].name !== 'activiteEffectuerRien' && checkboxes[i].checked) {
+            rienCheckbox.checked = false;
+            return;
+        }
+    }
+}
+
+function uncheckOthersSecond() {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    var rienCheckbox = document.querySelector('input[name="activiteEffectuerRien"]');
+    if (rienCheckbox.checked) {
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].name !== 'activiteEffectuerRien') {
+                checkboxes[i].checked = false;
+            }
+        }
+    }
+}
+
+
+
+var currentTab = 0; // Current tab is set to be the first tab (0)
+showTab(currentTab); // Display the current tab
+
+function showTab(n) {
+    // This function will display the specified tab of the form...
+    var x = document.getElementsByClassName("tab");
+    x[n].style.display = "block";
+    //... and fix the Previous/Next buttons:
+    if (n == 0) {
+        document.getElementById("prevBtn").style.display = "none";
+    } else {
+        document.getElementById("prevBtn").style.display = "inline";
+    }
+    if (n == (x.length - 1)) {
+        document.getElementById("nextBtn").innerHTML = "حفظ";
+    } else {
+        document.getElementById("nextBtn").innerHTML = "التالي";
+    }
+    //... and run a function that will display the correct step indicator:
+    fixStepIndicator(n)
+}
+
+function nextPrev(n) {
+    // This function will figure out which tab to display
+    var x = document.getElementsByClassName("tab");
+    // Exit the function if any field in the current tab is invalid:
+    if (n == 1 && !validateForm()) return false;
+    // Hide the current tab:
+    x[currentTab].style.display = "none";
+    // Increase or decrease the current tab by 1:
+    currentTab = currentTab + n;
+    // if you have reached the end of the form...
+    if (currentTab >= x.length) {
+        // ... the form gets submitted:
+        document.getElementById("regForm").submit();
+        return false;
+    }
+    // Otherwise, display the correct tab:
+    showTab(currentTab);
+}
+
+function validateForm() {
+    // This function deals with validation of the form fields
+    var x, y, i, valid = true;
+    x = document.getElementsByClassName("tab");
+    y = x[currentTab].getElementsByTagName("input");
+    // A loop that checks every input field in the current tab:
+    for (i = 0; i < y.length; i++) {
+        // If a field is empty...
+        if (y[i].value == "") {
+            // add an "invalid" class to the field:
+            y[i].className += " invalid";
+            // and set the current valid status to false
+            valid = false;
+        }
+    }
+    // If the valid status is true, mark the step as finished and valid:
+    if (valid) {
+        document.getElementsByClassName("step")[currentTab].className += " finish";
+    }
+    return valid; // return the valid status
+}
+
+function fixStepIndicator(n) {
+    // This function removes the "active" class of all steps...
+    var i, x = document.getElementsByClassName("step");
+    for (i = 0; i < x.length; i++) {
+        x[i].className = x[i].className.replace(" active", "");
+    }
+    //... and adds the "active" class on the current step:
+    x[n].className += " active";
 }
 var colegeButtona = document.getElementById("colegeButton");
 var collegediv = document.getElementById("college-div");
@@ -883,6 +1059,22 @@ const input = document.getElementById('myInput');
             errorMessage.style.display = 'none';
         }
     });
+    function showDiv(radio) {
+  if (radio.value === "oui") {
+    document.getElementById("div1").style.display = "block";
+    document.getElementById("div2").style.display = "none";
+  } else if (radio.value === "non") {
+    document.getElementById("div1").style.display = "none";
+    document.getElementById("div2").style.display = "block";
+  }
+}
+function getIPAddress() {
+    fetch('https://api.ipify.org/?format=json')
+        .then(response => response.json())
+        .then(data => alert(data.ip))
+        .catch(error => console.error(error))
+}
+
 </script>
 </body>
 

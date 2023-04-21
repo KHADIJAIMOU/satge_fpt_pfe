@@ -6,22 +6,37 @@ use App\Models\Rapport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Http;
 
 class RapportController extends Controller
 {
     public function index()
     {
         $rapports = Rapport::all();
-
-        $user = Auth::user();
-        $LL_CYCLE = $user->LL_CYCLE;
-        
-        $CD_ETAB = $user->CD_ETAB;
-        $users = User::where('CD_ETAB', $CD_ETAB)->get();
+        if (!auth()->check()) {
+            return redirect()->route('user.login');
+        }
+        else{
     
-    $NetabFr = $user->NetabFr;
-        return view('auth.user.rapport',compact('LL_CYCLE', 'NetabFr','users'));  
+            $user = Auth::user();
+            $LL_CYCLE = $user->LL_CYCLE;
+            
+            $CD_ETAB = $user->CD_ETAB;
+            $users = User::where('CD_ETAB', $CD_ETAB)->get();
+        
+        $NetabFr = $user->NetabFr;
+            return view('auth.user.rapport',compact('LL_CYCLE', 'NetabFr','users'));  
+        }
       }
+      private function getMacAddressFromCommandOutput($output)
+{
+    foreach($output as $line){
+        if (strpos($line, "Physical Address") !== false){
+            $mac = substr($line, strpos($line, "Physical Address") + 36);
+            return trim($mac);
+        }
+    }
+}
     public function create()
     {
         $user = Auth::user();
@@ -34,6 +49,7 @@ class RapportController extends Controller
 {
     $validatedData = $request->validate([
         'date' => 'required|date',
+        'typeClass' => 'required',
         'absenceFirstPrimaire' => 'nullable|integer',
         'totalFirstPrimaire' => 'nullable|integer',
         'absenceSecondPrimaire' => 'nullable|integer',
@@ -72,38 +88,57 @@ class RapportController extends Controller
         'nbSeanceProgramme' => 'required',
         'nbSeanceEffecuter' => 'required',
         'nbSeanceComponser' => 'required',
-       'renionEffectuerConseilAdministratif' => 'nullable|integer',
-        'renionEffectuerConseilsDepartementaux' => 'nullable|integer',
-        'renionEffectuerConseilsPedagogiqueTa3limi' => 'nullable|integer',
-        'renionEffectuerConseilsPedagogiqueTrbaoui' => 'nullable|integer',
-        'renionEffectuerConseilDeGestion' => 'nullable|integer',
-        'renionEffectuerAutreRenion' => 'nullable|integer',
-        'renionEffectuerRien' => 'nullable|integer',
-        'activiteEffectuerIntégrée' => 'nullable|integer',
-        'activiteEffectuerParallel' => 'nullable|integer',
-        'activiteEffectuerRien' => 'nullable|integer',
-        'rapportActiviteEffectuer' => 'required',
-        'rapportVisit' => 'required',
-        'rapportAccidentScolaire' => 'required',
-        'different' => 'required',
-        'classInterieur' => 'required',
-       'inscritPetitDejeuner' => 'required|integer',
-        'presentPetitDejeuner' => 'required|integer',
-        'inscritDejeuner' => 'required|integer',
-        'presentDejeuner' => 'required|integer',
-         'inscritDinner' => 'required|integer',
-        'presentDinner' => 'required|integer',
-        'RespectProgrammeNutritional' => 'required|integer',
-        'quality' => 'required|integer',
-        'quantity' => 'required|integer',
-        'presentRevision'=> 'required|integer',
+       'renionEffectuerConseilAdministratif' => 'nullable',
+        'renionEffectuerConseilsDepartementaux' => 'nullable',
+        'renionEffectuerConseilsPedagogiqueTa3limi' => 'nullable',
+        'renionEffectuerConseilsPedagogiqueTrbaoui' => 'nullable',
+        'renionEffectuerConseilDeGestion' => 'nullable',
+        'renionEffectuerAutreRenion' => 'nullable',
+        'renionEffectuerRien' => 'nullable',
+        'activiteEffectuerIntégrée' => 'nullable',
+        'activiteEffectuerParallel' => 'nullable',
+        'activiteEffectuerRien' => 'nullable',
+        'rapportActiviteEffectuer' => 'nullable',
+        'rapportVisit' => 'nullable',
+        'rapportAccidentScolaire' => 'nullable',
+        'different' => 'nullable',
+        'classInterieur' => 'nullable',
+       'inscritPetitDejeuner' => 'nullable|integer',
+        'presentPetitDejeuner' => 'nullable|integer',
+        'inscritDejeuner' => 'nullable|integer',
+        'presentDejeuner' => 'nullable|integer',
+         'inscritDinner' => 'nullable|integer',
+        'presentDinner' => 'nullable|integer',
+        'RespectProgrammeNutritional' => 'nullable|integer',
+        'quality' => 'nullable|integer',
+        'quantity' => 'nullable|integer',
+        'presentRevision'=> 'nullable|integer',
         ]);
         $user = Auth::user();
-    
+        $text = "";
+        $CD_ETAB = $user->CD_ETAB;
+        $users = User::where('CD_ETAB', $CD_ETAB)->get();
+
+        $count = count($users);
+        foreach($users as $key => $user) {
+            $text .= $user->LL_CYCLE;
+            if($key !== $count - 1) {
+                $text .= " + ";
+            }
+        }
         $user = Auth::user();
+        $ipAddress = $_SERVER['REMOTE_ADDR'];
+        $mac_address = exec('getmac');
+        $ip = Http::get('https://api.ipify.org')->body();
+        $macAddress = exec('getmac');
+        $macAddress = strtok($macAddress, ' ');
+
+
+
         $admin = new Rapport([
             'users_id' => $user->id,
             'date' => $validatedData['date'],
+            'typeClass' =>$validatedData['typeClass'],
             'absenceFirstPrimaire' => $validatedData['absenceFirstPrimaire']?? null,
             'totalFirstPrimaire' => $validatedData['totalFirstPrimaire']?? null,
             'absenceSecondPrimaire' => $validatedData['absenceSecondPrimaire']?? null,
@@ -114,8 +149,8 @@ class RapportController extends Controller
             'totalFourthPrimaire' => $validatedData['totalFourthPrimaire']?? null,
             'absenceFifthPrimaire' => $validatedData['absenceFifthPrimaire']?? null,
             'totalFifthPrimaire' => $validatedData['totalFifthPrimaire']?? null,
-            ' absenceSixthPrimaire' => $validatedData['absenceSixthPrimaire']?? null,
-            ' totalSixthPrimaire' => $validatedData['totalSixthPrimaire']?? null,
+            'absenceSixthPrimaire' => $validatedData['absenceSixthPrimaire']?? null,
+            'totalSixthPrimaire' => $validatedData['totalSixthPrimaire']?? null,
             'absenceFirstCollege' => $validatedData['absenceFirstCollege']?? null,
             'totalFirstCollege' => $validatedData['totalFirstCollege']?? null,
             'absenceSecondCollege' => $validatedData['absenceSecondCollege']?? null,
@@ -142,31 +177,33 @@ class RapportController extends Controller
             'nbSeanceProgramme' => $validatedData['nbSeanceProgramme'],
             'nbSeanceEffecuter' => $validatedData['nbSeanceEffecuter'],
             'nbSeanceComponser' => $validatedData['nbSeanceComponser'],
-            'renionEffectuerConseilAdministratif' => isset($validatedData['renionEffectuerConseilAdministratif']) ? 1 : 0,
-            'renionEffectuerConseilsDepartementaux' => isset($validatedData['renionEffectuerConseilsDepartementaux']) ? 1 : 0,
-            'renionEffectuerConseilsPedagogiqueTa3limi' => isset($validatedData['renionEffectuerConseilsPedagogiqueTa3limi']) ? 1 : 0,
-            'renionEffectuerConseilsPedagogiqueTrbaoui' => isset($validatedData['renionEffectuerConseilsPedagogiqueTrbaoui']) ? 1 : 0,
-            'renionEffectuerConseilDeGestion' => isset($validatedData['renionEffectuerConseilDeGestion']) ? 1 : 0,
-            'renionEffectuerAutreRenion' => isset($validatedData['renionEffectuerAutreRenion']) ? 1 : 0,
-            'renionEffectuerRien' => isset($validatedData['renionEffectuerRien']) ? 1 : 0,
-            'activiteEffectuerIntégrée' => isset($validatedData['activiteEffectuerIntégrée']) ? 1 : 0,
-            'activiteEffectuerParallel' => isset($validatedData['activiteEffectuerParallel']) ? 1 : 0,
-            'activiteEffectuerRien' => isset($validatedData['activiteEffectuerRien']) ? 1 : 0,
-            'rapportActiviteEffectuer' => $validatedData['rapportActiviteEffectuer'],
-            'rapportVisit' => $validatedData['rapportVisit'],
-            'rapportAccidentScolaire' => $validatedData['rapportAccidentScolaire'],
-            'different' => $validatedData['different'],
-            'classInterieur' =>$validatedData['classInterieur'],
+            'renionEffectuerConseilAdministratif' => $validatedData['renionEffectuerConseilAdministratif']??'non',
+            'renionEffectuerConseilsDepartementaux' =>$validatedData['renionEffectuerConseilsDepartementaux']??'non',
+            'renionEffectuerConseilsPedagogiqueTa3limi' =>$validatedData['renionEffectuerConseilsPedagogiqueTa3limi']??'non',
+            'renionEffectuerConseilsPedagogiqueTrbaoui' =>$validatedData['renionEffectuerConseilsPedagogiqueTrbaoui']??'non',
+            'renionEffectuerConseilDeGestion' =>$validatedData['renionEffectuerConseilDeGestion']??'non',
+            'renionEffectuerAutreRenion' =>$validatedData['renionEffectuerAutreRenion']??'non',
+            'renionEffectuerRien' =>$validatedData['renionEffectuerRien']??'non',
+            'activiteEffectuerIntégrée' =>$validatedData['activiteEffectuerIntégrée']??'non',
+            'activiteEffectuerParallel' =>$validatedData['activiteEffectuerParallel']??'non',
+            'activiteEffectuerRien' =>$validatedData['activiteEffectuerRien']??'non',
+            'rapportActiviteEffectuer' =>isset($validatedData['rapportActiviteEffectuer']) ? $validatedData['rapportActiviteEffectuer'] : 'rien',
+            'rapportVisit' =>isset($validatedData['rapportVisit']) ? $validatedData['rapportVisit'] : 'rien',
+            'rapportAccidentScolaire' =>isset($validatedData['rapportAccidentScolaire']) ? $validatedData['rapportAccidentScolaire'] : 'rien',
+            'different' =>isset($validatedData['different']) ? $validatedData['different'] : 'rien',
+            'classInterieur' =>isset($validatedData['classInterieur']) ? $validatedData['classInterieur'] : 'non',
              'inscritPetitDejeuner' => $validatedData['inscritPetitDejeuner'],
             'presentPetitDejeuner'=> $validatedData['presentPetitDejeuner'],
             'inscritDejeuner' => $validatedData['inscritDejeuner'],
             'presentDejeuner' => $validatedData['presentDejeuner'],
             'inscritDinner' => $validatedData['inscritDinner'],
             'presentDinner' => $validatedData['presentDinner'],
-            'RespectProgrammeNutritional' => $validatedData['RespectProgrammeNutritional'],
-            'quality' => $validatedData['quality'],
-            'quantity' => $validatedData['quantity'],
+            'RespectProgrammeNutritional' => $validatedData['RespectProgrammeNutritional'] ?? 0,
+            'quality' => $validatedData['quality']?? 0,
+            'quantity' => $validatedData['quantity'] ?? 0,
             'presentRevision'=> $validatedData['presentRevision'],
+            'adressIp'=>$ip,
+            'mac_address'=>$macAddress,
              ]);
         $admin->save();
     return redirect()->route('rapport.index')->with('success', 'Rapport added successfully.')->withErrors($validatedData)

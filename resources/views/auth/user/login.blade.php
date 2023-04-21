@@ -6,14 +6,17 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('User Login') }}</div>
+                   <center> <div class="card-header" style="background-color: #cfe7d0">{{ __('Connexion  " Etablissement " ') }}</div></center>
 
                     <div class="card-body">
+                        <div class="row mb-3">
+                            <img  class="mx-auto d-block" style="margin-bottom: 30px;margin-top: 30px;padding-right: 50px;padding-left: 50px;" src="{{asset('/img/logo.jpg')}}">
+                        </div>    
                         <form method="POST" action="{{ route('user.login') }}">
                             @csrf
 
                             <div class="form-group row">
-                                <label for="CD_ETAB" class="col-md-4 col-form-label text-md-right">{{ __('-Mail Address') }}</label>
+                                <label for="CD_ETAB" class="col-md-4 col-form-label text-md-right">{{ __('Code Etablissement') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="CD_ETAB" type="text" class="form-control @error('CD_ETAB') is-invalid @enderror" name="CD_ETAB" value="{{ old('CD_ETAB') }}" required autocomplete="email" autofocus>
@@ -27,7 +30,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Mot de passe') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="password" type="text" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
