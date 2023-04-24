@@ -6,10 +6,11 @@
     <div class="wrapper">
 
         <!-- Preloader -->
-        <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo" height="60"
-                width="60">
+        <div style="background-color:white " class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__shake"  style="border-radius: 60%"src="{{ asset('/img/logoDirection.jpg') }}" alt="logoDirection" height="150"
+                width="150">
         </div>
+        
 
         <!-- Navbar -->
         @include('layouts.navbar')
@@ -108,6 +109,31 @@
         @if (session()->has('message'))
             toastr.success("{{ session()->get('message') }}");
         @endif
+        $(function() {
+    $('.update-password').click(function(e) {
+        e.preventDefault();
+
+        var userId = $(this).data('user-id');
+        var password = Math.random().toString(36).slice(-8);;
+
+        $.ajax({
+            url: '/admin/users/' + userId + '/updatePassword',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                password: password,
+            },
+            success: function(response) {
+            toastr.success(response.message); // Show success message
+            setTimeout(function() {
+            location.reload();
+        }, 5000);        },
+        error: function(response) {
+            toastr.error(response.responseJSON.message); // Show error message
+        }
+        });
+    });
+});
     </script>
 
 </body>

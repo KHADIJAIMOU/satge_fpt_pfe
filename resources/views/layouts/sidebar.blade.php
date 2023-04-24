@@ -18,7 +18,7 @@
                         with font-awesome or any other icon font library -->
                
             <li class="nav-item {{ (Session::get('menu') == 'profil') ? 'menu-open':''}}">
-            <a href="/admin/users" class="nav-link {{ (Session::get('menu') == 'users') ? 'active':'' }}">
+            <a href="/admin/repports" class="nav-link {{ (Session::get('menu') == 'repports') ? 'active':'' }}">
                         <i class="fa-solid fa-users"></i>
                         <p>
                             Rapports
@@ -27,7 +27,15 @@
               
                 </li>
                 <li class="nav-item">
-                <a href="/admin/users" class="nav-link {{ (Session::get('menu') == 'users') ? 'active':'' }}">
+                    <a href="/admin/users" class="nav-link {{ (Session::get('menu') == 'users') ? 'active':'' }}">
+                            <i class="fa-solid fa-users"></i>
+                            <p>
+                                Utilisateurs
+                            </p>
+                        </a>
+                    </li>
+                <li class="nav-item">
+                <a href="/admin/profil" class="nav-link {{ (Session::get('menu') == 'profil') ? 'active':'' }}">
                         <i class="fa-solid fa-users"></i>
                         <p>
                             profil

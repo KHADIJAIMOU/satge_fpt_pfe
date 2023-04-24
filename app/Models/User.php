@@ -31,7 +31,13 @@ class User extends Authenticatable
         'NetabFr',
         'CD_GIPE',
         'password',
+        'role',
+
     ];
+    public function hasRole(string $role): bool
+    {
+        return $this->getAttribute('role') === $role;
+    }
 
 
 }

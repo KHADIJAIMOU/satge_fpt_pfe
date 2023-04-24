@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class UserController extends Controller
 {
@@ -16,27 +17,32 @@ class UserController extends Controller
 
     // Handle the login form submission
     public function login(Request $request)
-{
-    $CD_ETAB = $request->input('CD_ETAB');
-    $password = $request->input('password');
-    
-    $users = User::where('CD_ETAB', $CD_ETAB)->get();
-    
-    if ($users->isNotEmpty()) {
-        foreach ($users as $user) {
-            if ($password=== $user->password){
-                Auth::login($user);
-                $LL_CYCLE = $user->LL_CYCLE;
-                return redirect()->intended('/user/rapport')->withCookie(cookie('LL_CYCLE', $LL_CYCLE));
+    {
+        $CD_ETAB = $request->input('CD_ETAB');
+        $password = $request->input('password');
+        
+        $users = User::where('CD_ETAB', $CD_ETAB)->get();
+        
+        if ($users->isNotEmpty()) {
+            foreach ($users as $user) {
+                if ($password === $user->password){
+                    Auth::login($user);
+                    
+                    // check user role
+                    if ($user->role === 'admin') {
+                        return redirect('/admin/dashboard');
+                    } else {
+                        return redirect('/user/dashboard');
+                    }
+                }
             }
         }
+        
+        return back()->withErrors([
+            'CD_ETAB' => 'The provided credentials do not match our records.',
+        ]);
     }
     
-    return back()->withErrors([
-        'CD_ETAB' => 'The provided credentials do not match our records.',
-    ]);
-}
-
 
     // Show the registration form
     public function showRegistrationForm()
@@ -86,8 +92,7 @@ class UserController extends Controller
     else{
 
         $user = Auth::user();
-        $LL_CYCLE = $user->LL_CYCLE;
-        
+        $LL_CYCLE = $user->LL_CYCLE; 
         $CD_ETAB = $user->CD_ETAB;
         $users = User::where('CD_ETAB', $CD_ETAB)->get();
     

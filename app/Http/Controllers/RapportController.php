@@ -18,7 +18,7 @@ class RapportController extends Controller
         }
         else{
     
-            $user = Auth::user();
+            $user = Auth::guard('web')->user();
             $LL_CYCLE = $user->LL_CYCLE;
             
             $CD_ETAB = $user->CD_ETAB;
@@ -132,9 +132,6 @@ class RapportController extends Controller
         $ip = Http::get('https://api.ipify.org')->body();
         $macAddress = exec('getmac');
         $macAddress = strtok($macAddress, ' ');
-
-
-
         $admin = new Rapport([
             'users_id' => $user->id,
             'date' => $validatedData['date'],
