@@ -1,6 +1,6 @@
 <!-- resources/views/auth/admin/register.blade.php -->
 
-@extends('layouts.app')
+@extends('layoutsAdmin.app')
 
 @section('content')
     <div class="container">

@@ -45,7 +45,7 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('user.login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
@@ -57,10 +57,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('admin.logout') }}"
+                                    <a class="dropdown-item" href="{{ route('user.logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        <a class="nav-link" href="{{ route('admin.logout') }}">Logout</a>
+                                        <a class="nav-link" href="{{ route('user.logout') }}">Logout</a>
                                     </a>
 
                                     

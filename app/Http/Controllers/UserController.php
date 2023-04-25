@@ -32,7 +32,7 @@ class UserController extends Controller
                     if ($user->role === 'admin') {
                         return redirect('/admin/dashboard');
                     } else {
-                        return redirect('/user/dashboard');
+                        return redirect('/user/repports');
                     }
                 }
             }
@@ -82,7 +82,7 @@ class UserController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/user/login');
+        return redirect('/login');
     }
   public function userReport()
 {

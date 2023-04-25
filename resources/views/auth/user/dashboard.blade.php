@@ -1,570 +1,107 @@
 @extends("auth.user.baseUser")
 @section('title')
 
-<form>
     <div class="card-body">
 
-        <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#e8e8e8">
-
-
-    <p>Type Class:</p>
-
-
-
-    <form id="regForm" action="{{ route('rapport.store') }}" method="post" enctype="multipart/form-data">
-                    @csrf
-        <center>
-            <div class="row mb-4">
-                <img class="mx-auto d-block"
-                    style="border-style: outset;border-radius: 10px;margin-bottom: 30px;margin-top: 30px;"
-                    src="{{asset('/img/logo.jpg')}}">
-            </div>
-            <h1
-                style="font-family:'Scheherazade', serif;color: #333;text-align: center;text-transform: uppercase;margin-bottom: 20px;font-size: 56px; ">
-                التقرير اليومي</h1>
-            <center style="border-bottom: 2px solid black;margin-bottom:10px">
-                <h6
-                    style="font-family:'Amiri', serif;color: #333;text-align: center;text-transform: uppercase;margin-bottom: 20px;font-size: 26px;">
-                    مسك المعطيات التربوية الخاصة بسير المؤسسة تربويا وإداريا </h6>
-            </center>
-            <!-- One "tab" for each step in the form: -->
-            <div class="tab">
-                <div class="card" style="width: auto;padding:20px;margin-top:50px;margin-bottom:50px;">
-
-                    <p style="text-align: right;">
-                        <label class="col-form-label" style="text-align: right;">اليوم</label>
-                    </p>
-
-                    <p><input required type="date" placeholder=""  name="date"></p>
-                </div>
-            </div>
-
-            <div class="tab">
-                <center>
-                    <div class="card-header" style="background-color:#B9F2CD;border-radius: 10px;">
-                        مواظبة التلاميذ
-                    </div>
-                </center>
-                <br>
-                <div id="errorMessage" style="display: none; color: red;">Value must be between 0 and 400</div>
-
-                <div id="lycee-div">
-                    <center style="background-color: #F2BEB9;border-radius: 10px;"> المستوى الثانوي </center>
-                    <br><br>
-                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                        <label class=" col-form-label" style="text-align: right;">غياب الجذع مشترك
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400"  name="absenceFirstLycee"></p>
-
-                        <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ الجذع مشترك
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" name="totalFirstLycee"></p>
-                    </div>
-                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                        <label id="myInput" class=" col-form-label" style="text-align: right;">
-                            غياب الأولى بكالوريا
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400"  oninput="this.className = ''"
-                                name="absenceSecondLycee"></p>
-
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            مجموع تلاميذ الأولى بكالوريا
-
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="totalSecondLycee"></p>
-                    </div>
-                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            غياب الثانية بكالوريا
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="absenceThirdLycee"></p>
-
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            مجموع تلاميذ الثانية بكالوريا
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="totalThirdLycee"></p>
-                    </div>
-                </div>
-
-
-
-                <div id="college-div">
-                    <center style="background-color: #F2BEB9;border-radius: 10px;">
-                        المستوى الإعدادي
-
-                    </center>
-                    <br><br>
-                    <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            غياب السنة الأولى إعدادي
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="absenceFirstCollege"></p>
-
-                        <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى إعدادي
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="totalFirstCollege"></p>
-                    </div>
-                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            غياب السنة الثانية إعدادي
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="absenceSecondCollege"></p>
-
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            مجموع تلاميذ السنة الثانية إعدادي
-
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="totalSecondCollege"></p>
-                    </div>
-                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            غياب السنة الثالثة إعدادي
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="absenceThirdCollege"></p>
-
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            مجموع تلاميذ السنة الثالثة إعدادي
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="totalThirdCollege"></p>
-                    </div>
-                </div>
-
-
-
-                <div id="lycee-college-div">
-                    <center style="background-color: #F2BEB9;border-radius: 10px;"> المستوى الثانوي و الإعدادي
-                    </center>
-                    <br><br>
-                    <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
-                        <label class=" col-form-label" style="text-align: right;">غياب السنة الأولى إعدادي</label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="absenceFirstCollege"></p>
-
-                        <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
-                            إعدادي</label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="totalFirstCollege"></p>
-                    </div>
-                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-                        <label class=" col-form-label" style="text-align: right;">غياب السنة الثانية إعدادي</label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="absenceSecondCollege"></p>
-
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            مجموع تلاميذ السنة الثانية إعدادي
-
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="totalSecondCollege"></p>
-                    </div>
-                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-                        <label class=" col-form-label" style="text-align: right;">غياب السنة الثالثة إعدادي</label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="absenceThirdCollege"></p>
-
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            مجموع تلاميذ السنة الثالثة إعدادي
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="totalThirdCollege"></p>
-                    </div>
-                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-                        <label class=" col-form-label" style="text-align: right;">غياب الجذع مشترك
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="absenceFirstLycee"></p>
-
-                        <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ الجذع مشترك
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="totalFirstLycee"></p>
-                    </div>
-                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-                        <label class=" col-form-label" style="text-align: right;">
-                            غياب الأولى بكالوريا
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="absenceSecondLycee"></p>
-
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            مجموع تلاميذ الأولى بكالوريا
-
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="totalSecondLycee"></p>
-                    </div>
-                    <div class="card" style="width: auto;padding:20px;margin-top:50px;;margin-bottom:50px;">
-                        <label class=" col-form-label" style="text-align: right;">
-                            غياب الثانية بكالوريا
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="absenceThirdLycee"></p>
-
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            مجموع تلاميذ الثانية بكالوريا
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="totalThirdLycee"></p>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="tab">
-                <center>
-                    <div class="card-header" style="background-color:#B9F2CD;border-radius: 10px;">
-                        مواظبة الأطر
-                    </div>
-                </center>
-                <br>
-
-                <div id="lycee-div">
-                    <br><br>
-                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            عدد العاملين من الأطر
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="nbEmployee"></p>
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            عدد المتغيبين من الأطر
-
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="nbAbsenceEmployee"></p>
-
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            عدد المتأخرين من الأطر
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="nbRetardEmployee"></p>
-
-                    </div>
-
-                </div>
-            </div>
-
-
-            <div class="tab">
-                <center>
-                    <div class="card-header" style="background-color:#B9F2CD;border-radius: 10px;">
-                        الدعم التربوي والتعويض
-                    </div>
-                </center>
-                <br>
-
-                <div id="lycee-div">
-                    <br><br>
-                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            حصص الدعم المبرمجة
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="nbSeanceProgramme"></p>
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            حصص الدعم المنجزة
-
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="nbSeanceEffecuter"></p>
-
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            حصص التعويض المنجزة
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''"
-                                name="nbSeanceComponser"></p>
 
+
+        <div class="max-w-7xl mx-auto p-6 lg:p-8">
+
+
+            <div class="mt-16">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                    <a href="https://laravel.com/docs" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
+                        <div>
+                         
+
+                            <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Bonjour user</h2>
+
+                            <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                                Laravel has wonderful documentation covering every aspect of the framework. Whether you are a newcomer or have prior experience with Laravel, we recommend reading our documentation from beginning to end.
+                            </p>
+                        </div>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                        </svg>
+                    </a>
+
+                    <a href="https://laracasts.com" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
+                        <div>
+                            <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
+                                    <path stroke-linecap="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
+                                </svg>
+                            </div>
+
+                            <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Laracasts</h2>
+
+                            <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                                Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
+                            </p>
+                        </div>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                        </svg>
+                    </a>
+
+                    <a href="https://laravel-news.com" class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
+                        <div>
+                            <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
+                                </svg>
+                            </div>
+
+                            <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Laravel News</h2>
+
+                            <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                                Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
+                            </p>
+                        </div>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                        </svg>
+                    </a>
+
+                    <div class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
+                        <div>
+                            <div class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-7 h-7 stroke-red-500">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a8.7 8.7 0 002.288-4.042 1.087 1.087 0 00-.358-1.099l-1.33-1.108c-.251-.21-.582-.299-.905-.245l-1.17.195a1.125 1.125 0 01-.98-.314l-.295-.295a1.125 1.125 0 010-1.591l.13-.132a1.125 1.125 0 011.3-.21l.603.302a.809.809 0 001.086-1.086L14.25 7.5l1.256-.837a4.5 4.5 0 001.528-1.732l.146-.292M6.115 5.19A9 9 0 1017.18 4.64M6.115 5.19A8.965 8.965 0 0112 3c1.929 0 3.716.607 5.18 1.64" />
+                                </svg>
+                            </div>
+
+                            <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Vibrant Ecosystem</h2>
+
+                            <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                                Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Forge</a>, <a href="https://vapor.laravel.com" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Vapor</a>, <a href="https://nova.laravel.com" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Nova</a>, and <a href="https://envoyer.io" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Envoyer</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Echo</a>, <a href="https://laravel.com/docs/horizon" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Telescope</a>, and more.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="tab">
-                <center>
-                    <div class="card-header" style="background-color:#F6DEC0;border-radius: 10px;">
-                        الاجتماعات المنجزة
-                    </div>
-                </center>
-                <br>
-
-                <div id="lycee-div">
-                    <br>
-                    <div class="card" style="width: auto;padding:20px;margin-top:20px;margin-bottom:10px;padding:10px">
-
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>المجلس الإداري</th>
-                                    <th>مجالس الأقسام</th>
-                                    <th>المجالس التعليمية</th>
-                                    <th>المجلس التربوي</th>
-                                    <th>مجلس التدبير</th>
-                                    <th>اجتماع جمعية دعم مدرسة النجاح</th>
-                                    <th>اجتماعات أخرى</th>
-                                    <th>لاشيء</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>طبيعة الاجتماع</td>
-                                    <td><input type="checkbox" name="renionEffectuerConseilAdministratif" value="1"  ></td>
-                                    <td><input type="checkbox" name="renionEffectuerConseilsDepartementaux" value="1"  ></td>
-                                    <td><input type="checkbox" name="renionEffectuerConseilsPedagogiqueTa3limi" value="1"  ></td>
-                                    <td><input type="checkbox" name="renionEffectuerConseilsPedagogiqueTrbaoui" value="1"  ></td>
-                                    <td><input type="checkbox" name="renionEffectuerConseilDeGestion" value="1"  ></td>
-                                    <td><input type="checkbox" name="renionEffectuerRenionAssociationSoutienScolaire" value="1"  ></td>
-                                    <td><input type="checkbox" name="renionEffectuerAutreRenion" value="1"   ></td>
-                                    <td><input type="checkbox" name="renionEffectuerRien" value="1"  ></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-
+            <div class="flex justify-center mt-16 px-0 sm:items-center sm:justify-between">
+                <div class="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-left">
+                    <div class="flex items-center gap-4">
+                        <a href="https://github.com/sponsors/taylorotwell" class="group inline-flex items-center hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="-mt-px mr-1 w-5 h-5 stroke-gray-400 dark:stroke-gray-600 group-hover:stroke-gray-600 dark:group-hover:stroke-gray-400">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                            </svg>
+                            Sponsor
+                        </a>
                     </div>
                 </div>
-                
-                <center>
-                    <div class="card-header" style="background-color:#F6DEC0;border-radius: 10px;">
-                        الأنشطة المنجزة
-                    </div>
-                </center>
-                <br>
 
-                <div id="lycee-div">
-                    <br>
-                    <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
-
-                        <input type="checkbox" name="activiteEffectuerIntégrée" value="1"> <label>أنشطة مندمجة</label>
-                        <input type="checkbox" name="activiteEffectuerParallel" value="1"><label>أنشطة موازية</label>
-                        <input type="checkbox" name="activiteEffectuerRien" value="1"><label>لا شيء</label>
-                    </div>
-                </div>
-                <center>
-                    <div class="card-header" style="background-color:#F6DEC0;border-radius: 10px;">
-                        تقرير مبسط حول الأنشطة المنجزة (الموضوع/الفئة...)
-                    </div>
-                </center>
-                <br>
-
-                <div id="lycee-div">
-                    <br>
-                    <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
-                        <textarea id="rapportActiviteEffectuer" name="rapportActiviteEffectuer" style="width: 100%">
-                        </textarea>
-                    </div>
-                </div>
-                <center>
-                    <div class="card-header" style="background-color:#F6DEC0;border-radius: 10px;">
-                        تقرير مبسط حول الزيارات
-                    </div>
-                </center>
-                <br>
-
-                <div id="lycee-div">
-                    <br>
-                    <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
-                        <textarea id="rapportVisit" name="rapportVisit" style="width: 100%">
-                        </textarea>
-                    </div>
-                </div>
-                <center>
-                    <div class="card-header" style="background-color:#F6DEC0;border-radius: 10px;">
-                        تقرير مبسط حول الحوادث المدرسية
-                    </div>
-                </center>
-                <br>
-
-                <div id="lycee-div">
-                    <br>
-                    <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
-                        <textarea id="rapportAccidentScolaire" name="rapportAccidentScolaire" style="width: 100%">
-                        </textarea>
-                    </div>
-                </div>
-                <center>
-                    <div class="card-header" style="background-color:#F6DEC0;border-radius: 10px;">
-                        مختلفات
-                    </div>
-                </center>
-                <br>
-
-                <div id="lycee-div">
-                    <br>
-                    <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
-                        <textarea id="different " name="different" style="width: 100%">
-                        </textarea>
-                    </div>
-                </div>
-                <center>
-                    <div class="card-header" style="background-color:#F6DEC0;border-radius: 10px;">
-                        القسم الداخلي
-                    </div>
-                </center>
-                <br>
-
-                <div id="lycee-div">
-                    <br>
-                    <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
-
-                        <input type="radio" name="classInterieur" value="1"> <label>نعم</label>
-                        <input type="radio" name="classInterieur" value="0"><label>لا</label>
-
-                    </div>
+                <div class="ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
+                    Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
                 </div>
             </div>
-
-            <div class="tab">
-                <center>
-                    <div class="card-header" style="background-color:#B9F2CD;border-radius: 10px;">
-                        القسم الداخلي </div>
-                </center>
-                <br>
-
-                <div id="lycee-div">
-                    <br><br>
-                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            المسجلون في وجبة الفطور </label>
-                        <p><input required placeholder="" type="number" oninput="this.className = ''" min="0" max="400" name="inscritPetitDejeuner"></p>
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            الحاضرون في وجبة الفطور
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''" name="presentPetitDejeuner"></p>
+        </div>
 
 
-                        <label class=" col-form-label" style="text-align: right;">
-                            المسجلون في وجبة الغداء </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''" name="inscritDejeuner"></p>
-                        <label class=" col-form-label" style="text-align: right;">
-                            الحاضرون في وجبة الغداء
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''" name="presentDejeuner"></p>
-
-                        <label class=" col-form-label" style="text-align: right;">
-                            المسجلون في وجبة العشاء </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''" name="inscritDinner"></p>
-                        <label class=" col-form-label" style="text-align: right;">
-                            الحاضرون في وجبة العشاء
-                        </label>
-                        <p><input required placeholder="" type="number" min="0" max="400" oninput="this.className = ''" name="presentDinner"></p>
-
-                    </div>
-                </div>
-                
-
-                <div id="lycee-div">
-
-                    <br>
-                    <label class=" col-form-label" style="text-align: right;"> البرنامج الغذائي </label>
-                    <div class="card" style="width: auto;padding:20px;margin-top:20px;padding:10px">
-
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col" style="text-align: center;">5</th>
-                                    <th scope="col" style="text-align: center;"> 4</th>
-                                    <th scope="col" style="text-align: center;"> 3</th>
-                                    <th scope="col" style="text-align: center;"> 2</th>
-                                    <th scope="col" style="text-align: center;"> 1</th>
-                                    <th scope="col"
-                                        style="min-width: 48px;width: 200px;border-bottom-left-radius: 4px;border-top-left-radius: 4px;text-align: center;"
-                                        </th>
-
-
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="radio" name="RespectProgrammeNutritional" value="5"></td>
-                                    <td><input type="radio" name="RespectProgrammeNutritional" value="4"></td>
-                                    <td><input type="radio" name="RespectProgrammeNutritional" value="3"></td>
-                                    <td><input type="radio" name="RespectProgrammeNutritional" value="2"></td>
-                                    <td><input type="radio" name="RespectProgrammeNutritional" value="1"></td>
-                                    <td style="text-align: center;"> مدى احترام البرنامج الغذائي </td>
-
-                                </tr>
-                            </tbody>
-                            <tbody>
-                                <tr>
-                                    <td><input type="radio" name="quality" value="5"></td>
-                                    <td><input type="radio" name="quality" value="4"></td>
-                                    <td><input type="radio" name="quality" value="3"></td>
-                                    <td><input type="radio" name="quality" value="2"></td>
-                                    <td><input type="radio" name="quality"value="1"></td>
-                                    <td style="text-align: center;"> من حيث الجودة </td>
-
-                                </tr>
-                            </tbody>
-                            <tbody>
-                                <tr>
-                                    <td><input type="radio" name="quantity" value="5"></td>
-                                    <td><input type="radio" name="quantity" value="4"></td>
-                                    <td><input type="radio" name="quantity" value="3"></td>
-                                    <td><input type="radio" name="quantity" value="2"></td>
-                                    <td><input type="radio" name="quantity" value="1"></td>
-                                    <td style="text-align: center;"> من حيث الكمية </td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-                <div id="lycee-div">
-                    <br><br>
-                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                        <label class=" col-form-label" style="text-align: right;">الحاضرون في حصة المراجعة
-
-                        </label>
-                        <p><input required placeholder="" type="number" oninput="this.className = ''" name="presentRevision"></p>
-
-
-                    </div>
-                </div>
-                <br>
-
-
-                </div>
-                </div>
-                
-
-        <!-- end ENCAPSULATION -->
-
-    </div>
-</form>
+    
 @endsection

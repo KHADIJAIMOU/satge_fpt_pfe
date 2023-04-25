@@ -194,7 +194,7 @@
     
         public function edit(Rapport $rapport)
         {
-            return view('rapports.edit', compact('rapport'));
+            return view('rapport.edit', compact('rapport'));
         }
     
         public function update(Request $request, Rapport $rapport)

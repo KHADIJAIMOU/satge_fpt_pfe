@@ -1,12 +1,12 @@
 <!-- resources/views/auth/user/login.blade.php -->
-@extends('layouts.app')
+@extends('layoutsUser.app')
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                   <center> <div class="card-header" style="background-color: #cfe7d0">{{ __('Connexion  " Etablissement " ') }}</div></center>
+                   <center> <div class="card-header" style="background-color: #cfe7d0">{{ __('Connexion ') }}</div></center>
 
                     <div class="card-body">
                         <div class="row mb-3">
@@ -16,7 +16,7 @@
                             @csrf
 
                             <div class="form-group row">
-                                <label for="CD_ETAB" class="col-md-4 col-form-label text-md-right">{{ __('Code Etablissement') }}</label>
+                                <label for="CD_ETAB" class="col-md-4 col-form-label text-md-right">{{ __('Login') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="CD_ETAB" type="text" class="form-control @error('CD_ETAB') is-invalid @enderror" name="CD_ETAB" value="{{ old('CD_ETAB') }}" required autocomplete="email" autofocus>

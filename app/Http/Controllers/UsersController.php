@@ -12,7 +12,7 @@ class UsersController extends Controller
 {
     public function profil()
     {
-        $user = Auth::guard('admin')->user();
+        $user = Auth::user();
                 session()->put("menu", "profil");
 
         return view('auth.admin.users.profil', compact('user'));

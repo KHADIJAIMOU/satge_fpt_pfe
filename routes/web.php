@@ -13,9 +13,9 @@ use App\Http\Controllers\UsersController;
 Route::get('/', [RapportController::class, 'index']); 
 Route::get('/user/register', [UserController::class, 'showRegistrationForm'])->name('user.register');
 Route::post('/user/register', [UserController::class, 'register'])->name('user.register');
-Route::get('/user/login', [UserController::class, 'showLoginForm'])->name('user.login');
-Route::post('/user/login', [UserController::class, 'login'])->name('user.login');
-Route::post('/user/logout', [UserController::class, 'logout'])->name('user.logout');
+Route::get('/login', [UserController::class, 'showLoginForm'])->name('user.login');
+Route::post('/login', [UserController::class, 'login'])->name('user.login');
+Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
 
 // Admin Routes
 
@@ -75,15 +75,12 @@ Route::middleware(['auth:admin', 'admin'])->group(function () {
 });*/
 // user protected routes
 Route::group(['middleware' => ['auth', 'web'], 'prefix' => 'user'], function () {
-    Route::get('/rapport', [RapportController::class, 'index'])->name('rapport.index');
-    Route::post('/rapport', [RapportController::class, 'store'])->name('rapport.store');
-    Route::get('/rapport/create', [RapportController::class, 'create'])->name('rapport.create');
-    Route::get('/rapport/{id}', [RapportController::class, 'show'])->name('rapport.show');
-    Route::get('/rapport/{id}/edit', [RapportController::class, 'edit'])->name('rapport.edit');
-    Route::put('/rapport/{id}', [RapportController::class, 'update'])->name('rapport.update');
-    Route::delete('/rapport/{id}', [RapportController::class, 'destroy'])->name('rapport.destroy');
+    Route::get('/repports', [RapportController::class, 'indexReport'])->name('rapport.indexReport');
+
     Route::resource('/rapport', RapportController::class);
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('/profil', [RapportController::class,'profil'])->name('user.profil');
+
 });
 
 // admin protected routes
@@ -92,6 +89,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::resource('/repports', RapportAdminController::class);
     Route::resource('/users', UsersController::class);
     Route::post('/users/{user}/updatePassword', [UsersController::class,'updatePassword'])->name('admin.updatePassword');
-    Route::get('/users/profil', [UsersController::class,'profil'])->name('admin.profil');
+    Route::get('/profil', [UsersController::class,'profil'])->name('admin.profil');
 
 });

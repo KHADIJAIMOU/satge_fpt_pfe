@@ -14,7 +14,7 @@
             </a>
         </li>
         <li>
-            <form method="POST" action="{{ route('admin.logout') }}">
+            <form method="POST" action="{{ route('user.logout') }}">
                 @csrf
                 <button class='btn btn-danger' onclick="this.closest('form').submit();">
                     <i class="fa-solid fa-right-from-bracket"></i>

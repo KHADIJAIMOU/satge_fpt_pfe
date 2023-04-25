@@ -7,9 +7,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 
 class RapportController extends Controller
 {
+    public function profil()
+    {
+        $user = Auth::user();
+                session()->put("menu", "profil");
+
+        return view('auth.user.profil', compact('user'));
+    }
+    public function indexReport()
+    {
+
+        $user_id = Auth::user()->id;
+        $lists = Rapport::where('users_id', $user_id)->paginate(10);
+        session()->put("menu", "repports");
+        return view('auth.user.repports', compact('lists'));
+    }
     public function index()
     {
         $rapports = Rapport::all();
@@ -214,38 +230,190 @@ class RapportController extends Controller
         return view('rapports.show', compact('rapport'));
     }
 
-    public function edit(Rapport $rapport)
+    public function edit(Rapport $Rapport)
     {
-        return view('rapports.edit', compact('rapport'));
+        
+        $user = Auth::user();
+        $LL_CYCLE = $user->LL_CYCLE;
+        $NetabFr = $user->NetabFr;
+        $CD_ETAB = $user->CD_ETAB;
+        $users = User::where('CD_ETAB', $CD_ETAB)->get();
+    
+
+        
+        return view('auth.user.rapport.edit', compact('LL_CYCLE','NetabFr','user','Rapport','users'));
     }
 
     public function update(Request $request, Rapport $rapport)
     {
-        $validatedData = $request->validate([
+        //VALIDATION
+        $validatedData = Validator::make(request()->all(), [
             'date' => 'required|date',
-            'type_class' => 'required',
-            'absence_first_lycee' => 'required_if:type_class,lycee|integer',
-            'total_first_lycee' => 'required_if:type_class,lycee|integer',
-            'absence_second_lycee' => 'required_if:type_class,lycee|integer',
-            'total_second_lycee' => 'required_if:type_class,lycee|integer',
-            'absence_third_lycee' => 'required_if:type_class,lycee|integer',
-            'total_third_lycee' => 'required_if:type_class,lycee|integer',
-            'absence_first_college' => 'required_if:type_class,college|integer',
-            'total_first_college' => 'required_if:type_class,college|integer',
-            'absence_second_college' => 'required_if:type_class,college|integer',
-            'total_second_college' => 'required_if:type_class,college|integer',
+        'typeClass' => 'required',
+        'absenceFirstPrimaire' => 'nullable|integer',
+        'totalFirstPrimaire' => 'nullable|integer',
+        'absenceSecondPrimaire' => 'nullable|integer',
+        'totalSecondPrimaire' => 'nullable|integer',
+        'absenceThirdPrimaire' => 'nullable|integer',
+        'totalThirdPrimaire' => 'nullable|integer',
+        'absenceFourthPrimaire' => 'nullable|integer',
+        'totalFourthPrimaire' => 'nullable|integer',
+        'absenceFifthPrimaire' => 'nullable|integer',
+        'totalFifthPrimaire' => 'nullable|integer',
+        'absenceSixthPrimaire' => 'nullable|integer',
+        'totalSixthPrimaire' => 'nullable|integer',
+        'absenceFirstCollege' => 'nullable|integer',
+        'totalFirstCollege' => 'nullable|integer',
+        'absenceSecondCollege' => 'nullable|integer',
+        'totalSecondCollege' => 'nullable|integer',
+        'absenceThirdCollege' => 'nullable|integer',
+        'totalThirdCollege' => 'nullable|integer',
+        'absenceFirstLycee' => 'nullable|integer',
+        'totalFirstLycee' => 'nullable|integer',
+        'absenceSecondLycee' => 'nullable|integer',
+        'totalSecondLycee' => 'nullable|integer',
+        'absenceThirdLycee' => 'nullable|integer',
+        'totalThirdLycee' => 'nullable|integer',
+        'absenceFirstComptabiliteGeneral' => 'nullable|integer',
+        'totalFirstComptabiliteGeneral' => 'nullable|integer',
+        'absenceSecondComptabiliteGeneral' => 'nullable|integer',
+        'totalSecondComptabiliteGeneral' => 'nullable|integer',
+        'absenceFirstManagementCommercial' => 'nullable|integer',
+        'totalFirstManagementCommercial' => 'nullable|integer',
+        'absenceSecondManagementCommercial' => 'nullable|integer',
+        'totalSecondManagementCommercial' => 'nullable|integer',
+        'nbEmployee' => 'required',
+        'nbAbsenceEmployee' => 'required',
+        'nbRetardEmployee' => 'required',
+        'nbSeanceProgramme' => 'required',
+        'nbSeanceEffecuter' => 'required',
+        'nbSeanceComponser' => 'required',
+       'renionEffectuerConseilAdministratif' => 'nullable',
+        'renionEffectuerConseilsDepartementaux' => 'nullable',
+        'renionEffectuerConseilsPedagogiqueTa3limi' => 'nullable',
+        'renionEffectuerConseilsPedagogiqueTrbaoui' => 'nullable',
+        'renionEffectuerConseilDeGestion' => 'nullable',
+        'renionEffectuerAutreRenion' => 'nullable',
+        'renionEffectuerRien' => 'nullable',
+        'activiteEffectuerIntégrée' => 'nullable',
+        'activiteEffectuerParallel' => 'nullable',
+        'activiteEffectuerRien' => 'nullable',
+        'rapportActiviteEffectuer' => 'nullable',
+        'rapportVisit' => 'nullable',
+        'rapportAccidentScolaire' => 'nullable',
+        'different' => 'nullable',
+        'classInterieur' => 'nullable',
+       'inscritPetitDejeuner' => 'nullable|integer',
+        'presentPetitDejeuner' => 'nullable|integer',
+        'inscritDejeuner' => 'nullable|integer',
+        'presentDejeuner' => 'nullable|integer',
+         'inscritDinner' => 'nullable|integer',
+        'presentDinner' => 'nullable|integer',
+        'RespectProgrammeNutritional' => 'nullable|integer',
+        'quality' => 'nullable|integer',
+        'quantity' => 'nullable|integer',
+        'presentRevision'=> 'nullable|integer',
         ]);
 
-        $rapport->update($validatedData);
+        if ($validatedData->fails()) {
+            return back()
+                ->withErrors($validatedData)
+                ->withInput();
+        }
+        $user = Auth::user();
+        $ipAddress = $_SERVER['REMOTE_ADDR'];
+        $mac_address = exec('getmac');
+        $ip = Http::get('https://api.ipify.org')->body();
+        $macAddress = exec('getmac');
+        $macAddress = strtok($macAddress, ' ');
+        $rapport->update([
+            'date' => $request->date,
+            'typeClass' => $request->typeClass,
+            'absenceFirstPrimaire' => $request->absenceFirstPrimaire,
+            'nbSeanceProgramme' => $request->nbSeanceProgramme,
+            'totalFirstPrimaire' => $request->totalFirstPrimaire,
+            'nbRetardEmployee' => $request->nbRetardEmployee,
+            'absenceSecondPrimaire' => $request->absenceSecondPrimaire,
+            'totalSecondPrimaire' => $request->totalSecondPrimaire,
+            'absenceThirdPrimaire' => $request->absenceThirdPrimaire,
+            'totalThirdPrimaire' => $request->totalThirdPrimaire,
+            'absenceFourthPrimaire' => $request->absenceFourthPrimaire,
+            'totalFourthPrimaire' => $request->totalFourthPrimaire,
+            'absenceFifthPrimaire' => $request->absenceFifthPrimaire,
+            'totalFifthPrimaire' => $request->totalFifthPrimaire,
+            'absenceSixthPrimaire' => $request->absenceSixthPrimaire,
+            'totalSixthPrimaire' => $request->totalSixthPrimaire,
+            'absenceFirstCollege' => $request->absenceFirstCollege,
+            'totalFirstCollege' => $request->totalFirstCollege,
+            'absenceSecondCollege' => $request->absenceSecondCollege,
+            'totalSecondCollege' => $request->totalSecondCollege,
+            'absenceThirdCollege' => $request->absenceThirdCollege,
+            'totalThirdCollege' => $request->totalThirdCollege,
+            'absenceFirstLycee' => $request->absenceFirstLycee,
+            'totalFirstLycee' => $request->totalFirstLycee,
+            'absenceSecondLycee' => $request->absenceSecondLycee,
+            'totalSecondLycee' => $request->totalSecondLycee,
+            'absenceThirdLycee' => $request->absenceThirdLycee,
+            'totalThirdLycee' => $request->totalThirdLycee,
+            'absenceFirstComptabiliteGeneral' => $request->absenceFirstComptabiliteGeneral,
+            'totalFirstComptabiliteGeneral' => $request->totalFirstComptabiliteGeneral,
+            'absenceSecondComptabiliteGeneral' => $request->absenceSecondComptabiliteGeneral,
+            'totalSecondComptabiliteGeneral' => $request->totalSecondComptabiliteGeneral,
+            'absenceFirstManagementCommercial' => $request->absenceFirstManagementCommercial,
+            'totalFirstManagementCommercial' => $request->totalFirstManagementCommercial,
+            'absenceSecondManagementCommercial' => $request->absenceSecondManagementCommercial,
+            'totalSecondManagementCommercial' => $request->totalSecondManagementCommercial,
+            'nbEmployee' => $request->nbEmployee,
+            'nbAbsenceEmployee' => $request->nbAbsenceEmployee,
+            'nbSeanceEffecuter' => $request->nbSeanceEffecuter,
+            'nbSeanceComponser' => $request->nbSeanceComponser,
+            'renionEffectuerConseilAdministratif' => $request->renionEffectuerConseilAdministratif,
+            'renionEffectuerConseilsDepartementaux' => $request->renionEffectuerConseilsDepartementaux,
+            'renionEffectuerConseilsPedagogiqueTa3limi' => $request->renionEffectuerConseilsPedagogiqueTa3limi,
+            'renionEffectuerConseilsPedagogiqueTrbaoui' => $request->renionEffectuerConseilsPedagogiqueTrbaoui,
+            'renionEffectuerConseilDeGestion' => $request->renionEffectuerConseilDeGestion,
+            'renionEffectuerAutreRenion' => $request->renionEffectuerAutreRenion,
+            'renionEffectuerRien' => $request->renionEffectuerRien,
+            'activiteEffectuerIntégrée' => $request->activiteEffectuerIntégrée,
+            'activiteEffectuerParallel' => $request->activiteEffectuerParallel,
+            'activiteEffectuerRien' => $request->activiteEffectuerRien,
+            'rapportActiviteEffectuer' => $request->rapportActiviteEffectuer,
+            'rapportVisit' => $request->rapportVisit,
+            'rapportAccidentScolaire' => $request->rapportAccidentScolaire,
+            'different' => $request->different,
+            'classInterieur' => $request->classInterieur,
+            'inscritPetitDejeuner' => $request->inscritPetitDejeuner,
+            'presentPetitDejeuner' => $request->presentPetitDejeuner,
+            'inscritDejeuner' => $request->inscritDejeuner,
+            'presentDejeuner' => $request->presentDejeuner,
+            'inscritDinner' => $request->inscritDinner,
+            'presentDinner' => $request->presentDinner,
+            'RespectProgrammeNutritional' => $request->RespectProgrammeNutritional,
+            'quality' => $request->quality,
+            'quantity' => $request->quantity,
+            'presentRevision' => $request->presentRevision,
+            'adressIp' => $ip,
+            'mac_address' => $macAddress,
 
-        return redirect()->route('rapports.index')
-            ->with('success', 'Rapport updated successfully.');
+            
+            
+        ]);
+
+        return redirect('/admin/users')->with([
+            'type' => 'success',
+            'message' => 'Utilisateur modifié avec succès',
+        ]);
     }
 
-    public function destroy(Rapport $rapport)
+    public function destroy($rapport)
     {
-        $rapport->delete();
-        return redirect()->route('rapports.index')
-            ->with('success', 'Rapport deleted successfully.');
+    
+        Rapport::find($rapport)->delete();
+
+        return redirect('/user/repports')->with([
+            'type' => 'success',
+            'message' => 'Rapport  supprimée avec succès',
+        ]);
     }
+    
 }
