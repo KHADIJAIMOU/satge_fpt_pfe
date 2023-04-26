@@ -399,9 +399,9 @@ class RapportController extends Controller
             
         ]);
 
-        return redirect('/admin/users')->with([
+        return redirect('/user/repports')->with([
             'type' => 'success',
-            'message' => 'Utilisateur modifié avec succès',
+            'message' => 'Rapport N'.$rapport->id.'  modifié avec succès',
         ]);
     }
 
