@@ -29,6 +29,7 @@
             </td>
             <td class="text-center">
                 <div class="d-flex flex-row justify-content-center">
+                    
                 <div  class="mr-2">
                 <a href="{{ '/admin/repports/' . $repport->id }}" class="btn btn-primary btn-sm">
                     <i class="fa-solid fa-eye"></i>
@@ -38,6 +39,10 @@
                 <a href="{{ '/admin/repports/' . $repport->id . '/edit' }}" class="btn btn-secondary btn-sm">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </a>
+                </div>
+                <div class="mr-2">
+                    <a href="{{ '/admin/repports/' . $repport->id . '/print' }}" target="_blank" class="btn btn-info btn-sm">
+                        <i class="fa-solid fa-print"></i>                    </a>
                 </div>
                 <div>
                 <form action="{{ route('repports.destroy', $repport->id) }}" method="post">

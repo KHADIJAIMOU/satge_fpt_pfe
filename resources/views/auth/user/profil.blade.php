@@ -8,7 +8,7 @@
                     <center>
                 </center>
                     <div class="panel-body">
-                        <form class="form-horizontal" method="POST" action="{{ route('user.profil') }}">
+                        <form class="form-horizontal" method="POST" action="{{ route('users.profil') }}">
                             {{ csrf_field() }}
                             {{ method_field('PUT') }}
 

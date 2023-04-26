@@ -79,7 +79,7 @@ Route::group(['middleware' => ['auth', 'web'], 'prefix' => 'user'], function () 
 
     Route::resource('/rapport', RapportController::class);
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
-    Route::get('/profil', [RapportController::class,'profil'])->name('user.profil');
+    Route::get('/profil', [RapportController::class,'profil'])->name('users.profil');
 
 });
 
@@ -90,5 +90,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::resource('/users', UsersController::class);
     Route::post('/users/{user}/updatePassword', [UsersController::class,'updatePassword'])->name('admin.updatePassword');
     Route::get('/profil', [UsersController::class,'profil'])->name('admin.profil');
+    Route::get('/repports/{id}/print', [RapportAdminController::class, 'print'])->name('repports.print');
 
 });

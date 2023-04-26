@@ -225,10 +225,17 @@ class RapportController extends Controller
 
     
 
-    public function show(Rapport $rapport)
+    public function show(Rapport $Rapport)
     {
-        return view('rapports.show', compact('rapport'));
-    }
+        $user = Auth::user();
+        $LL_CYCLE = $user->LL_CYCLE;
+        $NetabFr = $user->NetabFr;
+        $CD_ETAB = $user->CD_ETAB;
+        $users = User::where('CD_ETAB', $CD_ETAB)->get();
+    
+
+        
+        return view('auth.user.rapport.show', compact('LL_CYCLE','NetabFr','user','Rapport','users'));    }
 
     public function edit(Rapport $Rapport)
     {

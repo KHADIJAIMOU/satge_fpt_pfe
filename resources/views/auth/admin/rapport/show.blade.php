@@ -95,22 +95,16 @@
 
 
     @php
-        $user = Auth::user();
-        $NOM_ETABL = $user->NOM_ETABL;
+        
+        $NOM_ETABL = $Rapport->NOM_ETABL;
         $text = '';
-        $count = count($users);
-        foreach ($users as $key => $user) {
-            $text .= $user->LL_CYCLE;
-            if ($key !== $count - 1) {
-                $text .= ' + ';
-            }
-        }
+        
         
     @endphp
     <center>
         <br>
 
-        <div>Etablissement: {{ $NOM_ETABL }} </div>
+        <div>Etablissement: {{$Rapport->LL_CYCLE }} </div>
         <br>
 
         <div>Type: {{ $text }} </div>
@@ -126,8 +120,7 @@
         </form>
     </center>
     <form id="regForm" enctype="multipart/form-data" method="post"
-        action="{{ route('rapport.update', $Rapport->id) }}">
-
+>
         @csrf
         @method('PUT')
         <center>
@@ -144,28 +137,27 @@
                     style="font-family:'Amiri', serif;color: #333;text-align: center;text-transform: uppercase;margin-bottom: 20px;font-size: 26px;">
                     مسك المعطيات التربوية الخاصة بسير المؤسسة تربويا وإداريا </h6>
             </center>
-            <!-- One "tab" for each step in the form: -->
-            <div class="tab">
+            <!-- One "tab1" for each step in the form: -->
+            <div class="tab1">
                 <div class="card" style="width: auto;padding:20px;margin-top:50px;margin-bottom:50px;">
 
                     <p style="text-align: right;">
                         <label class="col-form-label" style="text-align: right;">اليوم</label>
                     </p>
 
-                    <p><input  type="date" placeholder="" id="date" name="date" value="{{ $Rapport->date }}"></p>
-                    <p><input required type="hidden" placeholder="" name="typeClass" value="{{ $text }}"></p>
+                    <p><input  disabled   disabled   type="date" placeholder="" id="date" name="date" value="{{ $Rapport->date }}"></p>
+                    <p><input  disabled   disabled  required type="hidden" placeholder="" name="typeClass" value="{{ $text }}"></p>
                 </div>
             </div>
 
-            @foreach ($users->unique('LL_CYCLE') as $user)
-                <div class="tab">
+                <div class="tab1">
                     <center>
                         <div class="card-header" style="background-color:#B9F2CD;border-radius: 10px;">
                             مواظبة التلاميذ
                         </div>
                     </center>
                     <br>
-                    @if ($user->LL_CYCLE == 'SECONDAIRE QUALIFIANT')
+                    @if ($Rapport->LL_CYCLE == 'SECONDAIRE QUALIFIANT')
                         <div id="errorMessage" style="display: none; color: red;">Value must be between 0 and 400</div>
 
                         <div id="lycee-div">
@@ -175,12 +167,12 @@
 
                                 <label class=" col-form-label" style="text-align: right;">غياب الجذع مشترك
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         name="absenceFirstLycee"  id="absenceFirstLycee" value="{{ $Rapport->absenceFirstLycee }}"></p>
 
                                 <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ الجذع مشترك
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         name="totalFirstLycee"  id="totalFirstLycee"  value="{{ $Rapport->totalFirstLycee }}"></p>
                             </div>
                             <div class="card" style="width: auto;padding:20px;margin-top:50px;">
@@ -188,7 +180,7 @@
                                 <label id="myInput" class=" col-form-label" style="text-align: right;">
                                     غياب الأولى بكالوريا
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceSecondLycee" id="absenceSecondLycee"
                                         value="{{ $Rapport->absenceSecondLycee }}"></p>
 
@@ -197,7 +189,7 @@
                                     مجموع تلاميذ الأولى بكالوريا
 
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalSecondLycee" id="totalSecondLycee"
                                         value="{{ $Rapport->totalSecondLycee }}"></p>
                             </div>
@@ -207,7 +199,7 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     غياب الثانية بكالوريا
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceThirdLycee" id="absenceThirdLycee"
                                         value="{{ $Rapport->absenceThirdLycee }}"></p>
 
@@ -215,14 +207,14 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     مجموع تلاميذ الثانية بكالوريا
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalThirdLycee" id="totalThirdLycee"
                                         value="{{ $Rapport->totalThirdLycee }}"></p>
                             </div>
                         </div>
                     @endif
 
-                    @if ($user->LL_CYCLE == 'SECONDAIRE-COLLEGIAL')
+                    @if ($Rapport->LL_CYCLE == 'SECONDAIRE-COLLEGIAL')
                         <div id="college-div">
                             <center style="background-color: #F2BEB9;border-radius: 10px;">
                                 المستوى الإعدادي
@@ -234,14 +226,14 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     غياب السنة الأولى إعدادي
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceFirstCollege" id="absenceFirstCollege"
                                         value="{{ $Rapport->absenceFirstCollege }}"></p>
 
                                 <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
                                     إعدادي
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalFirstCollege" id="totalFirstCollege"
                                         value="{{ $Rapport->totalFirstCollege }}"></p>
                             </div>
@@ -250,7 +242,7 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     غياب السنة الثانية إعدادي
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceSecondCollege" id="absenceSecondCollege"
                                         value="{{ $Rapport->absenceSecondCollege }}"></p>
 
@@ -259,7 +251,7 @@
                                     مجموع تلاميذ السنة الثانية إعدادي
 
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalSecondCollege" id="totalSecondCollege"
                                         value="{{ $Rapport->totalSecondCollege }}"></p>
                             </div>
@@ -269,7 +261,7 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     غياب السنة الثالثة إعدادي
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceThirdCollege" id="absenceThirdCollege"
                                         value="{{ $Rapport->absenceThirdCollege }}"></p>
 
@@ -277,13 +269,13 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     مجموع تلاميذ السنة الثالثة إعدادي
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalThirdCollege" id="totalThirdCollege"
                                         value="{{ $Rapport->totalThirdCollege }}"></p>
                             </div>
                         </div>
                     @endif
-                    @if ($user->LL_CYCLE == 'PRIMAIRE')
+                    @if ($Rapport->LL_CYCLE == 'PRIMAIRE')
                         <div id="college-div">
                             <center style="background-color: #F2BEB9;border-radius: 10px;">
                                 المستوى الإبتدائي
@@ -295,14 +287,14 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     غياب السنة الأولى إبتدائي
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceFirstPrimaire" id="absenceFirstPrimaire"
                                         value="{{ $Rapport->absenceFirstPrimaire }}"></p>
 
                                 <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
                                     إبتدائي
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" id="totalFirstPrimaire" name="totalFirstPrimaire" id="totalFirstPrimaire"
                                         value="{{ $Rapport->totalFirstPrimaire }}"></p>
                             </div>
@@ -311,7 +303,7 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     غياب السنة الثانية إبتدائي
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceSecondPrimaire" id="absenceSecondPrimaire"
                                         value="{{ $Rapport->absenceSecondPrimaire }}"></p>
 
@@ -320,7 +312,7 @@
                                     مجموع تلاميذ السنة الثانية إبتدائي
 
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalSecondPrimaire"  id="totalSecondPrimaire"
                                         value="{{ $Rapport->totalSecondPrimaire }}"></p>
                             </div>
@@ -330,7 +322,7 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     غياب السنة الثالثة إبتدائي
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceThirdPrimaire" id="absenceThirdPrimaire"
                                         value="{{ $Rapport->absenceThirdPrimaire }}"></p>
 
@@ -338,7 +330,7 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     مجموع تلاميذ السنة الثالثة إبتدائي
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalThirdPrimaire"  id="totalThirdPrimaire"
                                         value="{{ $Rapport->totalThirdPrimaire }}"></p>
                             </div>
@@ -347,7 +339,7 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     غياب السنة الرابعة إبتدائي
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceFourthPrimaire" id="absenceFourthPrimaire"
                                         value="{{ $Rapport->absenceFourthPrimaire }}"></p>
 
@@ -356,7 +348,7 @@
                                     مجموع تلاميذ السنة الرابعة إبتدائي
 
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalFourthPrimaire" id="totalFourthPrimaire"
                                         value="{{ $Rapport->totalFourthPrimaire }}"></p>
                             </div>
@@ -365,7 +357,7 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     غياب السنة الخامسة إبتدائي
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceFifthPrimaire" id="absenceFifthPrimaire"
                                         value="{{ $Rapport->absenceFifthPrimaire }}"></p>
 
@@ -374,7 +366,7 @@
                                     مجموع تلاميذ السنة الخامسة إبتدائي
 
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalFifthPrimaire" id="totalFifthPrimaire"
                                         value="{{ $Rapport->totalFifthPrimaire }}"></p>
                             </div>
@@ -383,7 +375,7 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     غياب السنة السادسة إبتدائي
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceSixthPrimaire" id="absenceSixthPrimaire"
                                         value="{{ $Rapport->absenceSixthPrimaire }}"></p>
 
@@ -392,13 +384,13 @@
                                     مجموع تلاميذ السنة السادسة إبتدائي
 
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400" 
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400" 
                                         oninput="this.className = ''" name="totalSixthPrimaire" id="totalSixthPrimaire"
                                         value="{{ $Rapport->totalSixthPrimaire }}"></p>
                             </div>
                         </div>
                     @endif
-                    @if ($user->LL_CYCLE == 'BTS')
+                    @if ($Rapport->LL_CYCLE == 'BTS')
                         <div id="college-div">
                             <center style="background-color: #F2BEB9;border-radius: 10px;">
                                 المحاسبة و التسيير
@@ -409,13 +401,13 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     غياب السنة الأولى
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceFirstComptabiliteGeneral" id="absenceFirstComptabiliteGeneral"
                                         value="{{ $Rapport->absenceFirstComptabiliteGeneral }}"></p>
 
                                 <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalFirstComptabiliteGeneral" id="totalFirstComptabiliteGeneral"
                                         value="{{ $Rapport->totalFirstComptabiliteGeneral }}"></p>
                             </div>
@@ -424,7 +416,7 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     غياب السنة الثانية
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceSecondComptabiliteGeneral" id="absenceSecondComptabiliteGeneral"
                                         value="{{ $Rapport->absenceSecondComptabiliteGeneral }}"></p>
 
@@ -433,7 +425,7 @@
                                     مجموع تلاميذ السنة الثانية
 
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalSecondComptabiliteGeneral" id="totalSecondComptabiliteGeneral"
                                         value="{{ $Rapport->totalSecondComptabiliteGeneral }}"></p>
                             </div>
@@ -449,14 +441,14 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     غياب السنة الأولى
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceFirstManagementCommercial" id="absenceFirstManagementCommercial"
                                         value="{{ $Rapport->absenceFirstManagementCommercial }}"></p>
 
                                 <label class=" col-form-label" style="text-align: right;">
                                     مجموع تلاميذ السنة الأولى
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalFirstManagementCommercial" id="totalFirstManagementCommercial"
                                         value="{{ $Rapport->totalFirstManagementCommercial }}"></p>
                             </div>
@@ -465,7 +457,7 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     غياب السنة الثانية
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceSecondManagementCommercial" id="absenceSecondManagementCommercial"
                                         value="{{ $Rapport->absenceSecondManagementCommercial }}"></p>
 
@@ -474,14 +466,14 @@
                                     مجموع تلاميذ السنة الثانية
 
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalSecondManagementCommercial" id="totalSecondManagementCommercial"
                                         value="{{ $Rapport->totalSecondManagementCommercial }}"></p>
                             </div>
 
                         </div>
                     @endif
-                    @if ($user->LL_CYCLE == 'SECONDAIRE-COLLEGIAL')
+                    @if ($Rapport->LL_CYCLE == 'SECONDAIRE-COLLEGIAL')
                         <div id="lycee-college-div">
                             <center style="background-color: #F2BEB9;border-radius: 10px;"> المستوى الثانوي و الإعدادي
                             </center>
@@ -489,20 +481,20 @@
                             <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
                                 <label class=" col-form-label" style="text-align: right;">غياب السنة الأولى
                                     إعدادي</label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceFirstCollege" id="absenceFirstCollege"
                                         value="{{ $Rapport->absenceFirstCollege }}"></p>
 
                                 <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
                                     إعدادي</label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalFirstCollege" id="totalFirstCollege"
                                         value="{{ $Rapport->totalFirstCollege }}"></p>
                             </div>
                             <div class="card" style="width: auto;padding:20px;margin-top:50px;">
                                 <label class=" col-form-label" style="text-align: right;">غياب السنة الثانية
                                     إعدادي</label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceSecondCollege" id="absenceSecondCollege"
                                         value="{{ $Rapport->absenceSecondCollege }}"></p>
 
@@ -511,14 +503,14 @@
                                     مجموع تلاميذ السنة الثانية إعدادي
 
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalSecondCollege" id="totalSecondCollege"
                                         value="{{ $Rapport->totalSecondCollege }}"></p>
                             </div>
                             <div class="card" style="width: auto;padding:20px;margin-top:50px;">
                                 <label class=" col-form-label" style="text-align: right;">غياب السنة الثالثة
                                     إعدادي</label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceThirdCollege" id="absenceThirdCollege"
                                         value="{{ $Rapport->absenceThirdCollege }}"></p>
 
@@ -526,20 +518,20 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     مجموع تلاميذ السنة الثالثة إعدادي
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalThirdCollege" id="totalThirdCollege"
                                         value="{{ $Rapport->totalThirdCollege }}"></p>
                             </div>
                             <div class="card" style="width: auto;padding:20px;margin-top:50px;">
                                 <label class=" col-form-label" style="text-align: right;">غياب الجذع مشترك
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceFirstLycee" id="absenceFirstLycee"
                                         value="{{ $Rapport->absenceFirstLycee }}"></p>
 
                                 <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ الجذع مشترك
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalFirstLycee" id="totalFirstLycee"
                                         value="{{ $Rapport->totalFirstLycee }}"></p>
                             </div>
@@ -547,14 +539,14 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     غياب الأولى بكالوريا
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceSecondLycee" id="absenceSecondLycee"
                                         value="{{ $Rapport->absenceSecondLycee }}"></p>
                                 <label class=" col-form-label" style="text-align: right;">
                                     مجموع تلاميذ الأولى بكالوريا
 
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalSecondLycee" id="totalSecondLycee"
                                         value="{{ $Rapport->totalSecondLycee }}"></p>
                             </div>
@@ -562,7 +554,7 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     غياب الثانية بكالوريا
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="absenceThirdLycee" id="absenceThirdLycee"
                                         value="{{ $Rapport->absenceThirdLycee }}"></p>
 
@@ -570,7 +562,7 @@
                                 <label class=" col-form-label" style="text-align: right;">
                                     مجموع تلاميذ الثانية بكالوريا
                                 </label>
-                                <p><input required placeholder="" type="number" min="0" max="400"
+                                <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                         oninput="this.className = ''" name="totalThirdLycee" id="totalThirdLycee"
                                         value="{{ $Rapport->totalThirdLycee }}"></p>
                             </div>
@@ -578,9 +570,8 @@
                     @endif
                 </div>
                 </div>
-            @endforeach
 
-            <div class="tab">
+            <div class="tab1">
                 <center>
                     <div class="card-header" style="background-color:#B9F2CD;border-radius: 10px;">
                         مواظبة الأطر
@@ -595,7 +586,7 @@
                         <label class=" col-form-label" style="text-align: right;">
                             عدد العاملين من الأطر
                         </label>
-                        <p><input required placeholder="" type="number" min="0" max="400"
+                        <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                 oninput="this.className = ''" name="nbEmployee" id="nbEmployee" value="{{ $Rapport->nbEmployee }}">
                         </p>
 
@@ -603,7 +594,7 @@
                             عدد المتغيبين من الأطر
 
                         </label>
-                        <p><input required placeholder="" type="number" min="0" max="400"
+                        <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                 oninput="this.className = ''" name="nbAbsenceEmployee" id="nbAbsenceEmployee"
                                 value="{{ $Rapport->nbAbsenceEmployee }}"></p>
 
@@ -611,7 +602,7 @@
                         <label class=" col-form-label" style="text-align: right;">
                             عدد المتأخرين من الأطر
                         </label>
-                        <p><input required placeholder="" type="number" min="0" max="400"
+                        <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                 oninput="this.className = ''" name="nbRetardEmployee" id="nbRetardEmployee"
                                 value="{{ $Rapport->nbRetardEmployee }}"></p>
 
@@ -621,7 +612,7 @@
             </div>
 
 
-            <div class="tab">
+            <div class="tab1">
                 <center>
                     <div class="card-header" style="background-color:#B9F2CD;border-radius: 10px;">
                         الدعم التربوي والتعويض
@@ -636,7 +627,7 @@
                         <label class=" col-form-label" style="text-align: right;">
                             حصص الدعم المبرمجة
                         </label>
-                        <p><input required placeholder="" type="number" min="0" max="400"
+                        <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                 oninput="this.className = ''" name="nbSeanceProgramme" id="nbSeanceProgramme"
                                 value="{{ $Rapport->nbSeanceProgramme }}"></p>
 
@@ -644,7 +635,7 @@
                             حصص الدعم المنجزة
 
                         </label>
-                        <p><input required placeholder="" type="number" min="0" max="400"
+                        <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                 oninput="this.className = ''" name="nbSeanceEffecuter" id="nbSeanceEffecuter"
                                 value="{{ $Rapport->nbSeanceEffecuter }}"></p>
 
@@ -652,7 +643,7 @@
                         <label class=" col-form-label" style="text-align: right;">
                             حصص التعويض المنجزة
                         </label>
-                        <p><input required placeholder="" type="number" min="0" max="400"
+                        <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                 oninput="this.className = ''" name="nbSeanceComponser" id="nbSeanceComponser"
                                 value="{{ $Rapport->nbSeanceComponser }}"></p>
 
@@ -664,7 +655,7 @@
                             <label class=" col-form-label" style="text-align: right;">الحاضرون في حصة المراجعة
 
                             </label>
-                            <p><input required placeholder="" type="number" oninput="this.className = ''"
+                            <p><input  disabled  required placeholder="" type="number" oninput="this.className = ''"
                                     min="0" max="400" name="presentRevision" id="presentRevision"
                                     value="{{ $Rapport->presentRevision }}"></p>
 
@@ -675,7 +666,7 @@
                 </div>
             </div>
 
-            <div class="tab">
+            <div class="tab1">
                 <center>
                     <div class="card-header" style="background-color:#F6DEC0;border-radius: 10px;">
                         الاجتماعات المنجزة
@@ -705,28 +696,28 @@
                             <tbody>
                                 <tr>
                                     <td>طبيعة الاجتماع</td>
-                                    <td><input type="checkbox" name="renionEffectuerConseilAdministratif"
+                                    <td><input  disabled  type="checkbox" name="renionEffectuerConseilAdministratif"
                                             onclick="checkRien()" value="oui"
                                             @if ($Rapport->renionEffectuerConseilAdministratif == 'oui') checked @endif></td>
-                                    <td><input type="checkbox" name="renionEffectuerConseilsDepartementaux"
+                                    <td><input  disabled  type="checkbox" name="renionEffectuerConseilsDepartementaux"
                                             onclick="checkRien()" value="oui"
                                             @if ($Rapport->renionEffectuerConseilsDepartementaux == 'oui') checked @endif></td>
-                                    <td><input type="checkbox" name="renionEffectuerConseilsPedagogiqueTa3limi"
+                                    <td><input  disabled  type="checkbox" name="renionEffectuerConseilsPedagogiqueTa3limi"
                                             onclick="checkRien()" value="oui"
                                             @if ($Rapport->renionEffectuerConseilsPedagogiqueTa3limi == 'oui') checked @endif></td>
-                                    <td><input type="checkbox" name="renionEffectuerConseilsPedagogiqueTrbaoui"
+                                    <td><input  disabled  type="checkbox" name="renionEffectuerConseilsPedagogiqueTrbaoui"
                                             onclick="checkRien()" value="oui"
                                             @if ($Rapport->renionEffectuerConseilsPedagogiqueTrbaoui == 'oui') checked @endif></td>
-                                    <td><input type="checkbox" name="renionEffectuerConseilDeGestion" value="oui"
+                                    <td><input  disabled  type="checkbox" name="renionEffectuerConseilDeGestion" value="oui"
                                             onclick="checkRien()" @if ($Rapport->renionEffectuerConseilDeGestion == 'oui') checked @endif>
                                     </td>
-                                    <td><input type="checkbox" name="renionEffectuerRenionAssociationSoutienScolaire"
+                                    <td><input  disabled  type="checkbox" name="renionEffectuerRenionAssociationSoutienScolaire"
                                             value="oui" onclick="checkRien()"
                                             @if ($Rapport->renionEffectuerRenionAssociationSoutienScolaire == 'oui') checked @endif></td>
-                                    <td><input type="checkbox" name="renionEffectuerAutreRenion" value="oui"
+                                    <td><input  disabled  type="checkbox" name="renionEffectuerAutreRenion" value="oui"
                                             onclick="checkRien()" @if ($Rapport->renionEffectuerAutreRenion == 'oui') checked @endif>
                                     </td>
-                                    <td><input type="checkbox" name="renionEffectuerRien" value="oui"
+                                    <td><input  disabled  type="checkbox" name="renionEffectuerRien" value="oui"
                                             onclick="uncheckOthers()"
                                             @if ($Rapport->renionEffectuerRien == 'oui') checked @endif></td>
                                 </tr>
@@ -748,13 +739,13 @@
                     <br>
                     <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
 
-                        <input type="checkbox" name="activiteEffectuerIntégrée" value="oui"
+                        <input  disabled  type="checkbox" name="activiteEffectuerIntégrée" value="oui"
                             onclick="checkRienSecond()" @if ($Rapport->activiteEffectuerIntégrée == 'oui') checked @endif> <label>أنشطة
                             مندمجة</label>
-                        <input type="checkbox" name="activiteEffectuerParallel" value="oui"
+                        <input  disabled  type="checkbox" name="activiteEffectuerParallel" value="oui"
                             onclick="checkRienSecond()" @if ($Rapport->activiteEffectuerParallel == 'oui') checked @endif><label>أنشطة
                             موازية</label>
-                        <input type="checkbox" name="activiteEffectuerRien" value="oui"
+                        <input  disabled  type="checkbox" name="activiteEffectuerRien" value="oui"
                             onclick="uncheckOthersSecond()"@if ($Rapport->activiteEffectuerRien == 'oui') checked @endif><label>لا
                             شيء</label>
                     </div>
@@ -769,7 +760,7 @@
                 <div id="lycee-div">
                     <br>
                     <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
-                        <textarea required id="rapportActiviteEffectuer" name="rapportActiviteEffectuer" id="rapportActiviteEffectuer"  style="width: 100%">{{ $Rapport->rapportActiviteEffectuer }}</textarea>
+                        <textarea disabled required id="rapportActiviteEffectuer" name="rapportActiviteEffectuer" id="rapportActiviteEffectuer"  style="width: 100%">{{ $Rapport->rapportActiviteEffectuer }}</textarea>
                     </div>
                 </div>
                 <center>
@@ -782,7 +773,7 @@
                 <div id="lycese-div">
                     <br>
                     <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
-                        <textarea required id="rapportVisit" name="rapportVisit" id="rapportVisit" style="width: 100%">{{ $Rapport->rapportVisit }}</textarea>
+                        <textarea  disabled required id="rapportVisit" name="rapportVisit" id="rapportVisit" style="width: 100%">{{ $Rapport->rapportVisit }}</textarea>
                     </div>
                 </div>
                 <center>
@@ -795,7 +786,7 @@
                 <div id="lycee-div">
                     <br>
                     <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
-                        <textarea required id="rapportAccidentScolaire" name="rapportAccidentScolaire" id="rapportAccidentScolaire" style="width: 100%">{{ $Rapport->rapportAccidentScolaire }}</textarea>
+                        <textarea disabled required id="rapportAccidentScolaire" name="rapportAccidentScolaire" id="rapportAccidentScolaire" style="width: 100%">{{ $Rapport->rapportAccidentScolaire }}</textarea>
                     </div>
                 </div>
                 <center>
@@ -808,7 +799,7 @@
                 <div id="lycee-div">
                     <br>
                     <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
-                        <textarea required id="different " oninput="this.className = ''" name="different" name="different" style="width: 100%">{{ $Rapport->different }}</textarea>
+                        <textarea  disabled required id="different " oninput="this.className = ''" name="different" name="different" style="width: 100%">{{ $Rapport->different }}</textarea>
                     </div>
                 </div>
                 <center>
@@ -822,9 +813,9 @@
                     <br>
                     <div class="card" style="width: auto;padding:20px;margin-bottom:10px;padding:10px">
 
-                        <input type="radio" name="classInterieur" value="oui" onclick="showDiv(this)"
+                        <input  disabled  type="radio" name="classInterieur" value="oui" onclick="showDiv(this)"
                             @if ($Rapport->classInterieur == 'oui') checked @endif> <label>نعم</label>
-                        <input type="radio" name="classInterieur" value="non" onclick="showDiv(this)"
+                        <input  disabled  type="radio" name="classInterieur" value="non" onclick="showDiv(this)"
                             @if ($Rapport->classInterieur == 'non') checked @endif><label>لا</label>
 
                     </div>
@@ -843,39 +834,39 @@
 
                         <label class=" col-form-label" style="text-align: right;">
                             المسجلون في وجبة الفطور </label>
-                        <p><input required placeholder="" type="number" oninput="this.className = ''"
+                        <p><input  disabled  required placeholder="" type="number" oninput="this.className = ''"
                                 min="0" max="400" name="inscritPetitDejeuner" id="inscritPetitDejeuner"
                                 value="{{ $Rapport->inscritPetitDejeuner }}"></p>
 
                         <label class=" col-form-label" style="text-align: right;">
                             الحاضرون في وجبة الفطور
                         </label>
-                        <p><input required placeholder="" type="number" min="0" max="400"
+                        <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                 oninput="this.className = ''" name="presentPetitDejeuner" id="presentPetitDejeuner" 
                                 value="{{ $Rapport->presentPetitDejeuner }}"></p>
 
 
                         <label class=" col-form-label" style="text-align: right;">
                             المسجلون في وجبة الغداء </label>
-                        <p><input required placeholder="" type="number" min="0" max="400"
+                        <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                 oninput="this.className = ''" name="inscritDejeuner" id="inscritDejeuner" 
                                 value="{{ $Rapport->inscritDejeuner }}"></p>
                         <label class=" col-form-label" style="text-align: right;">
                             الحاضرون في وجبة الغداء
                         </label>
-                        <p><input required placeholder="" type="number" min="0" max="400"
+                        <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                 oninput="this.className = ''" name="presentDejeuner"  id="presentDejeuner"
                                 value="{{ $Rapport->presentDejeuner }}"></p>
 
                         <label class=" col-form-label" style="text-align: right;">
                             المسجلون في وجبة العشاء </label>
-                        <p><input  placeholder="" type="number" min="0" max="400"
+                        <p><input  disabled   placeholder="" type="number" min="0" max="400"
                             oninput="this.className = ''"   name="inscritDinner" id="inscritDinner"
                                 value="{{ $Rapport->inscritDinner }}"></p>
                         <label class=" col-form-label" style="text-align: right;">
                             الحاضرون في وجبة العشاء
                         </label>
-                        <p><input required placeholder="" type="number" min="0" max="400"
+                        <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                 oninput="this.className = ''" name="presentDinner" id="presentDinner"
                                 value="{{ $Rapport->presentDinner }}"></p>
 
@@ -907,38 +898,39 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><input     type="radio" name="RespectProgrammeNutritional" @if ($Rapport->RespectProgrammeNutritional == '5') checked @endif value="5"></td>
-                                    <td><input     type="radio" name="RespectProgrammeNutritional" @if ($Rapport->RespectProgrammeNutritional == '4') checked @endif value="4"></td>
-                                    <td><input     type="radio" name="RespectProgrammeNutritional" @if ($Rapport->RespectProgrammeNutritional == '3') checked @endif value="3"></td>
-                                    <td><input     type="radio" name="RespectProgrammeNutritional" @if ($Rapport->RespectProgrammeNutritional == '2') checked @endif value="2"></td>
-                                    <td><input     type="radio" name="RespectProgrammeNutritional" @if ($Rapport->RespectProgrammeNutritional == '1') checked @endif value="1"></td>
+                                    <td><input  disabled  type="radio" name="RespectProgrammeNutritional" @if ($Rapport->RespectProgrammeNutritional == '5') checked @endif value="5"></td>
+                                    <td><input  disabled  type="radio" name="RespectProgrammeNutritional" @if ($Rapport->RespectProgrammeNutritional == '4') checked @endif value="4"></td>
+                                    <td><input  disabled  type="radio" name="RespectProgrammeNutritional" @if ($Rapport->RespectProgrammeNutritional == '3') checked @endif value="3"></td>
+                                    <td><input  disabled  type="radio" name="RespectProgrammeNutritional" @if ($Rapport->RespectProgrammeNutritional == '2') checked @endif value="2"></td>
+                                    <td><input  disabled  type="radio" name="RespectProgrammeNutritional" @if ($Rapport->RespectProgrammeNutritional == '1') checked @endif value="1"></td>
                                     <td style="text-align: center;"> مدى احترام البرنامج الغذائي </td>
 
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
-                                    <td><input     type="radio" name="quality" @if ($Rapport->quality == '5') checked @endif value="5"></td>
-                                    <td><input     type="radio" name="quality" @if ($Rapport->quality == '4') checked @endif value="4"></td>
-                                    <td><input     type="radio" name="quality" @if ($Rapport->quality == '3') checked @endif value="3"></td>
-                                    <td><input     type="radio" name="quality" @if ($Rapport->quality == '2') checked @endif value="2"></td>
-                                    <td><input     type="radio" name="quality" @if ($Rapport->quality == '1') checked @endif value="1"></td>
+                                    <td><input  disabled  type="radio" name="quality" @if ($Rapport->quality == '5') checked @endif value="5"></td>
+                                    <td><input  disabled  type="radio" name="quality" @if ($Rapport->quality == '4') checked @endif value="4"></td>
+                                    <td><input  disabled  type="radio" name="quality" @if ($Rapport->quality == '3') checked @endif value="3"></td>
+                                    <td><input  disabled  type="radio" name="quality" @if ($Rapport->quality == '2') checked @endif value="2"></td>
+                                    <td><input  disabled  type="radio" name="quality" @if ($Rapport->quality == '1') checked @endif value="1"></td>
                                     <td style="text-align: center;"> من حيث الجودة </td>
 
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
-                                    <td><input     type="radio" name="quantity" @if ($Rapport->quantity == '5') checked @endif value="5"></td>
-                                    <td><input     type="radio" name="quantity" @if ($Rapport->quantity == '4') checked @endif value="4"></td>
-                                    <td><input     type="radio" name="quantity" @if ($Rapport->quantity == '3') checked @endif value="3"></td>
-                                    <td><input     type="radio" name="quantity" @if ($Rapport->quantity == '2') checked @endif value="2"></td>
-                                    <td><input     type="radio" name="quantity" @if ($Rapport->quantity == '1') checked @endif value="1"></td>
+                                    <td><input  disabled  type="radio" name="quantity" @if ($Rapport->quantity == '5') checked @endif value="5"></td>
+                                    <td><input  disabled  type="radio" name="quantity" @if ($Rapport->quantity == '4') checked @endif value="4"></td>
+                                    <td><input  disabled  type="radio" name="quantity" @if ($Rapport->quantity == '3') checked @endif value="3"></td>
+                                    <td><input  disabled  type="radio" name="quantity" @if ($Rapport->quantity == '2') checked @endif value="2"></td>
+                                    <td><input  disabled  type="radio" name="quantity" @if ($Rapport->quantity == '1') checked @endif value="1"></td>
                                     <td style="text-align: center;"> من حيث الكمية </td>
 
                                 </tr>
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
@@ -953,12 +945,7 @@
 
 
 
-            <div style="overflow:auto;">
-                <div style="float:right;">
-                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">السابق</button>
-                    <button type="button" id="nextBtn" onclick="nextPrev(1)">التالي</button>
-                </div>
-            </div>
+            
             <!-- Circles which indicates the steps of the form: -->
             <div style="text-align:center;margin-top:40px;">
                 <span class="step"></span>
@@ -974,211 +961,8 @@
     </form>
 </body>
 <script>
-    /*  var renionEffectuerRienCheckbox = document.querySelector('input[name="renionEffectuerRien"]');
-renionEffectuerRienCheckbox.addEventListener('change', function() {
-    if (this.checked) {
-        // If the "renionEffectuerRien" checkbox is checked, loop through all the other checkboxes and uncheck them
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]:not([name="renionEffectuerRien"])');
-        for (var i = 0; i < checkboxes.length; i++) {
-            checkboxes[i].checked = false;
-        }
-    }
-});*/
-    function checkRien() {
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        var rienCheckbox = document.querySelector('input[name="renionEffectuerRien"]');
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].name !== 'renionEffectuerRien' && checkboxes[i].checked) {
-                rienCheckbox.checked = false;
-                return;
-            }
-        }
-    }
-
-    function uncheckOthers() {
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        var rienCheckbox = document.querySelector('input[name="renionEffectuerRien"]');
-        if (rienCheckbox.checked) {
-            for (var i = 0; i < checkboxes.length; i++) {
-                if (checkboxes[i].name !== 'renionEffectuerRien') {
-                    checkboxes[i].checked = false;
-                }
-            }
-        }
-    }
-
-    function checkRienSecond() {
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        var rienCheckbox = document.querySelector('input[name="activiteEffectuerRien"]');
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].name !== 'activiteEffectuerRien' && checkboxes[i].checked) {
-                rienCheckbox.checked = false;
-                return;
-            }
-        }
-    }
-
-    function uncheckOthersSecond() {
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        var rienCheckbox = document.querySelector('input[name="activiteEffectuerRien"]');
-        if (rienCheckbox.checked) {
-            for (var i = 0; i < checkboxes.length; i++) {
-                if (checkboxes[i].name !== 'activiteEffectuerRien') {
-                    checkboxes[i].checked = false;
-                }
-            }
-        }
-    }
-
-
-
-    var currentTab = 0; // Current tab is set to be the first tab (0)
-    showTab(currentTab); // Display the current tab
-
-    function showTab(n) {
-        // This function will display the specified tab of the form...
-        var x = document.getElementsByClassName("tab");
-        x[n].style.display = "block";
-        //... and fix the Previous/Next buttons:
-        if (n == 0) {
-            document.getElementById("prevBtn").style.display = "none";
-        } else {
-            document.getElementById("prevBtn").style.display = "inline";
-        }
-        if (n == (x.length - 1)) {
-            document.getElementById("nextBtn").innerHTML = "حفظ";
-        } else {
-            document.getElementById("nextBtn").innerHTML = "التالي";
-        }
-        //... and run a function that will display the correct step indicator:
-        fixStepIndicator(n)
-    }
-
-    function nextPrev(n) {
-        // This function will figure out which tab to display
-        var x = document.getElementsByClassName("tab");
-        // Exit the function if any field in the current tab is invalid:
-        if (n == 1 && !validateForm()) return false;
-        // Hide the current tab:
-        x[currentTab].style.display = "none";
-        // Increase or decrease the current tab by 1:
-        currentTab = currentTab + n;
-        // if you have reached the end of the form...
-        if (currentTab >= x.length) {
-            // ... the form gets submitted:
-            document.getElementById("regForm").submit();
-            return false;
-        }
-        // Otherwise, display the correct tab:
-        showTab(currentTab);
-    }
-
-    function validateForm() {
-        // This function deals with validation of the form fields
-        var x, y, i, valid = true;
-        var radio = document.querySelector('input[name="classInterieur"]:checked');
-        x = document.getElementsByClassName("tab");
-        y = x[currentTab].querySelectorAll("#date,#absenceFirstPrimaire,#totalFirstPrimaire,#absenceSecondPrimaire,#totalSecondPrimaire,#absenceThirdPrimaire,#totalThirdPrimaire,#absenceFourthPrimaire,#totalFourthPrimaire,#absenceFifthPrimaire,#totalFifthPrimaire,#absenceSixthPrimaire,#totalSixthPrimaire,#absenceFirstCollege,#totalFirstCollege,#absenceSecondCollege,#totalSecondCollege,#absenceThirdCollege,#totalThirdCollege,#absenceFirstLycee,#totalFirstLycee,#absenceSecondLycee,#totalSecondLycee,#absenceThirdLycee,#totalThirdLycee,#absenceFirstComptabiliteGeneral,#totalFirstComptabiliteGeneral,#absenceSecondComptabiliteGeneral,#totalSecondComptabiliteGeneral,#absenceFirstManagementCommercial,#totalFirstManagementCommercial,#absenceSecondManagementCommercial,#totalSecondManagementCommercial,#nbEmployee,#nbAbsenceEmployee,#nbRetardEmployee,#nbSeanceProgramme,#nbSeanceEffecuter,#nbSeanceComponser,#renionEffectuerConseilAdministratif,#renionEffectuerConseilsDepartementaux,#renionEffectuerConseilsPedagogiqueTa3limi,#renionEffectuerConseilsPedagogiqueTrbaoui,#renionEffectuerConseilDeGestion,#renionEffectuerAutreRenion,#renionEffectuerRien,#activiteEffectuerIntégrée,#activiteEffectuerParallel,#activiteEffectuerRien,#rapportActiviteEffectuer,#rapportVisit,#rapportAccidentScolaire,#different,#classInterieur,#inscritPetitDejeuner,#presentPetitDejeuner,#inscritDejeuner,#presentDejeuner,#inscritDinner,#presentDinner,#RespectProgrammeNutritional,#quality,#quantity,#presentRevision");
-      
-        if (radio && radio.value === "oui") {
-        document.getElementById("div1").style.display = "block";
-        document.getElementById("div2").style.display = "none";
-        for (i = 0; i < y.length; i++) {
-            // If a field is empty...
-            if (y[i].value == "") {
-                // add an "invalid" class to the field:
-                y[i].className += " invalid";
-                // and set the current valid status to false
-                valid = false;
-            }
-        }
-    } else if (radio && radio.value === "non") {
-        document.getElementById("div1").style.display = "none";
-        document.getElementById("div2").style.display = "block";
-    }
-
-
-        // A loop that checks every input field in the current tab:
-        
-        if (valid) {
-            document.getElementsByClassName("step")[currentTab].className += " finish";
-        }
-        return valid; // return the valid status
-    }
-
-    function fixStepIndicator(n) {
-        // This function removes the "active" class of all steps...
-        var i, x = document.getElementsByClassName("step");
-        for (i = 0; i < x.length; i++) {
-            x[i].className = x[i].className.replace(" active", "");
-        }
-        //... and adds the "active" class on the current step:
-        x[n].className += " active";
-    }
-    var colegeButtona = document.getElementById("colegeButton");
-    var collegediv = document.getElementById("college-div");
-    if (colegeButtona && collegediv) {
-        colegeButtona.addEventListener("click", function() {
-            if (collegediv.style.display === "none") {
-                collegediv.style.display = "block";
-            } else {
-                collegediv.style.display = "none";
-            }
-        });
-    }
-    var lyceeButton = document.getElementById("lyceeButton");
-    var lyceeDiv = document.getElementById("lycee-div");
-    if (lyceeButton && lyceeDiv) {
-        lyceeButton.addEventListener("click", function() {
-            if (lyceeDiv.style.display === "none") {
-                lyceeDiv.style.display = "block";
-            } else {
-                lyceeDiv.style.display = "none";
-            }
-        });
-    }
-
-    var binomeA = document.getElementById("binome");
-    var lyceecollegediv = document.getElementById("lycee-college-div");
-    if (binomeA && lyceecollegediv) {
-        binomeA.addEventListener("click", function() {
-            if (lyceecollegediv.style.display === "none") {
-                lyceecollegediv.style.display = "block";
-            } else {
-                lyceecollegediv.style.display = "none";
-            }
-        });
-    }
-
-    const input = document.getElementById('myInput');
-    const errorMessage = document.getElementById('errorMessage');
-    input.addEventListener('input', function() {
-        if (input.value > 400) {
-            input.value = 400;
-            errorMessage.style.display = 'block';
-        } else {
-            errorMessage.style.display = 'none';
-        }
-    });
-
-    function showDiv(radio) {
-        if (radio.value === "oui") {
-            document.getElementById("div1").style.display = "block";
-            document.getElementById("div2").style.display = "none";
-
-        } else if (radio.value === "non") {
-            document.getElementById("div1").style.display = "none";
-            document.getElementById("div2").style.display = "block";
-
-        }
-    }
-
-    function getIPAddress() {
-        fetch('https://api.ipify.org/?format=json')
-            .then(response => response.json())
-            .then(data => alert(data.ip))
-            .catch(error => console.error(error))
-    }
+   
+    
 </script>
 </body>
 

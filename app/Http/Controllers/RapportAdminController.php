@@ -7,9 +7,12 @@
     use Illuminate\Support\Facades\Auth;
     use App\Models\User;
     use Illuminate\Support\Facades\Http;
-    
+    use Dompdf\Dompdf;
+use Dompdf\Options;
     class RapportAdminController extends Controller
     {
+        
+
         public function index()
         {
             $repports = \App\Models\Rapport::paginate(5);
@@ -17,7 +20,30 @@
 
             return view('auth.admin.showRapports', compact('repports'));
         }
-        
+
+        public function print($id)
+{
+    $report = Rapport::findOrFail($id); // find the report by ID
+                $repports = \App\Models\Rapport::paginate(5);
+
+    // generate the PDF file from a Blade template
+    $html = view('rapports.show', compact('repports','report'))->render();
+    
+    // instantiate Dompdf class
+    $dompdf = new Dompdf();
+    
+    // load HTML content into Dompdf
+    $dompdf->loadHtml($html);
+    
+    // (Optional) Set paper size and orientation
+    $dompdf->setPaper('A4', 'portrait');
+    
+    // Render the HTML as PDF
+    $dompdf->render();
+    
+    // Output the generated PDF (forced download)
+    return $dompdf->stream('report.pdf', ['Attachment' => false]);
+}
         public function create()
         {
             //REDIRECT TO CREATE PAGE OF PROTIEN
@@ -189,12 +215,12 @@
     
         public function show(Rapport $rapport)
         {
-            return view('rapports.show', compact('rapport'));
+        return view('auth.admin.rapport.show', compact('rapport'));  
         }
     
         public function edit(Rapport $rapport)
         {
-            return view('rapport.edit', compact('rapport'));
+            return view('auth.admin.rapport.edit', compact('rapport'));
         }
     
         public function update(Request $request, Rapport $rapport)
