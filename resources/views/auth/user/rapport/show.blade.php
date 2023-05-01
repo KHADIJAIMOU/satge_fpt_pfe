@@ -12,6 +12,7 @@
     <style>
         @import url(https://fonts.googleapis.com/earlyaccess/amiri.css);
         @import url(https://fonts.googleapis.com/earlyaccess/scheherazade.css);
+        @import url({{ public_path('css/tcpdf.css') }});
 
         html {
             background-color: #ffffff;

@@ -26,6 +26,7 @@ class RapportController extends Controller
         session()->put("menu", "repports");
         return view('auth.user.repports', compact('lists'));
     }
+    
     public function index()
     {
         $rapports = Rapport::all();

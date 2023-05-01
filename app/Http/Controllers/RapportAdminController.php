@@ -1,14 +1,24 @@
 <?php
 
     namespace App\Http\Controllers;
-    
+    require_once base_path('/vendor/autoload.php');
+
     use App\Models\Rapport;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Auth;
     use App\Models\User;
     use Illuminate\Support\Facades\Http;
+    use Illuminate\Support\Facades\Validator;
+
     use Dompdf\Dompdf;
 use Dompdf\Options;
+use App;
+use PDF;
+use TCPDF;
+use View;
+use Illuminate\Support\Facades\Storage;
+
+
     class RapportAdminController extends Controller
     {
         
@@ -21,29 +31,76 @@ use Dompdf\Options;
             return view('auth.admin.showRapports', compact('repports'));
         }
 
-        public function print($id)
+        public function print($id, Rapport $Rapport)
+        {
+            App::setLocale('ar');
+        
+            $rapport = Rapport::find($id);
+            $users = User::where('CD_ETAB', $rapport->CD_ETAB)->get();
+        
+            // Pass data to the view as an array
+            $data = [
+                'rapport' => $rapport,
+                'users' => $users,
+            ];
+        
+            // generate the PDF file from a Blade template
+            $html = view('auth.admin.rapport.print', compact('data'))->render();
+        
+            // instantiate Dompdf class
+            $dompdf = new Dompdf();
+        
+            // load HTML content into Dompdf
+            $dompdf->loadHtml($html, 'UTF-8');
+        
+            // (Optional) Set paper size and orientation
+            $dompdf->setPaper('A4', 'portrait');
+        
+            // Render the HTML as PDF
+            $dompdf->render();
+        
+            // Output the generated PDF (forced download)
+            return $dompdf->stream('report.pdf', ['Attachment' => false]);
+        }
+        
+  /* public function print($id,Rapport $rapport)
 {
-    $report = Rapport::findOrFail($id); // find the report by ID
-                $repports = \App\Models\Rapport::paginate(5);
+    
+    $pdf = new TCPDF();
+$pdf->AddPage();
 
-    // generate the PDF file from a Blade template
-    $html = view('rapports.show', compact('repports','report'))->render();
-    
-    // instantiate Dompdf class
-    $dompdf = new Dompdf();
-    
-    // load HTML content into Dompdf
-    $dompdf->loadHtml($html);
-    
-    // (Optional) Set paper size and orientation
-    $dompdf->setPaper('A4', 'portrait');
-    
-    // Render the HTML as PDF
-    $dompdf->render();
-    
-    // Output the generated PDF (forced download)
-    return $dompdf->stream('report.pdf', ['Attachment' => false]);
+// Define the table structure
+$header = array('Column 1', 'Column 2', 'Column 3');
+$data = array(
+    array('Row 1, Cell 1', 'Row 1, Cell 2', 'Row 1, Cell 3'),
+    array('Row 2, Cell 1', 'Row 2, Cell 2', 'Row 2, Cell 3'),
+    array('Row 3, Cell 1', 'Row 3, Cell 2', 'Row 3, Cell 3'),
+);
+
+// Set table header font
+$pdf->SetFont('helvetica', 'B', 12);
+
+// Output table header
+$pdf->Cell(50, 10, $header[0], 1);
+$pdf->Cell(50, 10, $header[1], 1);
+$pdf->Cell(50, 10, $header[2], 1);
+
+// Set table data font
+$pdf->SetFont('helvetica', '', 10);
+
+// Output table data
+foreach ($data as $row) {
+    $pdf->Ln();
+    $pdf->Cell(50, 10, $row[0], 1);
+    $pdf->Cell(50, 10, $row[1], 1);
+    $pdf->Cell(50, 10, $row[2], 1);
 }
+
+// Output the PDF
+$pdf->Output('example.pdf', 'I');
+}
+*/
+
         public function create()
         {
             //REDIRECT TO CREATE PAGE OF PROTIEN
@@ -213,38 +270,43 @@ use Dompdf\Options;
     
         
     
-        public function show(Rapport $rapport)
-        {
-        return view('auth.admin.rapport.show', compact('rapport'));  
+    public function show($id,Rapport $rapport)
+    {
+        $rapport = Rapport::find($id);
+        $users = User::where('CD_ETAB', $rapport->CD_ETAB)->get();
+
+        return view('auth.admin.rapport.show', ['rapport' => $rapport, 'users' => $users]);
+       }
+        
+public function edit($id,Rapport $rapport)
+        {      
+            $rapport= Rapport::find($id);
+            $users = User::where('CD_ETAB', $rapport->CD_ETAB)->get();
+
+            return view('auth.admin.rapport.edit', ['rapport' => $rapport, 'users' => $users]);
         }
     
-        public function edit(Rapport $rapport)
+        public function update(Request $request, Rapport $repport)
         {
-            return view('auth.admin.rapport.edit', compact('rapport'));
+            //VALIDATION
+        $validatedData = Validator::make(request()->all(), [
+            'date' => 'nullable|date',
+       
+        ]);
+
+        if ($validatedData->fails()) {
+            return back()
+                ->withErrors($validatedData)
+                ->withInput();
         }
-    
-        public function update(Request $request, Rapport $rapport)
-        {
-            $validatedData = $request->validate([
-                'date' => 'required|date',
-                'type_class' => 'required',
-                'absence_first_lycee' => 'required_if:type_class,lycee|integer',
-                'total_first_lycee' => 'required_if:type_class,lycee|integer',
-                'absence_second_lycee' => 'required_if:type_class,lycee|integer',
-                'total_second_lycee' => 'required_if:type_class,lycee|integer',
-                'absence_third_lycee' => 'required_if:type_class,lycee|integer',
-                'total_third_lycee' => 'required_if:type_class,lycee|integer',
-                'absence_first_college' => 'required_if:type_class,college|integer',
-                'total_first_college' => 'required_if:type_class,college|integer',
-                'absence_second_college' => 'required_if:type_class,college|integer',
-                'total_second_college' => 'required_if:type_class,college|integer',
-            ]);
-    
-            $rapport->update($validatedData);
-    
-            return redirect()->route('rapports.index')
-                ->with('success', 'Rapport updated successfully.');
-        }
+        $repport->update([
+            'date' => $request->date,
+        ]);
+        return redirect('/admin/repports')->with([
+            'type' => 'success',
+            'message' => 'Rapport N'.$repport->id.'  modifié avec succès',
+        ]);
+    }
     
         public function destroy(Rapport $repport)
         {
