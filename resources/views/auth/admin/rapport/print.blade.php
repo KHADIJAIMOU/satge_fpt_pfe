@@ -103,8 +103,8 @@
     <center>
         <div class="row mb-4">
             <img class="mx-auto d-block"
-                style="border-style: outset;border-radius: 10px;margin-bottom: 30px;margin-top: 30px;"
-                src="C:\Users\hp\Desktop\FormEtablissement\satge_fpt_pfe\public\img\logo.jpg">
+                style="border-style: outset;width:100%;border-radius: 10px;margin-bottom: 30px;margin-top: 30px;"
+                src="data:image/jpeg;base64,{{ $data['image'] }}">
         </div>
         <h1
             style="font-family:'Scheherazade', serif;color: #333;text-align: center;text-transform: uppercase;margin-bottom: 20px;font-size: 56px; ">
@@ -974,77 +974,95 @@
                 </div>
 
 
-                <div id="lycee-div">
+                <div id="lycee-div" style="text-align: left">
 
                     <br>
-                    <label class=" col-form-label" style="text-align: left;"> Programme Nutritional</label>
+                    <label class="col-form-label" style="text-align: left;">Programme Nutritional:
+                        @if ($data['rapport']->RespectProgrammeNutritional == 1)
+                           <span><img 
+                                style="width:15%;border-radius: 10px;"
+                                src="data:image/jpeg;base64,{{ $data['image1'] }}"></span> 
+                        @elseif($data['rapport']->RespectProgrammeNutritional == 2)
+                            <img class="mx-auto d-block"
+                                style="width:15%;"
+                                src="data:image/jpeg;base64,{{ $data['image2'] }}">
+                        @elseif($data['rapport']->RespectProgrammeNutritional == 3)
+                            <img class="mx-auto d-block"
+                                style="width:15%;"
+                                src="data:image/jpeg;base64,{{ $data['image3'] }}">
+                        @elseif($data['rapport']->RespectProgrammeNutritional == 4)
+                            <img class="mx-auto d-block"
+                                style="width:15%;"
+                                src="data:image/jpeg;base64,{{ $data['image14'] }}">
+                        @elseif($data['rapport']->RespectProgrammeNutritional == 5)
+                            <span><img class="mx-auto d-block"
+                                style="width:15%;"
+                                src="data:image/jpeg;base64,{{ $data['image5'] }}"></span> 
+                        @elseif($data['rapport']->RespectProgrammeNutritional == 0)
+                          <span><img class="mx-auto d-block"
+                                style="width:15%;"
+                                src="data:image/jpeg;base64,{{ $data['image0'] }}"></span> 
+                        @endif
+                    </label>
+                    <br>
+                    <label class=" col-form-label" style="text-align: left;"> quality
+                        : @if ($data['rapport']->quality == 1)
+                        <span><img 
+                             style="width:15%;border-radius: 10px;"
+                             src="data:image/jpeg;base64,{{ $data['image1'] }}"></span> 
+                     @elseif($data['rapport']->quality == 2)
+                         <img class="mx-auto d-block"
+                             style="width:15%;"
+                             src="data:image/jpeg;base64,{{ $data['image2'] }}">
+                     @elseif($data['rapport']->quality == 3)
+                         <img class="mx-auto d-block"
+                             style="width:15%;"
+                             src="data:image/jpeg;base64,{{ $data['image3'] }}">
+                     @elseif($data['rapport']->quality == 4)
+                         <img class="mx-auto d-block"
+                             style="width:15%;"
+                             src="data:image/jpeg;base64,{{ $data['image14'] }}">
+                     @elseif($data['rapport']->quality == 5)
+                         <span><img class="mx-auto d-block"
+                             style="width:15%;"
+                             src="data:image/jpeg;base64,{{ $data['image5'] }}"></span> 
+                     @elseif($data['rapport']->quality == 0)
+                       <span><img class="mx-auto d-block"
+                             style="width:15%;"
+                             src="data:image/jpeg;base64,{{ $data['image0'] }}"></span> 
+                     @endif
+                    <br>
+
+                    <label class=" col-form-label" style="text-align: left;"> quantity
+                        : @if ($data['rapport']->quantity == 1)
+                        <span><img 
+                             style="width:15%;border-radius: 10px;"
+                             src="data:image/jpeg;base64,{{ $data['image1'] }}"></span> 
+                     @elseif($data['rapport']->quantity == 2)
+                         <img class="mx-auto d-block"
+                             style="width:15%;"
+                             src="data:image/jpeg;base64,{{ $data['image2'] }}">
+                     @elseif($data['rapport']->quantity == 3)
+                         <img class="mx-auto d-block"
+                             style="width:15%;"
+                             src="data:image/jpeg;base64,{{ $data['image3'] }}">
+                     @elseif($data['rapport']->quantity == 4)
+                         <img class="mx-auto d-block"
+                             style="width:15%;"
+                             src="data:image/jpeg;base64,{{ $data['image14'] }}">
+                     @elseif($data['rapport']->quantity == 5)
+                         <span><img class="mx-auto d-block"
+                             style="width:15%;"
+                             src="data:image/jpeg;base64,{{ $data['image5'] }}"></span> 
+                     @elseif($data['rapport']->quantity == 0)
+                       <span><img class="mx-auto d-block"
+                             style="width:15%;"
+                             src="data:image/jpeg;base64,{{ $data['image0'] }}"></span> 
+                     @endif
+                    <br>
+
                     <div class="card" style="width: auto;padding:20px;margin-top:20px;padding:10px">
 
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col" style="text-align: center;">5</th>
-                                    <th scope="col" style="text-align: center;"> 4</th>
-                                    <th scope="col" style="text-align: center;"> 3</th>
-                                    <th scope="col" style="text-align: center;"> 2</th>
-                                    <th scope="col" style="text-align: center;"> 1</th>
-                                    <th scope="col"
-                                        style="min-width: 48px;width: 200px;border-bottom-left-radius: 4px;border-top-left-radius: 4px;text-align: center;"
-                                        </th>
-
-
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input disabled type="radio" name="RespectProgrammeNutritional"
-                                            @if ($data['rapport']->RespectProgrammeNutritional == '5') checked @endif value="5"></td>
-                                    <td><input disabled type="radio" name="RespectProgrammeNutritional"
-                                            @if ($data['rapport']->RespectProgrammeNutritional == '4') checked @endif value="4"></td>
-                                    <td><input disabled type="radio" name="RespectProgrammeNutritional"
-                                            @if ($data['rapport']->RespectProgrammeNutritional == '3') checked @endif value="3"></td>
-                                    <td><input disabled type="radio" name="RespectProgrammeNutritional"
-                                            @if ($data['rapport']->RespectProgrammeNutritional == '2') checked @endif value="2"></td>
-                                    <td><input disabled type="radio" name="RespectProgrammeNutritional"
-                                            @if ($data['rapport']->RespectProgrammeNutritional == '1') checked @endif value="1"></td>
-                                    <td style="text-align: center;"> Respect de Programme Nutritional</td>
-
-                                </tr>
-                            </tbody>
-                            <tbody>
-                                <tr>
-                                    <td><input disabled type="radio" name="quality"
-                                            @if ($data['rapport']->quality == '5') checked @endif value="5"></td>
-                                    <td><input disabled type="radio" name="quality"
-                                            @if ($data['rapport']->quality == '4') checked @endif value="4"></td>
-                                    <td><input disabled type="radio" name="quality"
-                                            @if ($data['rapport']->quality == '3') checked @endif value="3"></td>
-                                    <td><input disabled type="radio" name="quality"
-                                            @if ($data['rapport']->quality == '2') checked @endif value="2"></td>
-                                    <td><input disabled type="radio" name="quality"
-                                            @if ($data['rapport']->quality == '1') checked @endif value="1"></td>
-                                    <td style="text-align: center;"> quality</td>
-
-                                </tr>
-                            </tbody>
-                            <tbody>
-                                <tr>
-                                    <td><input disabled type="radio" name="quantity"
-                                            @if ($data['rapport']->quantity == '5') checked @endif value="5"></td>
-                                    <td><input disabled type="radio" name="quantity"
-                                            @if ($data['rapport']->quantity == '4') checked @endif value="4"></td>
-                                    <td><input disabled type="radio" name="quantity"
-                                            @if ($data['rapport']->quantity == '3') checked @endif value="3"></td>
-                                    <td><input disabled type="radio" name="quantity"
-                                            @if ($data['rapport']->quantity == '2') checked @endif value="2"></td>
-                                    <td><input disabled type="radio" name="quantity"
-                                            @if ($data['rapport']->quantity == '1') checked @endif value="1"></td>
-                                    <td style="text-align: center;"> quantity</td>
-
-                                </tr>
-                            </tbody>
-                        </table>
 
                     </div>
                 </div>

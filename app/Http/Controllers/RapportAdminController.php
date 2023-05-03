@@ -37,11 +37,28 @@ use Illuminate\Support\Facades\Storage;
         
             $rapport = Rapport::find($id);
             $users = User::where('CD_ETAB', $rapport->CD_ETAB)->get();
+            $imagePath = public_path('img/logo.jpg');
+            $image = base64_encode(file_get_contents($imagePath));
+            $image = base64_encode(file_get_contents(public_path('img/logo.jpg')));
+            $image0 = base64_encode(file_get_contents(public_path('img/image0.jpg')));
+            $image1 = base64_encode(file_get_contents(public_path('img/image1.jpg')));
+            $image2= base64_encode(file_get_contents(public_path('img/image2.jpg')));
+            $image3= base64_encode(file_get_contents(public_path('img/image3.jpg')));
+            $image4= base64_encode(file_get_contents(public_path('img/image4.jpg')));
+            $image5= base64_encode(file_get_contents(public_path('img/image5.jpg')));
         
             // Pass data to the view as an array
             $data = [
                 'rapport' => $rapport,
                 'users' => $users,
+                'image' => $image,
+                'image0' => $image0,
+                'image1' => $image1,
+                'image2' => $image2,
+                'image3' => $image3,
+                'image4' => $image4,
+                'image5' => $image5,
+
             ];
         
             // generate the PDF file from a Blade template
@@ -62,7 +79,57 @@ use Illuminate\Support\Facades\Storage;
             // Output the generated PDF (forced download)
             return $dompdf->stream('report.pdf', ['Attachment' => false]);
         }
+        public function telecharger($id, Rapport $Rapport)
+        {
+            App::setLocale('ar');
         
+            $rapport = Rapport::find($id);
+            $users = User::where('CD_ETAB', $rapport->CD_ETAB)->get();
+            $imagePath = public_path('img/logo.jpg');
+            $image = base64_encode(file_get_contents($imagePath));
+            $image = base64_encode(file_get_contents(public_path('img/logo.jpg')));
+            $image0 = base64_encode(file_get_contents(public_path('img/image0.jpg')));
+            $image1 = base64_encode(file_get_contents(public_path('img/image1.jpg')));
+            $image2= base64_encode(file_get_contents(public_path('img/image2.jpg')));
+            $image3= base64_encode(file_get_contents(public_path('img/image3.jpg')));
+            $image4= base64_encode(file_get_contents(public_path('img/image4.jpg')));
+            $image5= base64_encode(file_get_contents(public_path('img/image5.jpg')));
+        
+            // Pass data to the view as an array
+            $data = [
+                'rapport' => $rapport,
+                'users' => $users,
+                'image' => $image,
+                'image0' => $image0,
+                'image1' => $image1,
+                'image2' => $image2,
+                'image3' => $image3,
+                'image4' => $image4,
+                'image5' => $image5,
+
+            ];
+        
+            // generate the PDF file from a Blade template
+            $html = view('auth.admin.rapport.print', compact('data'))->render();
+        
+            // instantiate Dompdf class
+            $dompdf = new Dompdf();
+        
+            // load HTML content into Dompdf
+            $dompdf->loadHtml($html, 'UTF-8');
+        
+            // (Optional) Set paper size and orientation
+            $dompdf->setPaper('A4', 'portrait');
+        
+            // Render the HTML as PDF
+            $dompdf->render();
+        
+            // Output the generated PDF (forced download)
+            $filename = 'report.pdf';
+            $dompdf->stream($filename);
+            return response($dompdf->output(), 200)
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');        }
   /* public function print($id,Rapport $rapport)
 {
     
@@ -290,8 +357,70 @@ public function edit($id,Rapport $rapport)
         {
             //VALIDATION
         $validatedData = Validator::make(request()->all(), [
-            'date' => 'nullable|date',
-       
+            'date' => 'required|date',
+            'absenceFirstPrimaire' => 'nullable|integer',
+            'totalFirstPrimaire' => 'nullable|integer',
+            'absenceSecondPrimaire' => 'nullable|integer',
+            'totalSecondPrimaire' => 'nullable|integer',
+            'absenceThirdPrimaire' => 'nullable|integer',
+            'totalThirdPrimaire' => 'nullable|integer',
+            'absenceFourthPrimaire' => 'nullable|integer',
+            'totalFourthPrimaire' => 'nullable|integer',
+            'absenceFifthPrimaire' => 'nullable|integer',
+            'totalFifthPrimaire' => 'nullable|integer',
+            'absenceSixthPrimaire' => 'nullable|integer',
+            'totalSixthPrimaire' => 'nullable|integer',
+            'absenceFirstCollege' => 'nullable|integer',
+            'totalFirstCollege' => 'nullable|integer',
+            'absenceSecondCollege' => 'nullable|integer',
+            'totalSecondCollege' => 'nullable|integer',
+            'absenceThirdCollege' => 'nullable|integer',
+            'totalThirdCollege' => 'nullable|integer',
+            'absenceFirstLycee' => 'nullable|integer',
+            'totalFirstLycee' => 'nullable|integer',
+            'absenceSecondLycee' => 'nullable|integer',
+            'totalSecondLycee' => 'nullable|integer',
+            'absenceThirdLycee' => 'nullable|integer',
+            'totalThirdLycee' => 'nullable|integer',
+            'absenceFirstComptabiliteGeneral' => 'nullable|integer',
+            'totalFirstComptabiliteGeneral' => 'nullable|integer',
+            'absenceSecondComptabiliteGeneral' => 'nullable|integer',
+            'totalSecondComptabiliteGeneral' => 'nullable|integer',
+            'absenceFirstManagementCommercial' => 'nullable|integer',
+            'totalFirstManagementCommercial' => 'nullable|integer',
+            'absenceSecondManagementCommercial' => 'nullable|integer',
+            'totalSecondManagementCommercial' => 'nullable|integer',
+            'nbEmployee' => 'required',
+            'nbAbsenceEmployee' => 'required',
+            'nbRetardEmployee' => 'required',
+            'nbSeanceProgramme' => 'required',
+            'nbSeanceEffecuter' => 'required',
+            'nbSeanceComponser' => 'required',
+           'renionEffectuerConseilAdministratif' => 'nullable',
+            'renionEffectuerConseilsDepartementaux' => 'nullable',
+            'renionEffectuerConseilsPedagogiqueTa3limi' => 'nullable',
+            'renionEffectuerConseilsPedagogiqueTrbaoui' => 'nullable',
+            'renionEffectuerConseilDeGestion' => 'nullable',
+            'renionEffectuerAutreRenion' => 'nullable',
+            'renionEffectuerRien' => 'nullable',
+            'activiteEffectuerIntégrée' => 'nullable',
+            'activiteEffectuerParallel' => 'nullable',
+            'activiteEffectuerRien' => 'nullable',
+            'rapportActiviteEffectuer' => 'nullable',
+            'rapportVisit' => 'nullable',
+            'rapportAccidentScolaire' => 'nullable',
+            'different' => 'nullable',
+            'classInterieur' => 'nullable',
+           'inscritPetitDejeuner' => 'nullable|integer',
+            'presentPetitDejeuner' => 'nullable|integer',
+            'inscritDejeuner' => 'nullable|integer',
+            'presentDejeuner' => 'nullable|integer',
+             'inscritDinner' => 'nullable|integer',
+            'presentDinner' => 'nullable|integer',
+            'RespectProgrammeNutritional' => 'nullable|integer',
+            'quality' => 'nullable|integer',
+            'quantity' => 'nullable|integer',
+            'presentRevision'=> 'nullable|integer',       
         ]);
 
         if ($validatedData->fails()) {
@@ -299,9 +428,81 @@ public function edit($id,Rapport $rapport)
                 ->withErrors($validatedData)
                 ->withInput();
         }
+        $user = Auth::user();
+        $ipAddress = $_SERVER['REMOTE_ADDR'];
+        $mac_address = exec('getmac');
+        $ip = Http::get('https://api.ipify.org')->body();
+        $macAddress = exec('getmac');
+        $macAddress = strtok($macAddress, ' ');
         $repport->update([
             'date' => $request->date,
-        ]);
+            'absenceFirstPrimaire' => $request->absenceFirstPrimaire,
+            'nbSeanceProgramme' => $request->nbSeanceProgramme,
+            'totalFirstPrimaire' => $request->totalFirstPrimaire,
+            'nbRetardEmployee' => $request->nbRetardEmployee,
+            'absenceSecondPrimaire' => $request->absenceSecondPrimaire,
+            'totalSecondPrimaire' => $request->totalSecondPrimaire,
+            'absenceThirdPrimaire' => $request->absenceThirdPrimaire,
+            'totalThirdPrimaire' => $request->totalThirdPrimaire,
+            'absenceFourthPrimaire' => $request->absenceFourthPrimaire,
+            'totalFourthPrimaire' => $request->totalFourthPrimaire,
+            'absenceFifthPrimaire' => $request->absenceFifthPrimaire,
+            'totalFifthPrimaire' => $request->totalFifthPrimaire,
+            'absenceSixthPrimaire' => $request->absenceSixthPrimaire,
+            'totalSixthPrimaire' => $request->totalSixthPrimaire,
+            'absenceFirstCollege' => $request->absenceFirstCollege,
+            'totalFirstCollege' => $request->totalFirstCollege,
+            'absenceSecondCollege' => $request->absenceSecondCollege,
+            'totalSecondCollege' => $request->totalSecondCollege,
+            'absenceThirdCollege' => $request->absenceThirdCollege,
+            'totalThirdCollege' => $request->totalThirdCollege,
+            'absenceFirstLycee' => $request->absenceFirstLycee,
+            'totalFirstLycee' => $request->totalFirstLycee,
+            'absenceSecondLycee' => $request->absenceSecondLycee,
+            'totalSecondLycee' => $request->totalSecondLycee,
+            'absenceThirdLycee' => $request->absenceThirdLycee,
+            'totalThirdLycee' => $request->totalThirdLycee,
+            'absenceFirstComptabiliteGeneral' => $request->absenceFirstComptabiliteGeneral,
+            'totalFirstComptabiliteGeneral' => $request->totalFirstComptabiliteGeneral,
+            'absenceSecondComptabiliteGeneral' => $request->absenceSecondComptabiliteGeneral,
+            'totalSecondComptabiliteGeneral' => $request->totalSecondComptabiliteGeneral,
+            'absenceFirstManagementCommercial' => $request->absenceFirstManagementCommercial,
+            'totalFirstManagementCommercial' => $request->totalFirstManagementCommercial,
+            'absenceSecondManagementCommercial' => $request->absenceSecondManagementCommercial,
+            'totalSecondManagementCommercial' => $request->totalSecondManagementCommercial,
+            'nbEmployee' => $request->nbEmployee,
+            'nbAbsenceEmployee' => $request->nbAbsenceEmployee,
+            'nbSeanceEffecuter' => $request->nbSeanceEffecuter,
+            'nbSeanceComponser' => $request->nbSeanceComponser,
+            'renionEffectuerConseilAdministratif' => $request->renionEffectuerConseilAdministratif,
+            'renionEffectuerConseilsDepartementaux' => $request->renionEffectuerConseilsDepartementaux,
+            'renionEffectuerConseilsPedagogiqueTa3limi' => $request->renionEffectuerConseilsPedagogiqueTa3limi,
+            'renionEffectuerConseilsPedagogiqueTrbaoui' => $request->renionEffectuerConseilsPedagogiqueTrbaoui,
+            'renionEffectuerConseilDeGestion' => $request->renionEffectuerConseilDeGestion,
+            'renionEffectuerAutreRenion' => $request->renionEffectuerAutreRenion,
+            'renionEffectuerRien' => $request->renionEffectuerRien,
+            'activiteEffectuerIntégrée' => $request->activiteEffectuerIntégrée,
+            'activiteEffectuerParallel' => $request->activiteEffectuerParallel,
+            'activiteEffectuerRien' => $request->activiteEffectuerRien,
+            'rapportActiviteEffectuer' => $request->rapportActiviteEffectuer,
+            'rapportVisit' => $request->rapportVisit,
+            'rapportAccidentScolaire' => $request->rapportAccidentScolaire,
+            'different' => $request->different,
+            'classInterieur' => $request->classInterieur,
+            'inscritPetitDejeuner' => $request->inscritPetitDejeuner,
+            'presentPetitDejeuner' => $request->presentPetitDejeuner,
+            'inscritDejeuner' => $request->inscritDejeuner,
+            'presentDejeuner' => $request->presentDejeuner,
+            'inscritDinner' => $request->inscritDinner,
+            'presentDinner' => $request->presentDinner,
+            'RespectProgrammeNutritional' => $request->RespectProgrammeNutritional,
+            'quality' => $request->quality,
+            'quantity' => $request->quantity,
+            'presentRevision' => $request->presentRevision,
+            'adressIp' => $ip,
+            'mac_address' => $macAddress,
+
+                    ]);
         return redirect('/admin/repports')->with([
             'type' => 'success',
             'message' => 'Rapport N'.$repport->id.'  modifié avec succès',

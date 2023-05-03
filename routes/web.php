@@ -91,5 +91,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::post('/users/{user}/updatePassword', [UsersController::class,'updatePassword'])->name('admin.updatePassword');
     Route::get('/profil', [UsersController::class,'profil'])->name('admin.profil');
     Route::get('/repports/{id}/print', [RapportAdminController::class, 'print'])->name('repports.print');
-
+    Route::get('/repports/{id}/telecharger', [RapportAdminController::class, 'telecharger'])->name('repports.telecharger');
+    
 });

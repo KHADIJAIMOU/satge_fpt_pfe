@@ -16,16 +16,23 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
-               
-            <li class="nav-item {{ (Session::get('menu') == 'profil') ? 'menu-open':''}}">
-            <a href="/admin/repports" class="nav-link {{ (Session::get('menu') == 'repports') ? 'active':'' }}">
-                        <i class="fa-solid fa-users"></i>
-                        <p>
-                            Rapports
-                        </p>
-                    </a>
-              
-                </li>
+                        <li class="nav-item">
+                            <a href="/admin/dashboard" class="nav-link {{ Session::get('menu') == 'dashboard' ? 'active':'' }}">
+                                <i class="fa-solid fa-chart-line"></i>
+                                <p>
+                                    Tableau de Bord
+                                </p>
+                            </a>
+                        </li>
+           
+                <li class="nav-item">
+                    <a href="/admin/repports" class="nav-link {{ (Session::get('menu') == 'repports') ? 'active':'' }}">
+                            <i class="fa-solid fa-file"></i>
+                            <p>
+                                Rapports
+                            </p>
+                        </a>
+                    </li>
                 <li class="nav-item">
                     <a href="/admin/users" class="nav-link {{ (Session::get('menu') == 'users') ? 'active':'' }}">
                             <i class="fa-solid fa-users"></i>
@@ -36,7 +43,7 @@
                     </li>
                 <li class="nav-item">
                 <a href="/admin/profil" class="nav-link {{ (Session::get('menu') == 'profil') ? 'active':'' }}">
-                        <i class="fa-solid fa-users"></i>
+                        <i class="fa-solid fa-user"></i>
                         <p>
                             profil
                         </p>

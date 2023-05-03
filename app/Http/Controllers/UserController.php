@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Models\Rapport;
 
 class UserController extends Controller
 {
@@ -30,7 +31,10 @@ class UserController extends Controller
                     
                     // check user role
                     if ($user->role === 'admin') {
+                        session()->put("menu", "dashboard");
+
                         return redirect('/admin/dashboard');
+
                     } else {
                         return redirect('/user/repports');
                     }
@@ -105,8 +109,18 @@ public function dashboard()
     $user = Auth::user();
     $NOM_ETABL = $user->NOM_ETABL;
     $LL_CYCLE = $user->LL_CYCLE;
+    session()->put("menu", "dashboard");
 
-    return view('auth.user.dashboard', ['NOM_ETABL' => $NOM_ETABL,'LL_CYCLE' => $LL_CYCLE]);
+    $users = User::count();
+
+ 
+
+
+    $nbRapports = Rapport::count();
+
+    session()->put("menu", "dashboard");
+
+    return view('auth.user.dashboard', ['NOM_ETABL' => $NOM_ETABL,'LL_CYCLE' => $LL_CYCLE,'nbRapports'=> $nbRapports,'users'=>$users]);
 }
 
     

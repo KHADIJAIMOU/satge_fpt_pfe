@@ -122,7 +122,7 @@
         </form>
     </center>
     <form id="regForm" enctype="multipart/form-data" method="post"
->
+        action="{{ route('repports.update', $rapport->id) }}">
         @csrf
         @method('PUT')
         <center>
@@ -139,20 +139,20 @@
                     style="font-family:'Amiri', serif;color: #333;text-align: center;text-transform: uppercase;margin-bottom: 20px;font-size: 26px;">
                     مسك المعطيات التربوية الخاصة بسير المؤسسة تربويا وإداريا </h6>
             </center>
-            <!-- One "tab1" for each step in the form: -->
-            <div class="tab1">
+            <!-- One "tab" for each step in the form: -->
+            <div class="tab">
                 <div class="card" style="width: auto;padding:20px;margin-top:50px;margin-bottom:50px;">
 
                     <p style="text-align: right;">
                         <label class="col-form-label" style="text-align: right;">اليوم</label>
                     </p>
 
-                    <p><input        type="date" placeholder="" id="date" name="date" value="{{ $rapport->date }}"></p>
-                    <p><input       required type="hidden" placeholder="" name="typeClass" value="{{ $text }}"></p>
+                    <p><input   type="date" placeholder="" id="date" name="date" value="{{ $rapport->date }}"></p>
+                    <p><input required type="hidden" placeholder="" name="typeClass" value="{{ $text }}"></p>
                 </div>
             </div>
 
-                <div class="tab1">
+                <div class="tab">
                     <center>
                         <div class="card-header" style="background-color:#B9F2CD;border-radius: 10px;">
                             مواظبة التلاميذ
@@ -161,322 +161,6 @@
                     <br>
 
                     @if ($rapport->typeClass == 'SECONDAIRE QUALIFIANT')
-                        <div id="errorMessage" style="display: none; color: red;">Value must be between 0 and 400</div>
-
-                        <div id="lycee-div">
-                            <center style="background-color: #F2BEB9;border-radius: 10px;"> المستوى الثانوي </center>
-                            <br><br>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                                <label class=" col-form-label" style="text-align: right;">غياب الجذع مشترك
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        name="absenceFirstLycee"  id="absenceFirstLycee" value="{{ $rapport->absenceFirstLycee }}"></p>
-
-                                <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ الجذع مشترك
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        name="totalFirstLycee"  id="totalFirstLycee"  value="{{ $rapport->totalFirstLycee }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                                <label id="myInput" class=" col-form-label" style="text-align: right;">
-                                    غياب الأولى بكالوريا
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceSecondLycee" id="absenceSecondLycee"
-                                        value="{{ $rapport->absenceSecondLycee }}"></p>
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ الأولى بكالوريا
-
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalSecondLycee" id="totalSecondLycee"
-                                        value="{{ $rapport->totalSecondLycee }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب الثانية بكالوريا
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceThirdLycee" id="absenceThirdLycee"
-                                        value="{{ $rapport->absenceThirdLycee }}"></p>
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ الثانية بكالوريا
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalThirdLycee" id="totalThirdLycee"
-                                        value="{{ $rapport->totalThirdLycee }}"></p>
-                            </div>
-                        </div>
-                    @endif
-
-                    @if ($rapport->typeClass== 'SECONDAIRE-COLLEGIAL')
-                        <div id="college-div">
-                            <center style="background-color: #F2BEB9;border-radius: 10px;">
-                                المستوى الإعدادي
-
-                            </center>
-                            <br><br>
-                            <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الأولى إعدادي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceFirstCollege" id="absenceFirstCollege"
-                                        value="{{ $rapport->absenceFirstCollege }}"></p>
-
-                                <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
-                                    إعدادي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalFirstCollege" id="totalFirstCollege"
-                                        value="{{ $rapport->totalFirstCollege }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الثانية إعدادي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceSecondCollege" id="absenceSecondCollege"
-                                        value="{{ $rapport->absenceSecondCollege }}"></p>
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الثانية إعدادي
-
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalSecondCollege" id="totalSecondCollege"
-                                        value="{{ $rapport->totalSecondCollege }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الثالثة إعدادي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceThirdCollege" id="absenceThirdCollege"
-                                        value="{{ $rapport->absenceThirdCollege }}"></p>
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الثالثة إعدادي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalThirdCollege" id="totalThirdCollege"
-                                        value="{{ $rapport->totalThirdCollege }}"></p>
-                            </div>
-                        </div>
-                    @endif
-                    @if ($rapport->typeClass == 'PRIMAIRE')
-                        <div id="college-div">
-                            <center style="background-color: #F2BEB9;border-radius: 10px;">
-                                المستوى الإبتدائي
-
-                            </center>
-                            <br><br>
-                            <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الأولى إبتدائي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceFirstPrimaire" id="absenceFirstPrimaire"
-                                        value="{{ $rapport->absenceFirstPrimaire }}"></p>
-
-                                <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
-                                    إبتدائي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" id="totalFirstPrimaire" name="totalFirstPrimaire" id="totalFirstPrimaire"
-                                        value="{{ $rapport->totalFirstPrimaire }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الثانية إبتدائي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceSecondPrimaire" id="absenceSecondPrimaire"
-                                        value="{{ $rapport->absenceSecondPrimaire }}"></p>
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الثانية إبتدائي
-
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalSecondPrimaire"  id="totalSecondPrimaire"
-                                        value="{{ $rapport->totalSecondPrimaire }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الثالثة إبتدائي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceThirdPrimaire" id="absenceThirdPrimaire"
-                                        value="{{ $rapport->absenceThirdPrimaire }}"></p>
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الثالثة إبتدائي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalThirdPrimaire"  id="totalThirdPrimaire"
-                                        value="{{ $rapport->totalThirdPrimaire }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الرابعة إبتدائي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceFourthPrimaire" id="absenceFourthPrimaire"
-                                        value="{{ $rapport->absenceFourthPrimaire }}"></p>
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الرابعة إبتدائي
-
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalFourthPrimaire" id="totalFourthPrimaire"
-                                        value="{{ $rapport->totalFourthPrimaire }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الخامسة إبتدائي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceFifthPrimaire" id="absenceFifthPrimaire"
-                                        value="{{ $rapport->absenceFifthPrimaire }}"></p>
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الخامسة إبتدائي
-
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalFifthPrimaire" id="totalFifthPrimaire"
-                                        value="{{ $rapport->totalFifthPrimaire }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة السادسة إبتدائي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceSixthPrimaire" id="absenceSixthPrimaire"
-                                        value="{{ $rapport->absenceSixthPrimaire }}"></p>
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة السادسة إبتدائي
-
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400" 
-                                        oninput="this.className = ''" name="totalSixthPrimaire" id="totalSixthPrimaire"
-                                        value="{{ $rapport->totalSixthPrimaire }}"></p>
-                            </div>
-                        </div>
-                    @endif
-                    @if ($rapport->typeClass == 'BTS')
-                        <div id="college-div">
-                            <center style="background-color: #F2BEB9;border-radius: 10px;">
-                                المحاسبة و التسيير
-                            </center>
-                            <br><br>
-                            <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الأولى
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceFirstComptabiliteGeneral" id="absenceFirstComptabiliteGeneral"
-                                        value="{{ $rapport->absenceFirstComptabiliteGeneral }}"></p>
-
-                                <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalFirstComptabiliteGeneral" id="totalFirstComptabiliteGeneral"
-                                        value="{{ $rapport->totalFirstComptabiliteGeneral }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الثانية
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceSecondComptabiliteGeneral" id="absenceSecondComptabiliteGeneral"
-                                        value="{{ $rapport->absenceSecondComptabiliteGeneral }}"></p>
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الثانية
-
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalSecondComptabiliteGeneral" id="totalSecondComptabiliteGeneral"
-                                        value="{{ $rapport->totalSecondComptabiliteGeneral }}"></p>
-                            </div>
-
-                        </div>
-                        <div id="college-div">
-                            <center style="background-color: #F2BEB9;border-radius: 10px;">
-                                التدبير التجاري
-                            </center>
-                            <br><br>
-                            <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الأولى
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceFirstManagementCommercial" id="absenceFirstManagementCommercial"
-                                        value="{{ $rapport->absenceFirstManagementCommercial }}"></p>
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الأولى
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalFirstManagementCommercial" id="totalFirstManagementCommercial"
-                                        value="{{ $rapport->totalFirstManagementCommercial }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الثانية
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceSecondManagementCommercial" id="absenceSecondManagementCommercial"
-                                        value="{{ $rapport->absenceSecondManagementCommercial }}"></p>
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الثانية
-
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalSecondManagementCommercial" id="totalSecondManagementCommercial"
-                                        value="{{ $rapport->totalSecondManagementCommercial }}"></p>
-                            </div>
-
-                        </div>
-                    @endif
-                    @if ($rapport->typeClass == 'BTS + SECONDAIRE QUALIFIANT')
                     <div id="errorMessage" style="display: none; color: red;">Value must be between 0 and 400</div>
 
                     <div id="lycee-div">
@@ -486,12 +170,12 @@
 
                             <label class=" col-form-label" style="text-align: right;">غياب الجذع مشترك
                             </label>
-                            <p><input    required placeholder="" type="number" min="0" max="400"
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                     name="absenceFirstLycee"  id="absenceFirstLycee" value="{{ $rapport->absenceFirstLycee }}"></p>
 
                             <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ الجذع مشترك
                             </label>
-                            <p><input    required placeholder="" type="number" min="0" max="400"
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                     name="totalFirstLycee"  id="totalFirstLycee"  value="{{ $rapport->totalFirstLycee }}"></p>
                         </div>
                         <div class="card" style="width: auto;padding:20px;margin-top:50px;">
@@ -499,7 +183,7 @@
                             <label id="myInput" class=" col-form-label" style="text-align: right;">
                                 غياب الأولى بكالوريا
                             </label>
-                            <p><input    required placeholder="" type="number" min="0" max="400"
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                     oninput="this.className = ''" name="absenceSecondLycee" id="absenceSecondLycee"
                                     value="{{ $rapport->absenceSecondLycee }}"></p>
 
@@ -508,7 +192,7 @@
                                 مجموع تلاميذ الأولى بكالوريا
 
                             </label>
-                            <p><input    required placeholder="" type="number" min="0" max="400"
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                     oninput="this.className = ''" name="totalSecondLycee" id="totalSecondLycee"
                                     value="{{ $rapport->totalSecondLycee }}"></p>
                         </div>
@@ -518,7 +202,7 @@
                             <label class=" col-form-label" style="text-align: right;">
                                 غياب الثانية بكالوريا
                             </label>
-                            <p><input    required placeholder="" type="number" min="0" max="400"
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                     oninput="this.className = ''" name="absenceThirdLycee" id="absenceThirdLycee"
                                     value="{{ $rapport->absenceThirdLycee }}"></p>
 
@@ -526,345 +210,661 @@
                             <label class=" col-form-label" style="text-align: right;">
                                 مجموع تلاميذ الثانية بكالوريا
                             </label>
-                            <p><input    required placeholder="" type="number" min="0" max="400"
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
                                     oninput="this.className = ''" name="totalThirdLycee" id="totalThirdLycee"
                                     value="{{ $rapport->totalThirdLycee }}"></p>
                         </div>
                     </div>
-                        <div id="college-div">
-                            <center style="background-color: #F2BEB9;border-radius: 10px;">
-                                المحاسبة و التسيير
-                            </center>
-                            <br><br>
-                            <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
+                @endif
 
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الأولى
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceFirstComptabiliteGeneral" id="absenceFirstComptabiliteGeneral"
-                                        value="{{ $rapport->absenceFirstComptabiliteGeneral }}"></p>
+                @if ($rapport->typeClass== 'SECONDAIRE-COLLEGIAL')
+                    <div id="college-div">
+                        <center style="background-color: #F2BEB9;border-radius: 10px;">
+                            المستوى الإعدادي
 
-                                <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalFirstComptabiliteGeneral" id="totalFirstComptabiliteGeneral"
-                                        value="{{ $rapport->totalFirstComptabiliteGeneral }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+                        </center>
+                        <br><br>
+                        <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
 
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الثانية
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceSecondComptabiliteGeneral" id="absenceSecondComptabiliteGeneral"
-                                        value="{{ $rapport->absenceSecondComptabiliteGeneral }}"></p>
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الأولى إعدادي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceFirstCollege" id="absenceFirstCollege"
+                                    value="{{ $rapport->absenceFirstCollege }}"></p>
 
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الثانية
-
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalSecondComptabiliteGeneral" id="totalSecondComptabiliteGeneral"
-                                        value="{{ $rapport->totalSecondComptabiliteGeneral }}"></p>
-                            </div>
-
+                            <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
+                                إعدادي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalFirstCollege" id="totalFirstCollege"
+                                    value="{{ $rapport->totalFirstCollege }}"></p>
                         </div>
-                        <div id="college-div">
-                            <center style="background-color: #F2BEB9;border-radius: 10px;">
-                                التدبير التجاري
-                            </center>
-                            <br><br>
-                            <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
 
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الأولى
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceFirstManagementCommercial" id="absenceFirstManagementCommercial"
-                                        value="{{ $rapport->absenceFirstManagementCommercial }}"></p>
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الأولى
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalFirstManagementCommercial" id="totalFirstManagementCommercial"
-                                        value="{{ $rapport->totalFirstManagementCommercial }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الثانية
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceSecondManagementCommercial" id="absenceSecondManagementCommercial"
-                                        value="{{ $rapport->absenceSecondManagementCommercial }}"></p>
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الثانية إعدادي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceSecondCollege" id="absenceSecondCollege"
+                                    value="{{ $rapport->absenceSecondCollege }}"></p>
 
 
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الثانية
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الثانية إعدادي
 
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalSecondManagementCommercial" id="totalSecondManagementCommercial"
-                                        value="{{ $rapport->totalSecondManagementCommercial }}"></p>
-                            </div>
-
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalSecondCollege" id="totalSecondCollege"
+                                    value="{{ $rapport->totalSecondCollege }}"></p>
                         </div>
-                    @endif
-                    @if ($rapport->typeClass == 'SECONDAIRE-COLLEGIAL')
-                        <div id="lycee-college-div">
-                            <center style="background-color: #F2BEB9;border-radius: 10px;"> المستوى الثانوي و الإعدادي
-                            </center>
-                            <br><br>
-                            <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
-                                <label class=" col-form-label" style="text-align: right;">غياب السنة الأولى
-                                    إعدادي</label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceFirstCollege" id="absenceFirstCollege"
-                                        value="{{ $rapport->absenceFirstCollege }}"></p>
-
-                                <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
-                                    إعدادي</label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalFirstCollege" id="totalFirstCollege"
-                                        value="{{ $rapport->totalFirstCollege }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-                                <label class=" col-form-label" style="text-align: right;">غياب السنة الثانية
-                                    إعدادي</label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceSecondCollege" id="absenceSecondCollege"
-                                        value="{{ $rapport->absenceSecondCollege }}"></p>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
 
 
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الثانية إعدادي
-
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalSecondCollege" id="totalSecondCollege"
-                                        value="{{ $rapport->totalSecondCollege }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-                                <label class=" col-form-label" style="text-align: right;">غياب السنة الثالثة
-                                    إعدادي</label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceThirdCollege" id="absenceThirdCollege"
-                                        value="{{ $rapport->absenceThirdCollege }}"></p>
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الثالثة إعدادي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceThirdCollege" id="absenceThirdCollege"
+                                    value="{{ $rapport->absenceThirdCollege }}"></p>
 
 
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الثالثة إعدادي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalThirdCollege" id="totalThirdCollege"
-                                        value="{{ $rapport->totalThirdCollege }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-                                <label class=" col-form-label" style="text-align: right;">غياب الجذع مشترك
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceFirstLycee" id="absenceFirstLycee"
-                                        value="{{ $rapport->absenceFirstLycee }}"></p>
-
-                                <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ الجذع مشترك
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalFirstLycee" id="totalFirstLycee"
-                                        value="{{ $rapport->totalFirstLycee }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب الأولى بكالوريا
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceSecondLycee" id="absenceSecondLycee"
-                                        value="{{ $rapport->absenceSecondLycee }}"></p>
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ الأولى بكالوريا
-
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalSecondLycee" id="totalSecondLycee"
-                                        value="{{ $rapport->totalSecondLycee }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;;margin-bottom:50px;">
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب الثانية بكالوريا
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceThirdLycee" id="absenceThirdLycee"
-                                        value="{{ $rapport->absenceThirdLycee }}"></p>
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ الثانية بكالوريا
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalThirdLycee" id="totalThirdLycee"
-                                        value="{{ $rapport->totalThirdLycee }}"></p>
-                            </div>
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الثالثة إعدادي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalThirdCollege" id="totalThirdCollege"
+                                    value="{{ $rapport->totalThirdCollege }}"></p>
                         </div>
-                    @endif
-                    @if ($rapport->typeClass == 'SECONDAIRE QUALIFIANT + SECONDAIRE-COLLEGIAL')
-                        <div id="lycee-college-div">
-                            <center style="background-color: #F2BEB9;border-radius: 10px;"> المستوى الثانوي و الإعدادي
-                            </center>
-                            <br><br>
-                            <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
-                                <label class=" col-form-label" style="text-align: right;">غياب السنة الأولى
-                                    إعدادي</label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceFirstCollege" id="absenceFirstCollege"
-                                        value="{{ $rapport->absenceFirstCollege }}"></p>
+                    </div>
+                @endif
+                @if ($rapport->typeClass == 'PRIMAIRE')
+                    <div id="college-div">
+                        <center style="background-color: #F2BEB9;border-radius: 10px;">
+                            المستوى الإبتدائي
 
-                                <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
-                                    إعدادي</label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalFirstCollege" id="totalFirstCollege"
-                                        value="{{ $rapport->totalFirstCollege }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-                                <label class=" col-form-label" style="text-align: right;">غياب السنة الثانية
-                                    إعدادي</label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceSecondCollege" id="absenceSecondCollege"
-                                        value="{{ $rapport->absenceSecondCollege }}"></p>
+                        </center>
+                        <br><br>
+                        <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
 
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الأولى إبتدائي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceFirstPrimaire" id="absenceFirstPrimaire"
+                                    value="{{ $rapport->absenceFirstPrimaire }}"></p>
 
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الثانية إعدادي
-
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalSecondCollege" id="totalSecondCollege"
-                                        value="{{ $rapport->totalSecondCollege }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-                                <label class=" col-form-label" style="text-align: right;">غياب السنة الثالثة
-                                    إعدادي</label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceThirdCollege" id="absenceThirdCollege"
-                                        value="{{ $rapport->absenceThirdCollege }}"></p>
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الثالثة إعدادي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalThirdCollege" id="totalThirdCollege"
-                                        value="{{ $rapport->totalThirdCollege }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-                                <label class=" col-form-label" style="text-align: right;">غياب الجذع مشترك
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceFirstLycee" id="absenceFirstLycee"
-                                        value="{{ $rapport->absenceFirstLycee }}"></p>
-
-                                <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ الجذع مشترك
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalFirstLycee" id="totalFirstLycee"
-                                        value="{{ $rapport->totalFirstLycee }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب الأولى بكالوريا
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceSecondLycee" id="absenceSecondLycee"
-                                        value="{{ $rapport->absenceSecondLycee }}"></p>
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ الأولى بكالوريا
-
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalSecondLycee" id="totalSecondLycee"
-                                        value="{{ $rapport->totalSecondLycee }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;;margin-bottom:50px;">
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب الثانية بكالوريا
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceThirdLycee" id="absenceThirdLycee"
-                                        value="{{ $rapport->absenceThirdLycee }}"></p>
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ الثانية بكالوريا
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalThirdLycee" id="totalThirdLycee"
-                                        value="{{ $rapport->totalThirdLycee }}"></p>
-                            </div>
+                            <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
+                                إبتدائي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" id="totalFirstPrimaire" name="totalFirstPrimaire" id="totalFirstPrimaire"
+                                    value="{{ $rapport->totalFirstPrimaire }}"></p>
                         </div>
-                        <div id="college-div">
-                            <center style="background-color: #F2BEB9;border-radius: 10px;">
-                                المستوى الإعدادي
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
 
-                            </center>
-                            <br><br>
-                            <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الأولى إعدادي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceFirstCollege" id="absenceFirstCollege"
-                                        value="{{ $rapport->absenceFirstCollege }}"></p>
-
-                                <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
-                                    إعدادي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalFirstCollege" id="totalFirstCollege"
-                                        value="{{ $rapport->totalFirstCollege }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الثانية إعدادي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceSecondCollege" id="absenceSecondCollege"
-                                        value="{{ $rapport->absenceSecondCollege }}"></p>
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الثانية إبتدائي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceSecondPrimaire" id="absenceSecondPrimaire"
+                                    value="{{ $rapport->absenceSecondPrimaire }}"></p>
 
 
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الثانية إعدادي
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الثانية إبتدائي
 
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalSecondCollege" id="totalSecondCollege"
-                                        value="{{ $rapport->totalSecondCollege }}"></p>
-                            </div>
-                            <div class="card" style="width: auto;padding:20px;margin-top:50px;">
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    غياب السنة الثالثة إعدادي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="absenceThirdCollege" id="absenceThirdCollege"
-                                        value="{{ $rapport->absenceThirdCollege }}"></p>
-
-
-                                <label class=" col-form-label" style="text-align: right;">
-                                    مجموع تلاميذ السنة الثالثة إعدادي
-                                </label>
-                                <p><input    required placeholder="" type="number" min="0" max="400"
-                                        oninput="this.className = ''" name="totalThirdCollege" id="totalThirdCollege"
-                                        value="{{ $rapport->totalThirdCollege }}"></p>
-                            </div>
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalSecondPrimaire"  id="totalSecondPrimaire"
+                                    value="{{ $rapport->totalSecondPrimaire }}"></p>
                         </div>
-                    @endif
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الثالثة إبتدائي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceThirdPrimaire" id="absenceThirdPrimaire"
+                                    value="{{ $rapport->absenceThirdPrimaire }}"></p>
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الثالثة إبتدائي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalThirdPrimaire"  id="totalThirdPrimaire"
+                                    value="{{ $rapport->totalThirdPrimaire }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الرابعة إبتدائي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceFourthPrimaire" id="absenceFourthPrimaire"
+                                    value="{{ $rapport->absenceFourthPrimaire }}"></p>
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الرابعة إبتدائي
+
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalFourthPrimaire" id="totalFourthPrimaire"
+                                    value="{{ $rapport->totalFourthPrimaire }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الخامسة إبتدائي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceFifthPrimaire" id="absenceFifthPrimaire"
+                                    value="{{ $rapport->absenceFifthPrimaire }}"></p>
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الخامسة إبتدائي
+
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalFifthPrimaire" id="totalFifthPrimaire"
+                                    value="{{ $rapport->totalFifthPrimaire }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة السادسة إبتدائي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceSixthPrimaire" id="absenceSixthPrimaire"
+                                    value="{{ $rapport->absenceSixthPrimaire }}"></p>
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة السادسة إبتدائي
+
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400" 
+                                    oninput="this.className = ''" name="totalSixthPrimaire" id="totalSixthPrimaire"
+                                    value="{{ $rapport->totalSixthPrimaire }}"></p>
+                        </div>
+                    </div>
+                @endif
+                @if ($rapport->typeClass == 'BTS')
+                    <div id="college-div">
+                        <center style="background-color: #F2BEB9;border-radius: 10px;">
+                            المحاسبة و التسيير
+                        </center>
+                        <br><br>
+                        <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الأولى
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceFirstComptabiliteGeneral" id="absenceFirstComptabiliteGeneral"
+                                    value="{{ $rapport->absenceFirstComptabiliteGeneral }}"></p>
+
+                            <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalFirstComptabiliteGeneral" id="totalFirstComptabiliteGeneral"
+                                    value="{{ $rapport->totalFirstComptabiliteGeneral }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الثانية
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceSecondComptabiliteGeneral" id="absenceSecondComptabiliteGeneral"
+                                    value="{{ $rapport->absenceSecondComptabiliteGeneral }}"></p>
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الثانية
+
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalSecondComptabiliteGeneral" id="totalSecondComptabiliteGeneral"
+                                    value="{{ $rapport->totalSecondComptabiliteGeneral }}"></p>
+                        </div>
+
+                    </div>
+                    <div id="college-div">
+                        <center style="background-color: #F2BEB9;border-radius: 10px;">
+                            التدبير التجاري
+                        </center>
+                        <br><br>
+                        <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الأولى
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceFirstManagementCommercial" id="absenceFirstManagementCommercial"
+                                    value="{{ $rapport->absenceFirstManagementCommercial }}"></p>
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الأولى
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalFirstManagementCommercial" id="totalFirstManagementCommercial"
+                                    value="{{ $rapport->totalFirstManagementCommercial }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الثانية
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceSecondManagementCommercial" id="absenceSecondManagementCommercial"
+                                    value="{{ $rapport->absenceSecondManagementCommercial }}"></p>
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الثانية
+
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalSecondManagementCommercial" id="totalSecondManagementCommercial"
+                                    value="{{ $rapport->totalSecondManagementCommercial }}"></p>
+                        </div>
+
+                    </div>
+                @endif
+                @if ($rapport->typeClass == 'BTS + SECONDAIRE QUALIFIANT')
+                <div id="errorMessage" style="display: none; color: red;">Value must be between 0 and 400</div>
+
+                <div id="lycee-div">
+                    <center style="background-color: #F2BEB9;border-radius: 10px;"> المستوى الثانوي </center>
+                    <br><br>
+                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+
+                        <label class=" col-form-label" style="text-align: right;">غياب الجذع مشترك
+                        </label>
+                        <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                name="absenceFirstLycee"  id="absenceFirstLycee" value="{{ $rapport->absenceFirstLycee }}"></p>
+
+                        <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ الجذع مشترك
+                        </label>
+                        <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                name="totalFirstLycee"  id="totalFirstLycee"  value="{{ $rapport->totalFirstLycee }}"></p>
+                    </div>
+                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+
+                        <label id="myInput" class=" col-form-label" style="text-align: right;">
+                            غياب الأولى بكالوريا
+                        </label>
+                        <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                oninput="this.className = ''" name="absenceSecondLycee" id="absenceSecondLycee"
+                                value="{{ $rapport->absenceSecondLycee }}"></p>
+
+
+                        <label class=" col-form-label" style="text-align: right;">
+                            مجموع تلاميذ الأولى بكالوريا
+
+                        </label>
+                        <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                oninput="this.className = ''" name="totalSecondLycee" id="totalSecondLycee"
+                                value="{{ $rapport->totalSecondLycee }}"></p>
+                    </div>
+                    <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+
+
+                        <label class=" col-form-label" style="text-align: right;">
+                            غياب الثانية بكالوريا
+                        </label>
+                        <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                oninput="this.className = ''" name="absenceThirdLycee" id="absenceThirdLycee"
+                                value="{{ $rapport->absenceThirdLycee }}"></p>
+
+
+                        <label class=" col-form-label" style="text-align: right;">
+                            مجموع تلاميذ الثانية بكالوريا
+                        </label>
+                        <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                oninput="this.className = ''" name="totalThirdLycee" id="totalThirdLycee"
+                                value="{{ $rapport->totalThirdLycee }}"></p>
+                    </div>
+                </div>
+                    <div id="college-div">
+                        <center style="background-color: #F2BEB9;border-radius: 10px;">
+                            المحاسبة و التسيير
+                        </center>
+                        <br><br>
+                        <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الأولى
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceFirstComptabiliteGeneral" id="absenceFirstComptabiliteGeneral"
+                                    value="{{ $rapport->absenceFirstComptabiliteGeneral }}"></p>
+
+                            <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalFirstComptabiliteGeneral" id="totalFirstComptabiliteGeneral"
+                                    value="{{ $rapport->totalFirstComptabiliteGeneral }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الثانية
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceSecondComptabiliteGeneral" id="absenceSecondComptabiliteGeneral"
+                                    value="{{ $rapport->absenceSecondComptabiliteGeneral }}"></p>
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الثانية
+
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalSecondComptabiliteGeneral" id="totalSecondComptabiliteGeneral"
+                                    value="{{ $rapport->totalSecondComptabiliteGeneral }}"></p>
+                        </div>
+
+                    </div>
+                    <div id="college-div">
+                        <center style="background-color: #F2BEB9;border-radius: 10px;">
+                            التدبير التجاري
+                        </center>
+                        <br><br>
+                        <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الأولى
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceFirstManagementCommercial" id="absenceFirstManagementCommercial"
+                                    value="{{ $rapport->absenceFirstManagementCommercial }}"></p>
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الأولى
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalFirstManagementCommercial" id="totalFirstManagementCommercial"
+                                    value="{{ $rapport->totalFirstManagementCommercial }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الثانية
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceSecondManagementCommercial" id="absenceSecondManagementCommercial"
+                                    value="{{ $rapport->absenceSecondManagementCommercial }}"></p>
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الثانية
+
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalSecondManagementCommercial" id="totalSecondManagementCommercial"
+                                    value="{{ $rapport->totalSecondManagementCommercial }}"></p>
+                        </div>
+
+                    </div>
+                @endif
+                @if ($rapport->typeClass == 'SECONDAIRE-COLLEGIAL')
+                    <div id="lycee-college-div">
+                        <center style="background-color: #F2BEB9;border-radius: 10px;"> المستوى الثانوي و الإعدادي
+                        </center>
+                        <br><br>
+                        <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
+                            <label class=" col-form-label" style="text-align: right;">غياب السنة الأولى
+                                إعدادي</label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceFirstCollege" id="absenceFirstCollege"
+                                    value="{{ $rapport->absenceFirstCollege }}"></p>
+
+                            <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
+                                إعدادي</label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalFirstCollege" id="totalFirstCollege"
+                                    value="{{ $rapport->totalFirstCollege }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+                            <label class=" col-form-label" style="text-align: right;">غياب السنة الثانية
+                                إعدادي</label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceSecondCollege" id="absenceSecondCollege"
+                                    value="{{ $rapport->absenceSecondCollege }}"></p>
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الثانية إعدادي
+
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalSecondCollege" id="totalSecondCollege"
+                                    value="{{ $rapport->totalSecondCollege }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+                            <label class=" col-form-label" style="text-align: right;">غياب السنة الثالثة
+                                إعدادي</label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceThirdCollege" id="absenceThirdCollege"
+                                    value="{{ $rapport->absenceThirdCollege }}"></p>
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الثالثة إعدادي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalThirdCollege" id="totalThirdCollege"
+                                    value="{{ $rapport->totalThirdCollege }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+                            <label class=" col-form-label" style="text-align: right;">غياب الجذع مشترك
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceFirstLycee" id="absenceFirstLycee"
+                                    value="{{ $rapport->absenceFirstLycee }}"></p>
+
+                            <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ الجذع مشترك
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalFirstLycee" id="totalFirstLycee"
+                                    value="{{ $rapport->totalFirstLycee }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب الأولى بكالوريا
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceSecondLycee" id="absenceSecondLycee"
+                                    value="{{ $rapport->absenceSecondLycee }}"></p>
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ الأولى بكالوريا
+
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalSecondLycee" id="totalSecondLycee"
+                                    value="{{ $rapport->totalSecondLycee }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;;margin-bottom:50px;">
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب الثانية بكالوريا
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceThirdLycee" id="absenceThirdLycee"
+                                    value="{{ $rapport->absenceThirdLycee }}"></p>
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ الثانية بكالوريا
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalThirdLycee" id="totalThirdLycee"
+                                    value="{{ $rapport->totalThirdLycee }}"></p>
+                        </div>
+                    </div>
+                @endif
+                @if ($rapport->typeClass == 'SECONDAIRE QUALIFIANT + SECONDAIRE-COLLEGIAL')
+                    <div id="lycee-college-div">
+                        <center style="background-color: #F2BEB9;border-radius: 10px;"> المستوى الثانوي و الإعدادي
+                        </center>
+                        <br><br>
+                        <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
+                            <label class=" col-form-label" style="text-align: right;">غياب السنة الأولى
+                                إعدادي</label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceFirstCollege" id="absenceFirstCollege"
+                                    value="{{ $rapport->absenceFirstCollege }}"></p>
+
+                            <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
+                                إعدادي</label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalFirstCollege" id="totalFirstCollege"
+                                    value="{{ $rapport->totalFirstCollege }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+                            <label class=" col-form-label" style="text-align: right;">غياب السنة الثانية
+                                إعدادي</label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceSecondCollege" id="absenceSecondCollege"
+                                    value="{{ $rapport->absenceSecondCollege }}"></p>
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الثانية إعدادي
+
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalSecondCollege" id="totalSecondCollege"
+                                    value="{{ $rapport->totalSecondCollege }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+                            <label class=" col-form-label" style="text-align: right;">غياب السنة الثالثة
+                                إعدادي</label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceThirdCollege" id="absenceThirdCollege"
+                                    value="{{ $rapport->absenceThirdCollege }}"></p>
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الثالثة إعدادي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalThirdCollege" id="totalThirdCollege"
+                                    value="{{ $rapport->totalThirdCollege }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+                            <label class=" col-form-label" style="text-align: right;">غياب الجذع مشترك
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceFirstLycee" id="absenceFirstLycee"
+                                    value="{{ $rapport->absenceFirstLycee }}"></p>
+
+                            <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ الجذع مشترك
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalFirstLycee" id="totalFirstLycee"
+                                    value="{{ $rapport->totalFirstLycee }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب الأولى بكالوريا
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceSecondLycee" id="absenceSecondLycee"
+                                    value="{{ $rapport->absenceSecondLycee }}"></p>
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ الأولى بكالوريا
+
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalSecondLycee" id="totalSecondLycee"
+                                    value="{{ $rapport->totalSecondLycee }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;;margin-bottom:50px;">
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب الثانية بكالوريا
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceThirdLycee" id="absenceThirdLycee"
+                                    value="{{ $rapport->absenceThirdLycee }}"></p>
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ الثانية بكالوريا
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalThirdLycee" id="totalThirdLycee"
+                                    value="{{ $rapport->totalThirdLycee }}"></p>
+                        </div>
+                    </div>
+                    <div id="college-div">
+                        <center style="background-color: #F2BEB9;border-radius: 10px;">
+                            المستوى الإعدادي
+
+                        </center>
+                        <br><br>
+                        <div class=" card" style="width: auto;padding:20px;margin-top:50px;">
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الأولى إعدادي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceFirstCollege" id="absenceFirstCollege"
+                                    value="{{ $rapport->absenceFirstCollege }}"></p>
+
+                            <label class=" col-form-label" style="text-align: right;">مجموع تلاميذ السنة الأولى
+                                إعدادي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalFirstCollege" id="totalFirstCollege"
+                                    value="{{ $rapport->totalFirstCollege }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الثانية إعدادي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceSecondCollege" id="absenceSecondCollege"
+                                    value="{{ $rapport->absenceSecondCollege }}"></p>
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الثانية إعدادي
+
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalSecondCollege" id="totalSecondCollege"
+                                    value="{{ $rapport->totalSecondCollege }}"></p>
+                        </div>
+                        <div class="card" style="width: auto;padding:20px;margin-top:50px;">
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                غياب السنة الثالثة إعدادي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="absenceThirdCollege" id="absenceThirdCollege"
+                                    value="{{ $rapport->absenceThirdCollege }}"></p>
+
+
+                            <label class=" col-form-label" style="text-align: right;">
+                                مجموع تلاميذ السنة الثالثة إعدادي
+                            </label>
+                            <p><input  disabled  required placeholder="" type="number" min="0" max="400"
+                                    oninput="this.className = ''" name="totalThirdCollege" id="totalThirdCollege"
+                                    value="{{ $rapport->totalThirdCollege }}"></p>
+                        </div>
+                    </div>
+                @endif
                 </div>
                 </div>
-            <div class="tab1">
+            <div class="tab">
                 <center>
                     <div class="card-header" style="background-color:#B9F2CD;border-radius: 10px;">
                         مواظبة الأطر
@@ -905,7 +905,7 @@
             </div>
 
 
-            <div class="tab1">
+            <div class="tab">
                 <center>
                     <div class="card-header" style="background-color:#B9F2CD;border-radius: 10px;">
                         الدعم التربوي والتعويض
@@ -959,7 +959,7 @@
                 </div>
             </div>
 
-            <div class="tab1">
+            <div class="tab">
                 <center>
                     <div class="card-header" style="background-color:#F6DEC0;border-radius: 10px;">
                         الاجتماعات المنجزة
@@ -1238,7 +1238,12 @@
 
 
 
-            
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">السابق</button>
+                    <button type="button" id="nextBtn" onclick="nextPrev(1)">التالي</button>
+                </div>
+            </div>
             <!-- Circles which indicates the steps of the form: -->
             <div style="text-align:center;margin-top:40px;">
                 <span class="step"></span>
@@ -1258,5 +1263,213 @@
     
 </script>
 </body>
+<script>
+    /*  var renionEffectuerRienCheckbox = document.querySelector('input[name="renionEffectuerRien"]');
+renionEffectuerRienCheckbox.addEventListener('change', function() {
+    if (this.checked) {
+        // If the "renionEffectuerRien" checkbox is checked, loop through all the other checkboxes and uncheck them
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]:not([name="renionEffectuerRien"])');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = false;
+        }
+    }
+});*/
+    function checkRien() {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        var rienCheckbox = document.querySelector('input[name="renionEffectuerRien"]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].name !== 'renionEffectuerRien' && checkboxes[i].checked) {
+                rienCheckbox.checked = false;
+                return;
+            }
+        }
+    }
+
+    function uncheckOthers() {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        var rienCheckbox = document.querySelector('input[name="renionEffectuerRien"]');
+        if (rienCheckbox.checked) {
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].name !== 'renionEffectuerRien') {
+                    checkboxes[i].checked = false;
+                }
+            }
+        }
+    }
+
+    function checkRienSecond() {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        var rienCheckbox = document.querySelector('input[name="activiteEffectuerRien"]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].name !== 'activiteEffectuerRien' && checkboxes[i].checked) {
+                rienCheckbox.checked = false;
+                return;
+            }
+        }
+    }
+
+    function uncheckOthersSecond() {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        var rienCheckbox = document.querySelector('input[name="activiteEffectuerRien"]');
+        if (rienCheckbox.checked) {
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].name !== 'activiteEffectuerRien') {
+                    checkboxes[i].checked = false;
+                }
+            }
+        }
+    }
+
+
+
+    var currentTab = 0; // Current tab is set to be the first tab (0)
+    showTab(currentTab); // Display the current tab
+
+    function showTab(n) {
+        // This function will display the specified tab of the form...
+        var x = document.getElementsByClassName("tab");
+        x[n].style.display = "block";
+        //... and fix the Previous/Next buttons:
+        if (n == 0) {
+            document.getElementById("prevBtn").style.display = "none";
+        } else {
+            document.getElementById("prevBtn").style.display = "inline";
+        }
+        if (n == (x.length - 1)) {
+            document.getElementById("nextBtn").innerHTML = "حفظ";
+        } else {
+            document.getElementById("nextBtn").innerHTML = "التالي";
+        }
+        //... and run a function that will display the correct step indicator:
+        fixStepIndicator(n)
+    }
+
+    function nextPrev(n) {
+        // This function will figure out which tab to display
+        var x = document.getElementsByClassName("tab");
+        // Exit the function if any field in the current tab is invalid:
+        if (n == 1 && !validateForm()) return false;
+        // Hide the current tab:
+        x[currentTab].style.display = "none";
+        // Increase or decrease the current tab by 1:
+        currentTab = currentTab + n;
+        // if you have reached the end of the form...
+        if (currentTab >= x.length) {
+            // ... the form gets submitted:
+            document.getElementById("regForm").submit();
+            return false;
+        }
+        // Otherwise, display the correct tab:
+        showTab(currentTab);
+    }
+
+    function validateForm() {
+        // This function deals with validation of the form fields
+        var x, y, i, valid = true;
+        var radio = document.querySelector('input[name="classInterieur"]:checked');
+        x = document.getElementsByClassName("tab");
+        y = x[currentTab].querySelectorAll("#date,#absenceFirstPrimaire,#totalFirstPrimaire,#absenceSecondPrimaire,#totalSecondPrimaire,#absenceThirdPrimaire,#totalThirdPrimaire,#absenceFourthPrimaire,#totalFourthPrimaire,#absenceFifthPrimaire,#totalFifthPrimaire,#absenceSixthPrimaire,#totalSixthPrimaire,#absenceFirstCollege,#totalFirstCollege,#absenceSecondCollege,#totalSecondCollege,#absenceThirdCollege,#totalThirdCollege,#absenceFirstLycee,#totalFirstLycee,#absenceSecondLycee,#totalSecondLycee,#absenceThirdLycee,#totalThirdLycee,#absenceFirstComptabiliteGeneral,#totalFirstComptabiliteGeneral,#absenceSecondComptabiliteGeneral,#totalSecondComptabiliteGeneral,#absenceFirstManagementCommercial,#totalFirstManagementCommercial,#absenceSecondManagementCommercial,#totalSecondManagementCommercial,#nbEmployee,#nbAbsenceEmployee,#nbRetardEmployee,#nbSeanceProgramme,#nbSeanceEffecuter,#nbSeanceComponser,#renionEffectuerConseilAdministratif,#renionEffectuerConseilsDepartementaux,#renionEffectuerConseilsPedagogiqueTa3limi,#renionEffectuerConseilsPedagogiqueTrbaoui,#renionEffectuerConseilDeGestion,#renionEffectuerAutreRenion,#renionEffectuerRien,#activiteEffectuerIntégrée,#activiteEffectuerParallel,#activiteEffectuerRien,#rapportActiviteEffectuer,#rapportVisit,#rapportAccidentScolaire,#different,#classInterieur,#inscritPetitDejeuner,#presentPetitDejeuner,#inscritDejeuner,#presentDejeuner,#inscritDinner,#presentDinner,#RespectProgrammeNutritional,#quality,#quantity,#presentRevision");
+      
+        if (radio && radio.value === "oui") {
+        document.getElementById("div1").style.display = "block";
+        document.getElementById("div2").style.display = "none";
+        for (i = 0; i < y.length; i++) {
+            // If a field is empty...
+            if (y[i].value == "") {
+                // add an "invalid" class to the field:
+                y[i].className += " invalid";
+                // and set the current valid status to false
+                valid = false;
+            }
+        }
+    } else if (radio && radio.value === "non") {
+        document.getElementById("div1").style.display = "none";
+        document.getElementById("div2").style.display = "block";
+    }
+
+
+        // A loop that checks every input field in the current tab:
+        
+        if (valid) {
+            document.getElementsByClassName("step")[currentTab].className += " finish";
+        }
+        return valid; // return the valid status
+    }
+
+    function fixStepIndicator(n) {
+        // This function removes the "active" class of all steps...
+        var i, x = document.getElementsByClassName("step");
+        for (i = 0; i < x.length; i++) {
+            x[i].className = x[i].className.replace(" active", "");
+        }
+        //... and adds the "active" class on the current step:
+        x[n].className += " active";
+    }
+    var colegeButtona = document.getElementById("colegeButton");
+    var collegediv = document.getElementById("college-div");
+    if (colegeButtona && collegediv) {
+        colegeButtona.addEventListener("click", function() {
+            if (collegediv.style.display === "none") {
+                collegediv.style.display = "block";
+            } else {
+                collegediv.style.display = "none";
+            }
+        });
+    }
+    var lyceeButton = document.getElementById("lyceeButton");
+    var lyceeDiv = document.getElementById("lycee-div");
+    if (lyceeButton && lyceeDiv) {
+        lyceeButton.addEventListener("click", function() {
+            if (lyceeDiv.style.display === "none") {
+                lyceeDiv.style.display = "block";
+            } else {
+                lyceeDiv.style.display = "none";
+            }
+        });
+    }
+
+    var binomeA = document.getElementById("binome");
+    var lyceecollegediv = document.getElementById("lycee-college-div");
+    if (binomeA && lyceecollegediv) {
+        binomeA.addEventListener("click", function() {
+            if (lyceecollegediv.style.display === "none") {
+                lyceecollegediv.style.display = "block";
+            } else {
+                lyceecollegediv.style.display = "none";
+            }
+        });
+    }
+
+    const input = document.getElementById('myInput');
+    const errorMessage = document.getElementById('errorMessage');
+    input.addEventListener('input', function() {
+        if (input.value > 400) {
+            input.value = 400;
+            errorMessage.style.display = 'block';
+        } else {
+            errorMessage.style.display = 'none';
+        }
+    });
+
+    function showDiv(radio) {
+        if (radio.value === "oui") {
+            document.getElementById("div1").style.display = "block";
+            document.getElementById("div2").style.display = "none";
+
+        } else if (radio.value === "non") {
+            document.getElementById("div1").style.display = "none";
+            document.getElementById("div2").style.display = "block";
+
+        }
+    }
+
+    function getIPAddress() {
+        fetch('https://api.ipify.org/?format=json')
+            .then(response => response.json())
+            .then(data => alert(data.ip))
+            .catch(error => console.error(error))
+    }
+</script>
+
 
 </html>

@@ -2,7 +2,10 @@
     @section('title', 'Liste des rapports')
 @section('content')
 <div class="container-fluid">
-
+    <a href="{{ route('rapport.index') }}" class="btn btn-success mb-2">
+        <i class="fa-solid fa-plus"></i>
+        Ajouter Un Nouvel rapport
+    </a>
 @if (count($lists)==0)
 <div> Aucun rapport pour le moment </div>
     

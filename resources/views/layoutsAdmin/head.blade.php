@@ -60,7 +60,15 @@
         font-weight:100px;
 
     }
+    canvas#myChart2 {
+  width: 400px;
+  height: 200px;
+}
 
+canvas#myChart3 {
+  width: 200px;
+  height: 100px;
+}
     h1 {
         text-align: center;
         font-weight:100px;

@@ -9,6 +9,22 @@
 @endif
 
 @if (count($repports)>=1)
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+    <form action="">
+    <div class="input-group">
+    <input type="search" class="form-control form-control-lg" placeholder="Tapez vos mots-clés ici">
+    <div class="input-group-append">
+    <button type="submit" class="btn btn-lg btn-default">
+    <i class="fa fa-search"></i>
+    </button>
+    </div>
+    </div>
+    </form>
+    </div>
+    </div>
+    <br>
+    <br>
 <table class="table table-bordered">
     <thead class="card-header text-white bg-dark">
         <tr>
@@ -44,6 +60,11 @@
                     <a href="{{ '/admin/repports/' . $repport->id . '/print' }}" target="_blank" class="btn btn-info btn-sm">
                         <i class="fa-solid fa-print"></i>                    </a>
                 </div>
+                <div class="mr-2">
+                    <a href="{{ '/admin/repports/' . $repport->id . '/telecharger' }}" target="_blank" class="btn btn-warning btn-sm">
+                        <i class="fa-solid fa-download"></i>                  </a>
+                </div>
+                
                 <div>
                 <form action="{{ route('repports.destroy', $repport->id) }}" method="post">
                     @csrf
