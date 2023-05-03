@@ -15,6 +15,13 @@ class UsersController extends Controller
         $user = Auth::user();
                 session()->put("menu", "profil");
 
+        return view('auth.admin.base', compact('user'));
+    }
+    public function Base()
+    {
+        $user = Auth::user();
+                session()->put("menu", "profil");
+
         return view('auth.admin.users.profil', compact('user'));
     }
    

@@ -6,8 +6,9 @@
             <div class="image">
                 <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image"> <span style="color:white">    </span>
             </div>
-            <div class="info">
+            <div class="info" style="color:white">
                 <a href="#" class="d-block"><b></b></a>
+                {{$user->CD_ETAB}}
             </div>
         </div>
         <!-- Sidebar Menu -->
@@ -19,7 +20,7 @@
                
             <li class="nav-item {{ (Session::get('menu') == 'profil') ? 'menu-open':''}}">
             <a href="/user/repports" class="nav-link {{ (Session::get('menu') == 'repports') ? 'active':'' }}">
-                        <i class="fa-solid fa-users"></i>
+                        <i class="fa-solid fa-file"></i>
                         <p>
                             Rapports
                         </p>
@@ -28,7 +29,7 @@
                 </li>
               
                 <a href="/user/profil" class="nav-link {{ (Session::get('menu') == 'profil') ? 'active':'' }}">
-                        <i class="fa-solid fa-users"></i>
+                        <i class="fa-solid fa-user"></i>
                         <p>
                             profil
                         </p>

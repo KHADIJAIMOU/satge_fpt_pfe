@@ -1,4 +1,5 @@
-@extends('auth.admin.base')
+@extends('auth.user.baseUser')
+
 @section('title', "Edit profil")
 @section('content')
  <section class="content">
@@ -11,7 +12,7 @@
               <div class="card-body box-profile">
                 <div class="text-center">
                   <img class="profile-user-img img-fluid img-circle"
-                       src="../../dist/img/user4-128x128.jpg"
+                       src="/img/etab.jpg"
                        alt="User profile picture">
                 </div>
 
@@ -24,7 +25,7 @@
                     <b>Y</b> <a class="float-right">Y</a>
                   </li>
                   <li class="list-group-item">
-                    <b>Y/b> <a class="float-right">Y</a>
+                    <b>Y</b> <a class="float-right">Y</a>
                   </li>
                   <li class="list-group-item">
                     <b>Y</b> <a class="float-right">Y</a>
@@ -33,7 +34,12 @@
 
                 <a href="/admin/repports" class="btn btn-primary btn-block"><b>Rapports</b></a>
               </div>
-              <!-- /.card-body -->
+              <!-- Edit Profile
+
+E-Mail Address
+Password
+Confirm Password
+ -->
             </div>
             <!-- /.card -->
 
@@ -45,39 +51,62 @@
           <div class="col-md-9">
             <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">About Me</h3>
+                  <h3 class="card-title">Modifier</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <strong><i class="fas fa-book mr-1"></i> Education</strong>
+                  <strong><i class="fa-sharp fa-solid fa-user"></i> CD_ETAB</strong>
     
                   <p class="text-muted">
-                    B.S. in Computer Science from the University of Tennessee at Knoxville
+                   <input type="text" disabled value="{{$user->CD_ETAB}}">
                   </p>
     
                   <hr>
     
-                  <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
-    
-                  <p class="text-muted">Malibu, California</p>
-    
-                  <hr>
-    
-                  <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+                  <strong><i class="fa-solid fa-lock"></i> Mot de passe </strong>
     
                   <p class="text-muted">
-                    <span class="tag tag-danger">UI Design</span>
-                    <span class="tag tag-success">Coding</span>
-                    <span class="tag tag-info">Javascript</span>
-                    <span class="tag tag-warning">PHP</span>
-                    <span class="tag tag-primary">Node.js</span>
+                    <input type="text" value="{{$user->password}}">
                   </p>
     
                   <hr>
     
-                  <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+                  <strong><i class="fa-solid fa-circle-check"></i> Confirmer mot de passe </strong>
     
-                  <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+                  <p class="text-muted">
+                    <input type="text">
+                  </p>
+    
+                  <hr>
+    
+                  <strong><i class="fa-solid fa-image"></i> Image</strong>
+    <center>
+                  <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+                    <div class="card bg-light d-flex flex-fill">
+                      
+                      <div class="card-body pt-0">
+                        <div class="row">
+                          
+                          <div class="col-12 text-center">
+                            <img src="/img/etab.jpg" alt="user-avatar" class="img-circle img-fluid">
+                          </div>
+                        </div>
+                      </div>
+                     
+                    </div>
+                  </div>
+                </center>  
+                  <center>
+                    <button type="button" class="btn btn-info btn-block btn-flat"><i class="fa-solid fa-upload"></i> Importer</button>
+<br>
+<br>
+                  <a class="btn btn-app">
+                    <i class="fas fa-xmark"></i>Anuuler
+                  </a>
+                  <a class="btn btn-app">
+                    <i class="fas fa-save"></i> Enregistrer
+                  </a>
+                </center>
                 </div>
                 <!-- /.card-body -->
               </div>
