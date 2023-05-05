@@ -8,7 +8,6 @@
             </div>
             <div class="info" style="color:white">
                 <a href="#" class="d-block"><b></b></a>
-                {{$user->CD_ETAB}}
             </div>
         </div>
         <!-- Sidebar Menu -->

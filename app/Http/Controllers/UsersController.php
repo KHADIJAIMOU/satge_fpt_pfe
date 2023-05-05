@@ -14,17 +14,53 @@ class UsersController extends Controller
     {
         $user = Auth::user();
                 session()->put("menu", "profil");
+                return view('auth.admin.users.profil', compact('user'));
 
-        return view('auth.admin.base', compact('user'));
+    }
+    public function profileUpdate(Request $request)
+    {
+        //validation rules
+
+        $request->validate([
+            'password' => 'required|min:4|string|max:255',
+        ]);
+        $user = Auth::user();
+        $user->password = $request['password'];
+        $user->save();
+        return redirect('/admin/profil')->with([
+            'type' => 'success',
+            'message' => 'Profile modifié avec succès',
+        ]);
+    }
+    public function profileUpdateUser(Request $request)
+    {
+        //validation rules
+
+        $request->validate([
+            'password' => 'required|min:4|string|max:255',
+        ]);
+        $user = Auth::user();
+        $user->password = $request['password'];
+        $user->save();
+        return redirect('/user/profil')->with([
+            'type' => 'success',
+            'message' => 'Profile modifié avec succès',
+        ]);
     }
     public function Base()
     {
         $user = Auth::user();
                 session()->put("menu", "profil");
 
-        return view('auth.admin.users.profil', compact('user'));
-    }
-   
+                return view('auth.admin.base', compact('user'));
+            }
+            public function Base1()
+            {
+                $user = Auth::user();
+                        session()->put("menu", "profil");
+        
+                        return view('auth.user.baseUser', compact('user'));
+                    }
     /**
      * Display a listing of the resource.
      *
@@ -240,20 +276,7 @@ class UsersController extends Controller
         session()->put("submenu", "password");
         return view('/admin/profil/password');
     }
-    public function profileUpdate(Request $request)
-    {
-        //validation rules
-
-        $request->validate([
-            'name' => 'required|min:4|string|max:255',
-            'email' => 'required|email|string|max:255'
-        ]);
-        $user = Auth::user();
-        $user->name = $request['name'];
-        $user->email = $request['email'];
-        $user->save();
-        return back()->with('message', 'Profile Modifié');
-    }
+    
 
     /**
      * 

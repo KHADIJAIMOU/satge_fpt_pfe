@@ -10,20 +10,21 @@ use App\Http\Controllers\UsersController;
 
 // User Routes
 
+Route::get('/conversations', [App\Http\Controllers\ConversationsController::class,'index'])->name('conversations');
+Route::get('/conversations/{user}', [App\Http\Controllers\ConversationsController::class,'show'])->name('conversations.show')->middleware('can:talkTo,user');
+Route::post('/conversations/{user}', [App\Http\Controllers\ConversationsController::class,'store'])->middleware('can:talkTo,user');
 Route::get('/', [RapportController::class, 'index']); 
-Route::get('/user/register', [UserController::class, 'showRegistrationForm'])->name('user.register');
-Route::post('/user/register', [UserController::class, 'register'])->name('user.register');
-Route::get('/login', [UserController::class, 'showLoginForm'])->name('user.login');
+Route::get('/login', [UserController::class, 'showLoginForm']);
 Route::post('/login', [UserController::class, 'login'])->name('user.login');
 Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
 
 // Admin Routes
-
+/*
 Route::get('/admin/register', [AdminController::class, 'showRegistrationForm'])->name('admin.register');
 Route::post('/admin/register', [AdminController::class, 'register'])->name('admin.register');
 Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
-Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
+Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');*/
 /*
 // Admin Middleware
 Route::middleware(['auth:admin'])->group(function () {
@@ -80,11 +81,14 @@ Route::group(['middleware' => ['auth', 'web'], 'prefix' => 'user'], function () 
     Route::resource('/rapport', RapportController::class);
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
     Route::get('/profil', [RapportController::class,'profil'])->name('users.profil');
+    Route::match(['put', 'post'], '/profil', [UsersController::class, 'profileUpdateUser'])->name('profileUpdateUser');
 
 });
 
 // admin protected routes
 Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
+    Route::match(['put', 'post'], '/profil', [UsersController::class, 'profileUpdate'])->name('profileUpdateAdmin');
+
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::resource('/repports', RapportAdminController::class);
     Route::resource('/users', UsersController::class);
@@ -92,5 +96,5 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('/profil', [UsersController::class,'profil'])->name('admin.profil');
     Route::get('/repports/{id}/print', [RapportAdminController::class, 'print'])->name('repports.print');
     Route::get('/repports/{id}/telecharger', [RapportAdminController::class, 'telecharger'])->name('repports.telecharger');
-    
+
 });
