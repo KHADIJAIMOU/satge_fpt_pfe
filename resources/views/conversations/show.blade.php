@@ -15,7 +15,7 @@
                                         class="col-md-10 {{ $message->from->id !== $user->id ? 'offset-md-2 text-right' : '' }}">
                                         <p>
                                             <strong>{{ $message->from->id !== $user->id ? 'Moi' : $message->from->CD_ETAB }}</strong><br>
-                                            {{ $message->content }}
+                                            {!! nl2br(e( $message->content)) !!}
                                         </p>
                                     </div>
                                 </div>
