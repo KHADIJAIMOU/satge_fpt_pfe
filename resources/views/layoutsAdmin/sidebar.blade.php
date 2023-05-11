@@ -41,6 +41,14 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="/conversations" class="nav-link {{ (Session::get('menu') == 'conversations') ? 'active':'' }}">
+                                <i class="fa-solid fa-message"></i>
+                                <p>
+                                    Message Important
+                                </p>
+                            </a>
+                        </li>
                 <li class="nav-item">
                 <a href="/admin/profil" class="nav-link {{ (Session::get('menu') == 'profil') ? 'active':'' }}">
                         <i class="fa-solid fa-user"></i>
@@ -49,6 +57,7 @@
                         </p>
                     </a>
                 </li>
+
                 
             </ul>
         </nav>

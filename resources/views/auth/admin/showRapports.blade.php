@@ -78,10 +78,11 @@
             <table class="table table-bordered">
                 <thead class="card-header text-white bg-dark">
                     <tr>
-                        <th class="text-center" style="width: 100px;">Type class</th>
-                        <th class="text-center" style="width: 100px;">Rapport d'activite </th>
-                        <th class="text-center" style="width: 220px;">rapport des visites</th>
-                        <th class="text-center" style="width: 40px;">Actions</th>
+                        <th class="text-center" style="width: 20%;">Type class</th>
+                        <th class="text-center" style="width: 20%;">Rapport d'activite </th>
+                        <th class="text-center" style="width: 20%;">rapport des visites</th>
+                        <th class="text-center" style="width:20%;">totale des absences</th>
+                        <th class="text-center" style="width:20%;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,6 +93,9 @@
                             <td class="text-center">{{ $repport->rapportActiviteEffectuer }}</td>
                             <td class="text-center">
                                 {{ $repport->rapportVisit }}
+                            </td>
+                            <td class="text-center" >
+                                {{  $repport->total_absences}}
                             </td>
                             <td class="text-center">
                                 <div class="d-flex flex-row justify-content-center">
@@ -106,6 +110,11 @@
                                             class="btn btn-secondary btn-sm">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
+                                    </div>
+                                    <div class="mr-2">
+                                        <a href="{{ '/conversations/' . $repport->id . '/' }}" target="_blank"
+                                            class="btn btn-success btn-sm">
+                                            <i class="fa-solid fa-message"></i> </a>
                                     </div>
                                     <div class="mr-2">
                                         <a href="{{ '/admin/repports/' . $repport->id . '/print' }}" target="_blank"

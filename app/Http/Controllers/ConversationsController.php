@@ -33,15 +33,26 @@ class ConversationsController extends Controller
 
         return view('conversations/index', [
             'users' => $this->r->getConversations($this->auth->user()->id),
+            'unread'=> $this->r->unreadCount($this->auth->user()->id)
+
         ]);
     }
     
     public function show (User $user) {
+        $me = $this->auth->user();
 
+        $messages = $this->r->getMessagesFor($me->id, $user->id)->paginate(5);
+        $unread = $this->r->unreadCount($me->id);
+        
+        if (isset($unread[$user->id])) {
+            $this->r->readAllFrom($user->id, $me->id);
+            unset($unread[$user->id]); /**car isset puis permet d'enlever le 0 lorsque pas de notifications */
+        }
         return view('conversations/show', [
             'users' => $this->r->getConversations($this->auth->user()->id),
             'user' => $user,
             'messages' => $this->r->getMessagesFor($this->auth->user()->id,$user->id)->get()->reverse(),
+            'unread'=> $unread
 
         ]);
     }

@@ -9,6 +9,7 @@
     use App\Models\User;
     use Illuminate\Support\Facades\Http;
     use Illuminate\Support\Facades\Validator;
+    use Illuminate\Support\Facades\DB;
 
     use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -21,15 +22,16 @@ use Illuminate\Support\Facades\Storage;
 
     class RapportAdminController extends Controller
     {
-        
+        public function index(){
+        $repports = Rapport::select('*', DB::raw('(absenceFirstPrimaire + absenceThirdPrimaire + absenceFourthPrimaire + absenceFifthPrimaire + absenceSixthPrimaire + absenceSecondPrimaire + absenceFirstCollege + absenceSecondCollege + absenceThirdCollege + absenceFirstComptabiliteGeneral + absenceSecondComptabiliteGeneral + absenceFirstManagementCommercial + absenceSecondManagementCommercial) as total_absences'))
+            ->orderBy('total_absences', 'desc')
+            ->paginate(5);
+        session()->put("menu", "repports");
 
-        public function index()
-        {
-            $repports = \App\Models\Rapport::paginate(5);
-            session()->put("menu", "repports");
+        return view('auth.admin.showRapports', compact('repports'));
 
-            return view('auth.admin.showRapports', compact('repports'));
-        }
+
+      }
 
         public function print($id, Rapport $Rapport)
         {

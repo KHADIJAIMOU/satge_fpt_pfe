@@ -1,13 +1,12 @@
-
 @extends('auth.admin.base')
 @section('title', 'Tableau de Bord')
 @section('content')
 
-
 <section class="content">
+  <h1>{{$dateRange}} v</h1>
+
     <div class="container-fluid">
       <!-- Small boxes (Stat box) -->
-      
       <div class="row" >
         <div class="col-lg-4 col-4">
           <!-- small box -->
@@ -115,8 +114,22 @@
         <!-- /.Left col -->
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
         <section class="col-lg-12 connectedSortable">
+          <form id="dashboard-form" action="{{ route('admin.dashboard') }}" method="post">
+            @csrf
+          <div class="form-group">
+            <label>Date range:</label>
 
-         
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="far fa-calendar-alt"></i>
+                </span>
+              </div>
+              <input type="text" class="form-control float-right" id="reservation" name="reservation">
+            </div>
+            <button type="submit"></button>    
+                </div>
+          </form>
   <!-- solid sales graph -->
           <div class="card bg-gradient-white">
             <div class="card-header border-0">
@@ -171,7 +184,12 @@
 @endsection
 @section('scripts')
 <script>
-  
+  const reservationInput = document.querySelector('#reservation');
+
+reservationInput.addEventListener('change', () => {
+  const form = document.querySelector('#dashboard-form');
+  form.submit();
+});
   // const ctx0 = document.getElementById('myChart0').getContext('2d');
   // const myChart0 = new Chart(ctx0, {
   //   type: "line",
@@ -193,31 +211,46 @@
   //   }
   // });
   const ctx1 = document.getElementById('myChart1').getContext('2d');
+  var primairePercentage = 0;
+var lyceePercentage = 0;
+var collegePercentage = 0;
+var btsPercentage = 0;
+var primaire =  {{$primaire}};
+var lycee=  {{$lycee}};
+var college =  {{$college}};
+var bts=  {{$bts}};
+var total = {{$total}};
+if (total !==0) {
+  primairePercentage = Math.round(((primaire/total)*100),2);
+  lyceePercentage = Math.round(((lycee/total)*100),2);
+  collegePercentage = Math.round(((college/total)*100),2);
+  btsPercentage =Math.round(((bts/total)*100),2);
+}
 const myChart1 = new Chart(ctx1, {
   type: 'bar',
   data: {
     labels: ['Primaire', 'SECONDAIRE QUALIFIANT', 'SECONDAIRE COLLEGIAL', 'BTS'],
     datasets: [{
       label: 'Absences Primaire',
-      data: [{{$primaire}}, 0, 0, 0],
+      data: [primairePercentage, 0, 0, 0],
       backgroundColor: 'rgba(255, 99, 132, 0.2)',
       borderColor: 'rgba(255, 99, 132, 1)',
       borderWidth: 1
     }, {
       label: 'Absences SECONDAIRE QUALIFIANT',
-      data: [0, {{$lycee}}, 0, 0],
+      data: [0, lyceePercentage, 0, 0],
       backgroundColor: 'rgba(54, 162, 235, 0.2)',
       borderColor: 'rgba(54, 162, 235, 1)',
       borderWidth: 1
     }, {
       label: 'Absences SECONDAIRE COLLEGIAL',
-      data: [0, 0, {{$college}}, 0],
+      data: [0, 0,collegePercentage, 0],
       backgroundColor: 'rgba(255, 206, 86, 0.2)',
       borderColor: 'rgba(255, 206, 86, 1)',
       borderWidth: 1
     }, {
       label: 'Absences BTS',
-      data: [0, 0, 0, {{$bts}}],
+      data: [0, 0, 0, btsPercentage],
       backgroundColor: 'rgba(75, 192, 192, 0.2)',
       borderColor: 'rgba(75, 192, 192, 1)',
       borderWidth: 1
@@ -310,6 +343,8 @@ const myChart3 = new Chart(ctx3, {
         }
     }
 });
+$('#reservation').daterangepicker()
+
 const ctx5 = document.getElementById('myChart5').getContext('2d');
 const myChart5 = new Chart(ctx5, {
     type: 'doughnut',

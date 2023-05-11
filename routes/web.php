@@ -82,6 +82,8 @@ Route::group(['middleware' => ['auth', 'web'], 'prefix' => 'user'], function () 
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
     Route::get('/profil', [RapportController::class,'profil'])->name('users.profil');
     Route::match(['put', 'post'], '/profil', [UsersController::class, 'profileUpdateUser'])->name('profileUpdateUser');
+    Route::get('/rapport/{id}/print', [RapportController::class, 'print'])->name('rapport.print');
+    Route::get('/rapport/{id}/telecharger', [RapportController::class, 'telecharger'])->name('rapport.telecharger');
 
 });
 
@@ -90,6 +92,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::match(['put', 'post'], '/profil', [UsersController::class, 'profileUpdate'])->name('profileUpdateAdmin');
 
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::match(['put', 'post'],'/dashboard', [AdminController::class, 'dashboard1'])->name('admin.dashboard');
     Route::resource('/repports', RapportAdminController::class);
     Route::resource('/users', UsersController::class);
     Route::post('/users/{user}/updatePassword', [UsersController::class,'updatePassword'])->name('admin.updatePassword');

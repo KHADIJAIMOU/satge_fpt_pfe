@@ -30,9 +30,6 @@ class RapportController extends Controller
         
             $rapport = Rapport::find($id);
             $users = User::where('CD_ETAB', $rapport->CD_ETAB)->get();
-            $rapport1 = User::select('NOM_ETABL','CD_ETAB','ll_com','NetabFr')
-            ->where('id', $rapport->users_id)
-            ->get();
             $imagePath = public_path('img/logo.jpg');
             $image = base64_encode(file_get_contents($imagePath));
             $image = base64_encode(file_get_contents(public_path('img/logo.jpg')));
@@ -46,7 +43,6 @@ class RapportController extends Controller
             // Pass data to the view as an array
             $data = [
                 'rapport' => $rapport,
-                'rapport1' => $rapport1,
                 'users' => $users,
                 'image' => $image,
                 'image0' => $image0,
@@ -55,7 +51,6 @@ class RapportController extends Controller
                 'image3' => $image3,
                 'image4' => $image4,
                 'image5' => $image5,
-                
 
             ];
         
@@ -83,9 +78,6 @@ class RapportController extends Controller
         
             $rapport = Rapport::find($id);
             $users = User::where('CD_ETAB', $rapport->CD_ETAB)->get();
-            $rapport1 = User::select('NOM_ETABL','CD_ETAB','ll_com','NetabFr')
-            ->where('id', $rapport->users_id)
-            ->get();
             $imagePath = public_path('img/logo.jpg');
             $image = base64_encode(file_get_contents($imagePath));
             $image = base64_encode(file_get_contents(public_path('img/logo.jpg')));
@@ -99,7 +91,6 @@ class RapportController extends Controller
             // Pass data to the view as an array
             $data = [
                 'rapport' => $rapport,
-                'rapport1' => $rapport1,
                 'users' => $users,
                 'image' => $image,
                 'image0' => $image0,
