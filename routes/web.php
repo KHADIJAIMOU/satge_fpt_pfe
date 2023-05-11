@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RapportController;
 use App\Http\Controllers\RapportAdminController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\EventController;
 
 // User Routes
 
@@ -99,5 +100,6 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
     Route::get('/profil', [UsersController::class,'profil'])->name('admin.profil');
     Route::get('/repports/{id}/print', [RapportAdminController::class, 'print'])->name('repports.print');
     Route::get('/repports/{id}/telecharger', [RapportAdminController::class, 'telecharger'])->name('repports.telecharger');
+    Route::resource('/events', EventController::class);
 
 });
