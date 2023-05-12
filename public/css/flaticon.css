@@ -29,7 +29,8 @@
   font-style: normal;
   margin-left: 0;
 }
-
+.flaticon-family:before { content: "\f108"; }
+.flaticon-student:before { content: "\f109"; }
 .flaticon-001-mattress:before { content: "\f100"; }
 .flaticon-002-dumbell:before { content: "\f101"; }
 .flaticon-003-weight:before { content: "\f102"; }

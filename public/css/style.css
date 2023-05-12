@@ -570,6 +570,7 @@ ol {
 	position: relative;
 	top: 100px;
 	opacity: 0;
+	text-align: center;
 }
 
 .hs-slider .hs-item .hi-text h1 strong {

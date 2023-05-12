@@ -172,7 +172,7 @@ $pdf->Output('example.pdf', 'I');
 
         public function create()
         {
-            //REDIRECT TO CREATE PAGE OF PROTIEN
+            //REDIRECT TO CREATE PAGE OF 
             return view('auth.admin.rapport');
         }
         public function store(Request $request)

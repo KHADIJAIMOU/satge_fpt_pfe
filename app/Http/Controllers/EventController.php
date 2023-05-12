@@ -142,7 +142,29 @@ class EventController extends Controller
             'message' => 'Event supprimé avec succès',
         ]);
     }
+    public function DetailsEvent($id)
+    {
+        $event = Event::find($id);
+        $list_images = $event->images;
 
+        //TODO variable contains images list
+        return view('Home.detailsEvent', compact('event','list_images'));
+    }
+    public function ListEvent(Request $request)
+    {//
+        if($request->isMethod('post')){
+            $events = Event::with('images')->Where('name',$request->get('namefilter'))->orWhere('name', 'like', '%' .$request->get('namefilter') . '%')->paginate(8);
+
+            session()->put('menu', 'ListEvent');
+            return view('Home.listeEvent', compact('events'));
+             }
+        else{
+        $events = Event::with('images')->orderBy('date', 'desc')->paginate(8);
+        
+  session()->put('menu', 'ListEvent');
+  return view('Home.listeEvent', compact('events'));
+        }
+    }
     private function uploadImage(Request $request, $event_id)
     {
         $validator = $request->validate([

@@ -8,13 +8,18 @@ use App\Http\Controllers\RapportController;
 use App\Http\Controllers\RapportAdminController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\HomeController;
 
 // User Routes
 
 Route::get('/conversations', [App\Http\Controllers\ConversationsController::class,'index'])->name('conversations');
 Route::get('/conversations/{user}', [App\Http\Controllers\ConversationsController::class,'show'])->name('conversations.show')->middleware('can:talkTo,user');
 Route::post('/conversations/{user}', [App\Http\Controllers\ConversationsController::class,'store'])->middleware('can:talkTo,user');
-Route::get('/', [RapportController::class, 'index']); 
+//Route::get('/', [RapportController::class, 'index']);
+Route::get('/', [HomeController::class, 'redirectHome']);
+Route::get('detailsEvent/{id}', [EventController::class, 'DetailsEvent']);
+Route::get('listEvent/', [EventController::class, 'ListEvent']);
+Route::post('listEvent/', [EventController::class, 'ListEvent'])->name('ListEvent');
 Route::get('/login', [UserController::class, 'showLoginForm']);
 Route::post('/login', [UserController::class, 'login'])->name('user.login');
 Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
