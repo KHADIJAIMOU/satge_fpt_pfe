@@ -31,7 +31,121 @@
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
     <style>
-        
+        #chat-messages {
+    height:60vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-right: 20px;
+    -webkit-transition: all 200ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+    -moz-transition: all 200ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+    -ms-transition: all 200ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+    -o-transition: all 200ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+    transition: all 200ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+}
+#chat-messages label{
+    color:#aab8c2;
+    font-weight:600;
+    font-size:12px;
+    text-align:center;
+    margin:15px 0;
+    display:block;
+}
+#chat-messages div.message{
+    padding: 0 0 30px 58px;
+    clear: both;
+    margin-bottom: 40px;
+}
+#chat-messages div.message.right{
+    padding: 0 58px 30px 0;
+    margin-right: -19px;
+    margin-left: 19px;
+}
+#chat-messages .message img{
+    float: left;
+    margin-left: -38px;
+    border-radius: 50%;
+    width: 30px;
+    margin-top: 12px;
+}
+#chat-messages div.message.right img{
+    float: right;
+    margin-left: 0;
+    margin-right: -38px;
+}
+.message {
+    background-color: unset;
+}
+.message .bubble{
+    background:#f0f4f7;
+    font-size:13px;
+    font-weight:600;
+    padding:12px 13px;
+    border-radius:5px 5px 5px 0px;
+    color:#8495a3;
+    position:relative;
+    float:left;
+}
+#chat-messages div.message.right .bubble{
+    float:right;
+    border-radius:5px 5px 0px 5px ;
+}
+.bubble .corner{
+    background:url("/images/bubble-corner.png") 0 0 no-repeat;
+    position:absolute;
+    width:7px;
+    height:7px;
+    left:-5px;
+    bottom:0;
+}
+div.message.right .corner{
+    background:url("/images/bubble-cornerR.png") 0 0 no-repeat;
+    left:auto;
+    right:-5px;
+}
+.bubble span{
+    color: #aab8c2;
+    font-size: 11px;
+    position: absolute;
+    right: 0;
+    bottom: -22px;
+    width: 80px;
+}
+#sendmessage{
+    height: 60px;
+    border-top: 1px solid #e7ebee;
+    background: #fff;
+}
+#sendmessage input{
+    background:#fff;
+    border:none;
+    padding:21px;
+    font-size:14px;
+    font-family:"Open Sans", sans-serif;
+    font-weight:400;
+    color:#aab8c2;
+}
+#sendmessage input:focus{
+    outline: 0;
+}
+#sendmessage button{
+    background: #fff url(/images/send.png) 0 -41px no-repeat;
+    width: 30px;
+    height: 30px;
+    border: none;
+}
+#sendmessage button:hover{
+    cursor:pointer;
+    background-position: 0 0 ;
+}
+#sendmessage button:focus{
+    outline: 0;
+}
+
+#chatview, #sendmessage {
+    overflow:hidden;
+    border-radius:6px;
+}
+
           
         @import url(https://fonts.googleapis.com/earlyaccess/amiri.css);
     @import url(https://fonts.googleapis.com/earlyaccess/scheherazade.css);

@@ -35,8 +35,12 @@ class UserController extends Controller
 
                         return redirect('/admin/dashboard');
 
-                    } else {
+                    } 
+                    elseif($user->role === 'user') {
                         return redirect('/user/repports');
+                    }
+                    elseif($user->role === 'visiteur') {
+                        return redirect('/visiteur/avi');
                     }
                 }
             }
@@ -123,6 +127,14 @@ public function dashboard()
     return view('auth.user.dashboard', ['NOM_ETABL' => $NOM_ETABL,'LL_CYCLE' => $LL_CYCLE,'nbRapports'=> $nbRapports,'users'=>$users]);
 }
 
-    
+public function rec()
+{
+    $user = Auth::user();
+
+
+    return view('Home.Reclamation');
+}
+
+       
 
 }

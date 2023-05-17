@@ -33,22 +33,42 @@
                             </p>
                         </a>
                     </li>
-                <li class="nav-item">
-                    <a href="/admin/users" class="nav-link {{ (Session::get('menu') == 'users') ? 'active':'' }}">
-                            <i class="fa-solid fa-users"></i>
-                            <p>
-                                Utilisateurs
-                            </p>
-                        </a>
-                    </li>
+                
                     <li class="nav-item">
                         <a href="/conversations" class="nav-link {{ (Session::get('menu') == 'conversations') ? 'active':'' }}">
                                 <i class="fa-solid fa-message"></i>
                                 <p>
-                                    Message Important
+                                    Messages
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="/admin/events" class="nav-link {{ (Session::get('menu') == 'events') ? 'active':'' }}">
+                                <i class="fa-solid fa-calendar-days"></i>                                        Evénements
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/admin/avis" class="nav-link {{ (Session::get('menu') == 'avis') ? 'active':'' }}">
+                                      <i class="fa-solid fa-lightbulb"></i>
+                                    Avis
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/avis" class="nav-link {{ (Session::get('menu') == 'avis') ? 'active':'' }}">
+                                        <i class="fa-solid fa-circle-exclamation"></i>                                      Reclamatons
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/admin/users" class="nav-link {{ (Session::get('menu') == 'users') ? 'active':'' }}">
+                                                <i class="fa-solid fa-users"></i>
+                                                <p>
+                                                    Utilisateurs
+                                                </p>
+                                            </a>
+                                        </li>
                 <li class="nav-item">
                 <a href="/admin/profil" class="nav-link {{ (Session::get('menu') == 'profil') ? 'active':'' }}">
                         <i class="fa-solid fa-user"></i>

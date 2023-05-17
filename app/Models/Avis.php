@@ -1,18 +1,29 @@
 <?php
 
+
 namespace App\Models;
 
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Event extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+class Avis  extends Authenticatable
 {
+    use HasApiTokens, HasFactory, Notifiable;
     use HasFactory;
-    protected $fillable = ['name', 'content', 'date', 'description', 'short_description'];
-    public function images()
-    {
-        return $this->hasMany(Image::class);
-    }
+
+    protected $table = 'avis';
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'users_id',
+        'objet',
+        'type',
+        'detail',
+        'adressIp',
+        'mac_address',
+    ];
     public function getStatus($num)
     {
         switch ($num) {
@@ -30,4 +41,5 @@ class Event extends Model
                 break;
         }
     }
+    
 }

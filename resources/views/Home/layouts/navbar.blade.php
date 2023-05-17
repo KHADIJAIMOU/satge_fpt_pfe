@@ -33,11 +33,19 @@
                 <nav class="nav-menu">
                     <ul>
                         <li><a href="">تواصل معنا </a></li>
-
-                        <li class="{{ session()->get('menu') == '' ? 'active' : '' }}"><a
-                                href="">الشكايات</a></li>
-                        <li class="{{ session()->get('menu') == '' ? 'active' : '' }}"><a
-                                href="">الاراء</a></li>
+                        @if (Auth::user())
+                        <li class="{{ session()->get('menu') == 'Vip' ? 'active' : '' }}"><a href="#">زائر</a>
+                            <ul class="dropdown">
+                                <li class="{{ session()->get('menu') == '' ? 'active' : '' }}"><a
+                                    href="">الشكايات</a></li>
+                            <li class="{{ session()->get('menu') == '' ? 'active' : '' }}"><a
+                                    href="">الاراء</a></li>
+                                    <li><a href="/vip/informationprofile">حساب شخصي</a></li>
+                                    <li><a href="/vip/changepassword">تغيير كلمة المرور</a></li>
+                            </ul>
+                        </li>
+                    @endif
+                       
                                 <li class="{{ session()->get('menu') == 'ListEvent' ? 'active' : '' }}"><a
                                     href="/listEvent">الاخبار المحلية</a></li>
                         <li class="{{ session()->get('menu') == 'Home' ? 'active' : '' }}"><a href="/">الرئيسية</a></li>

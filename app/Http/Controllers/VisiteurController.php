@@ -1,0 +1,129 @@
+<?php
+
+namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Models\Rapport;
+use App\Models\Avis;
+use App\Models\Reclamation;
+use App\Models\Document;
+
+
+class VisiteurController extends Controller
+{
+    
+    // Handle the login form submission
+    private function uploadImage(Request $request, $reclamation_id)
+    {
+        $validator = $request->validate([
+            'images.*' => 'required|file|max:2048',
+        ]);
+    
+        if ($request->hasFile('images')) {
+            $images = $request->file('images');
+    
+            foreach ($images as $image) {
+                $name = $image->getClientOriginalName();
+                $path = $image->storeAs('images', $name, 'public');
+    
+                Document::create([
+                    'reclamation_id' => $reclamation_id,
+                    'name' => $name,
+                    'path' => 'storage/' . $path,
+                ]);
+            }
+        }
+    }
+    
+
+public function indexAvis()
+{
+    $user_id = Auth::user()->id;
+    $avis = Avis::where('users_id', $user_id)->paginate(3);
+    return view('Home.Avis', compact('avis'));
+}
+public function indexreclamation()
+{
+    $user_id = Auth::user()->id;
+    $idd =Auth::user()->id;
+
+    $reclamation = Reclamation::where('users_id', $user_id)->paginate(3);
+    return view('Home.Reclamation', compact('reclamation','idd'));
+}
+public function storeAvis(Request $request)
+    {
+        $id =Auth::user()->id;
+        $ipAddress = $_SERVER['REMOTE_ADDR'];
+        $mac_address = exec('getmac');
+        $ip = Http::get('https://api.ipify.org')->body();
+        $macAddress = exec('getmac');
+        $macAddress = strtok($macAddress, ' ');
+        Avis::create([
+            'users_id' =>$id,
+            'objet' => $request->objet,
+            'type' => $request->type,
+            'detail' => $request->detail,
+            'adressIp'=>$ip,
+            'mac_address'=>$macAddress,
+        ]);
+
+        return redirect('/visiteur/avi')->with([
+            'type' => 'success',
+            'message' => 'Avis créée avec succès ',
+        ]);
+    }
+    
+   
+    public function destroyAvis($id)
+    {
+        Avis::find($id)->delete();
+
+        return redirect('/visiteur/avi')->with([
+            'type' => 'success',
+            'message' => 'Avis supprimée avec succès',
+        ]);
+    }    
+
+    public function destroyreclamation($id)
+    {
+        Reclamation::find($id)->delete();
+
+        return redirect('/visiteur/reclamation')->with([
+            'type' => 'success',
+            'message' => 'reclamation supprimée avec succès',
+        ]);
+    }  
+    public function storereclamation(Request $request,$id)
+    {
+        $id =Auth::user()->id;
+
+        $ipAddress = $_SERVER['REMOTE_ADDR'];
+        $mac_address = exec('getmac');
+        $ip = Http::get('https://api.ipify.org')->body();
+        $macAddress = exec('getmac');
+        $macAddress = strtok($macAddress, ' ');
+        $rec=Reclamation::create([
+            'users_id' => $id,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'CNI' => $request->CNI,
+            'll_com' => $request->ll_com,
+            'NOM_ETABL' => $request->NOM_ETABL,
+            'phone' => $request->phone,
+            'content' => $request->content,
+            'adressIp'=>$ip,
+            'mac_address'=>$macAddress,
+           'status'=>0,
+        ]);
+        $this->uploadImage($request, $rec->id);
+
+        return redirect('/visiteur/reclamation')->with([
+            'type' => 'success',
+            'message' => 'reclamation ajouter avec succès',
+        ]);
+    }  
+
+}

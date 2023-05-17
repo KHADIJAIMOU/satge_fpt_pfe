@@ -46,6 +46,8 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
+                    @yield('header')
+
                     @yield('content')
                 </div><!-- /.container-fluid -->
             </section>

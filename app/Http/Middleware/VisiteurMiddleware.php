@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class AdminMiddleware
+class VisiteurMiddleware
 {
     /**
      * Handle an incoming request.
@@ -22,20 +22,19 @@ class AdminMiddleware
             $user = Auth::user();
 
             // if user is not admin take him to his dashboard
-            if ( $user->hasRole('user') ) {
-                return redirect(route('user.dashboard'));
+            if ( $user->hasRole('admin') ) {
+                return $next($request);
             }
 
             // allow admin to proceed with request
-            else if ( $user->hasRole('admin') ) {
+            else if ( $user->hasRole('user') ) {
                 return $next($request);
             }
             else if ( $user->hasRole('visiteur') ) {
-                return redirect(route('visiteur.avi'));
+                return $next($request);
             }
         }
 
         abort(403);  // permission denied error
     }
-
 }

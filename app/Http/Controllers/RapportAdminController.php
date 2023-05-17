@@ -33,12 +33,63 @@ use Illuminate\Support\Facades\Storage;
 
       }
 
+        // public function print($id, Rapport $Rapport)
+        // {
+        //     App::setLocale('ar');
+        
+        //     $rapport = Rapport::find($id);
+        //     $users = User::where('CD_ETAB', $rapport->CD_ETAB)->get();
+        //     $imagePath = public_path('img/logo.jpg');
+        //     $image = base64_encode(file_get_contents($imagePath));
+        //     $image = base64_encode(file_get_contents(public_path('img/logo.jpg')));
+        //     $image0 = base64_encode(file_get_contents(public_path('img/image0.jpg')));
+        //     $image1 = base64_encode(file_get_contents(public_path('img/image1.jpg')));
+        //     $image2= base64_encode(file_get_contents(public_path('img/image2.jpg')));
+        //     $image3= base64_encode(file_get_contents(public_path('img/image3.jpg')));
+        //     $image4= base64_encode(file_get_contents(public_path('img/image4.jpg')));
+        //     $image5= base64_encode(file_get_contents(public_path('img/image5.jpg')));
+        
+        //     // Pass data to the view as an array
+        //     $data = [
+        //         'rapport' => $rapport,
+        //         'users' => $users,
+        //         'image' => $image,
+        //         'image0' => $image0,
+        //         'image1' => $image1,
+        //         'image2' => $image2,
+        //         'image3' => $image3,
+        //         'image4' => $image4,
+        //         'image5' => $image5,
+
+        //     ];
+        
+        //     // generate the PDF file from a Blade template
+        //     $html = view('auth.admin.rapport.print', compact('data'))->render();
+        
+        //     // instantiate Dompdf class
+        //     $dompdf = new Dompdf();
+        
+        //     // load HTML content into Dompdf
+        //     $dompdf->loadHtml($html, 'UTF-8');
+        
+        //     // (Optional) Set paper size and orientation
+        //     $dompdf->setPaper('A4', 'portrait');
+        
+        //     // Render the HTML as PDF
+        //     $dompdf->render();
+        
+        //     // Output the generated PDF (forced download)
+        //     return $dompdf->stream('report.pdf', ['Attachment' => false]);
+        // }
         public function print($id, Rapport $Rapport)
         {
             App::setLocale('ar');
         
             $rapport = Rapport::find($id);
             $users = User::where('CD_ETAB', $rapport->CD_ETAB)->get();
+            $rapport1 = User::select('NOM_ETABL','CD_ETAB','ll_com','NetabFr')
+            ->where('id', $rapport->users_id)
+            ->get();
             $imagePath = public_path('img/logo.jpg');
             $image = base64_encode(file_get_contents($imagePath));
             $image = base64_encode(file_get_contents(public_path('img/logo.jpg')));
@@ -52,6 +103,7 @@ use Illuminate\Support\Facades\Storage;
             // Pass data to the view as an array
             $data = [
                 'rapport' => $rapport,
+                'rapport1' => $rapport1,
                 'users' => $users,
                 'image' => $image,
                 'image0' => $image0,
@@ -60,11 +112,12 @@ use Illuminate\Support\Facades\Storage;
                 'image3' => $image3,
                 'image4' => $image4,
                 'image5' => $image5,
+                
 
             ];
         
             // generate the PDF file from a Blade template
-            $html = view('auth.admin.rapport.print', compact('data'))->render();
+            $html = view('auth.user.rapport.print', compact('data'))->render();
         
             // instantiate Dompdf class
             $dompdf = new Dompdf();
@@ -87,6 +140,9 @@ use Illuminate\Support\Facades\Storage;
         
             $rapport = Rapport::find($id);
             $users = User::where('CD_ETAB', $rapport->CD_ETAB)->get();
+            $rapport1 = User::select('NOM_ETABL','CD_ETAB','ll_com','NetabFr')
+            ->where('id', $rapport->users_id)
+            ->get();
             $imagePath = public_path('img/logo.jpg');
             $image = base64_encode(file_get_contents($imagePath));
             $image = base64_encode(file_get_contents(public_path('img/logo.jpg')));
@@ -100,6 +156,7 @@ use Illuminate\Support\Facades\Storage;
             // Pass data to the view as an array
             $data = [
                 'rapport' => $rapport,
+                'rapport1' => $rapport1,
                 'users' => $users,
                 'image' => $image,
                 'image0' => $image0,
@@ -112,7 +169,7 @@ use Illuminate\Support\Facades\Storage;
             ];
         
             // generate the PDF file from a Blade template
-            $html = view('auth.admin.rapport.print', compact('data'))->render();
+            $html = view('auth.user.rapport.print', compact('data'))->render();
         
             // instantiate Dompdf class
             $dompdf = new Dompdf();
@@ -132,6 +189,58 @@ use Illuminate\Support\Facades\Storage;
             return response($dompdf->output(), 200)
                 ->header('Content-Type', 'application/pdf')
                 ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');        }
+ 
+        // public function telecharger($id, Rapport $Rapport)
+        // {
+        //     App::setLocale('ar');
+        
+        //     $rapport = Rapport::find($id);
+        //     $users = User::where('CD_ETAB', $rapport->CD_ETAB)->get();
+        //     $imagePath = public_path('img/logo.jpg');
+        //     $image = base64_encode(file_get_contents($imagePath));
+        //     $image = base64_encode(file_get_contents(public_path('img/logo.jpg')));
+        //     $image0 = base64_encode(file_get_contents(public_path('img/image0.jpg')));
+        //     $image1 = base64_encode(file_get_contents(public_path('img/image1.jpg')));
+        //     $image2= base64_encode(file_get_contents(public_path('img/image2.jpg')));
+        //     $image3= base64_encode(file_get_contents(public_path('img/image3.jpg')));
+        //     $image4= base64_encode(file_get_contents(public_path('img/image4.jpg')));
+        //     $image5= base64_encode(file_get_contents(public_path('img/image5.jpg')));
+        
+        //     // Pass data to the view as an array
+        //     $data = [
+        //         'rapport' => $rapport,
+        //         'users' => $users,
+        //         'image' => $image,
+        //         'image0' => $image0,
+        //         'image1' => $image1,
+        //         'image2' => $image2,
+        //         'image3' => $image3,
+        //         'image4' => $image4,
+        //         'image5' => $image5,
+
+        //     ];
+        
+        //     // generate the PDF file from a Blade template
+        //     $html = view('auth.admin.rapport.print', compact('data'))->render();
+        
+        //     // instantiate Dompdf class
+        //     $dompdf = new Dompdf();
+        
+        //     // load HTML content into Dompdf
+        //     $dompdf->loadHtml($html, 'UTF-8');
+        
+        //     // (Optional) Set paper size and orientation
+        //     $dompdf->setPaper('A4', 'portrait');
+        
+        //     // Render the HTML as PDF
+        //     $dompdf->render();
+        
+        //     // Output the generated PDF (forced download)
+        //     $filename = 'report.pdf';
+        //     $dompdf->stream($filename);
+        //     return response($dompdf->output(), 200)
+        //         ->header('Content-Type', 'application/pdf')
+        //         ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');        }
   /* public function print($id,Rapport $rapport)
 {
     

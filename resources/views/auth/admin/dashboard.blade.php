@@ -126,8 +126,9 @@
                 </span>
               </div>
               <input type="text" class="form-control float-right" id="reservation" name="reservation">
+              <button type="submit"> ok</button>
             </div>
-            <button type="submit"></button>    
+                
                 </div>
           </form>
   <!-- solid sales graph -->

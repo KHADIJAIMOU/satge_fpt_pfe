@@ -184,8 +184,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title">
-                    <span>Nous partenaires</span>
-                    <h2>Parmi les meilleurs salles de sports</h2>
+                    <span>***************</span>
+                    <h2>  خدمات      </h2>
                 </div>
             </div>
         </div>
@@ -193,21 +193,16 @@
             
             <div class="col-lg-8 col-md-4">
                 <div class="ps-item">
-                    <h3>12 Mois</h3>
                     <div class="pi-price">
                         <h2> وضع الشكاية  </h2>
-                        <span>Offre Spéciale uniquement pour Les VIP de BodyB</span>
+                        <span>  .لوضع شكايتكم، المرجو الاطلاع وقبول شروط استخدام الخدمة ثم النقر على زر  المرحلة الموالية
+                        </span>
                     </div>
                     <ul>
-                        <li>Conduite libre</li>
-                        <li>Équipements illimités</li>
-                        <li>Entraîneur personnel</li>
-                        <li>Seance de cardio</li>
-                        <li>Cours de perte de poids</li>
-                        <li>piscine intérieure</li>
-                        <li>Aucune restriction de temps</li>
+                        <li>يرجى الإطلاع وقبول  <a style="color:coral" data-toggle="modal" data-target="#exampleModal">    شروط استخدام </a>الخدمة، والموافقة على معالجة معطياتكم الشخصية قبل بدء العملية</li>
+                        
                     </ul>
-                    <a href="https://onair-fitness.fr/club/saint-jean-de-vedas/?gclid=CjwKCAjws8yUBhA1EiwAi_tpEZcgay-ZVg9TDUYmVBo06JGHxMv3CtjxI6uQMjGv-qkhV8hujDAJpRoC-iUQAvD_BwE" class="primary-btn pricing-btn">Consulter la salle du sport</a>
+                    <a href="" class="primary-btn pricing-btn"> المرحلة الموالية</a>
                 </div>
             </div>
             <div class="col-lg-8 col-md-8">
@@ -234,6 +229,54 @@
         </div>
     </div>
 </section>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <center>          <h5 class="modal-title" id="exampleModalLabel" style="text-align: right">أحكام وشروط الاستخدام</h5>
+            </center>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" dir="rtl" >
+          <ul  style="text-align: right;padding:30px">
+            <li>
+                هذا الموقع خاص بوضع الشكاية , ويهدف الى تبسيط الإجراءات وتقريب الخدمة إلى  جميع  المواطنين عبر الانترنت.
+
+            </li>
+            <li>
+                تحال الشكاية المقدمة من طرف المشتكي(ة) مباشرة وإلكترونيا وبشكل منتظم إلى المديرية  الاقليمية   وتتم معالجتها وفق الإجراءات المعمول بها.
+            </li>
+            <li>
+استعمال هذه الخدمة مجاني.
+
+            </li>
+            <li>
+                يجب على المشتكي(ة) الذي يتقدّم بالشكاية أن يدلي بشكل صحيح ودقيق بالمعلومات المتعلقة بتعريف هويته وجميع بياناتها، رقم الهاتف والبريد الإلكتروني الذي يريد أن يتواصل عبره بخصوص شكايته.
+            </li>
+            <li>
+                كما يجب عليه أن يدلي بشكل صحيح ودقيق بالمعلومات المتعلقة بتعريف الهوية وجميع بيانات المشتكى به.
+            </li>
+            <li>
+                يمكن للمشتكي(ة) أن يرفق شكايته بكل الوثائق الإلكترونية التي يراها مناسبة.
+            </li>
+            <li>
+                يتم حفظ الشكاية في حالة إدخال المشتكي(ة) لمعلومات خاطئة عند تقديم الشكاية.
+            </li>
+            <li>
+                باستخدام واعتماد وظائف هذا الموقع يعتبر إقرار وموافقة على أحكام وشروط الاستفادة من خدمة المعالجة الإلكترونية للشكاية من طرف المشتكي(ة).
+
+            </li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"> إلغاء </button>
+          <button type="button" class="btn btn-primary"> موافق </button>
+        </div>
+      </div>
+    </div>
+  </div>
 <!-- Pricing Section End -->
 
 <!-- Gallery Section Begin -->

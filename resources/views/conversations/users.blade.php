@@ -1,35 +1,35 @@
 
 
-{{-- @if (auth()->user()->role == 'admin')
-<div class="col-md-3">
-    @foreach ($users as $user)
-        @if ($user->role === 'admin')
-            <div class="list-group">
-                <a class="list-group-item d-flex justify-content-between align-items-center" href="{{route('conversations.show',$user->id)}}">
-                    {{ $user->NOM_ETABL }} {{ $user->unread }}
-                    @if(isset($unread [$user->id]))
-                        <span class="badge badge-pill badge-primary">{{ $unread [$user->id] }}</span>
-                    @endif
-                </a>
+<div class="column is-3">
+    <div id="chatbox">
+        <div id="friendslist">
+            <div id="topmenu">
+                <span class="friends"></span>
             </div>
-        @endif
-    @endforeach
-</div>
-@endif --}}
-{{-- @if (auth()->user()->role == 'user') --}}
 
-<div class="col-md-3">
-    @foreach ($users as $user)
-        @if ($user->role === 'user')
-            <div class="list-group">
-                <a class="list-group-item d-flex justify-content-between align-items-center" href="{{route('conversations.show',$user->id)}}">
-                    {{ $user->NOM_ETABL }} {{ $user->unread }}
-                    @if(isset($unread [$user->id]))
-                        <span class="badge badge-pill badge-primary">{{ $unread [$user->id] }}</span>
-                    @endif
+            <div id="friends">
+                @foreach($users as $user)
+                <a href="/conversations/{{ $user->id }}">
+                    <div class="friend">
+                        <img class="direct-chat-img" src="{{ asset('/dist/img/user1-128x128.jpg')}}" alt="message user image">
+                        <!-- /.direct-chat-img -->                    <p>
+                        <strong {!!  (isset($user->unread) && $user->unread != 0) ? 'class="badge" data-badge="'.$user->unread.'"' : '' !!} >
+                            {{ $user->CD_ETAB }}
+                        </strong>
+                        <span>{{ $user->CD_ETAB }}</span>
+                    </p>
+                    <div class="status active"></div>
+                </div>
                 </a>
+                @endforeach
+
             </div>
-        @endif
-    @endforeach
+
+        </div>
+
 </div>
-{{-- @endif --}}
+</div>
+
+
+
+
