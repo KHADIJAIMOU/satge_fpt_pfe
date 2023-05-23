@@ -37,13 +37,63 @@ class VisiteurController extends Controller
             }
         }
     }
+    public function indexchangePasswordUpdate()
+    {
+        return view('Home.changepassword');
+    } 
+    public function indexinformationupdate()
+    {
+        return view('Home.informationprofil');
+    }
+    public function profileUpdate(Request $request)
+    {
+        // Validation rules
+        $request->validate([
+            'NOM_ETABL' => 'required',
+            'CD_ETAB' => 'required',
+        ]);
     
+        $user = Auth::user();
+    
+       
+            // Update the user without the image
+            $user->update([
+                'NOM_ETABL' => $request->NOM_ETABL,
+                'CD_ETAB' => $request->CD_ETAB,
+
+            ]);
+        
+    
+        return redirect('/visiteur/informationprofile')->with([
+            'type' => 'success',
+            'message' => 'Profile modifié avec succès',
+        ]);
+    }
+    public function changePasswordUpdate(Request $request)
+    {
+        if ($request->get('current_password') !== Auth::user()->password) {
+            return back()->with('error', 'Your current password does not match what you provided');
+        }
+        if (strcmp($request->get('current_password'), $request->get('new_password')) == 0) {
+            return back()->with('error', 'Your new password cant be same with your current password');
+        }
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:6|confirmed'
+        ]);
+        $user = Auth::user();
+        $user->password = bcrypt($request->get('new_password'));
+        $user->save();
+        return back()->with('message', 'Mot de Passe Modifié');
+    }
 
 public function indexAvis()
 {
     $user_id = Auth::user()->id;
     $avis = Avis::where('users_id', $user_id)->paginate(3);
-    return view('Home.Avis', compact('avis'));
+    $idd =Auth::user()->id;
+
+    return view('Home.Avis', compact('avis','idd'));
 }
 public function indexreclamation()
 {

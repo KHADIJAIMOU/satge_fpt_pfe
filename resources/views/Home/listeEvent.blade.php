@@ -42,13 +42,13 @@
                     <div class="team-title">
                         <div class="section-title">
                  <form action="{{ route('ListEvent')}}" method="post" style=" width: 500px;height: 100px;position:relative;left: 100%;">
-                @csrf                 
+                @csrf  <center>        
 
                     <input name="namefilter" id="namefilter" type="text">
                         
                     
                     <input type="submit" class="primary-btn" value="فرز "style="height: 30px;padding-top: 0px;padding-bottom: 0px;">
-                    </form>
+                   </center>        </form>
                </div>
                </div>
                </div>

@@ -31,7 +31,7 @@ class AdminMiddleware
                 return $next($request);
             }
             else if ( $user->hasRole('visiteur') ) {
-                return redirect(route('visiteur.avi'));
+                return redirect(route('indexAvis'));
             }
         }
 

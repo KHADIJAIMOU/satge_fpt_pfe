@@ -11,7 +11,7 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                <img class="profile-user-img img-fluid img-circle" src="/img/etab.jpg"
+                                <img class="profile-user-img img-fluid img-circle" src="{{ Storage::url($user->image) }}"
                                     alt="User profile picture">
                             </div>
 
@@ -90,7 +90,7 @@
                                                 <div class="row">
 
                                                     <div class="col-12 text-center">
-                                                        <img id="profile-image"  src="/img/etab.jpg" alt="user-avatar"
+                                                        <img id="profile-image"  src="{{ Storage::url($user->image) }}" alt="user-avatar"
                                                             class="img-circle img-fluid">
                                                     </div>
                                                 </div>
@@ -101,7 +101,7 @@
                                 </center>
                                 <center>
                                   <button type="button" class="btn btn-info btn-block btn-flat" onclick="document.getElementById('image-input').click()"><i class="fa-solid fa-upload"></i> Importer</button>
-                                  <input type="file" id="image-input" style="display:none;" onchange="loadImage(event)">
+                                  <input type="file" name="image" id="image-input" style="display:none;" onchange="loadImage(event)">
                                   
                                     <br>
                                     <br>

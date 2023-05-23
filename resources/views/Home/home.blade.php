@@ -86,95 +86,11 @@
 <!-- ChoseUs Section End -->
 
 <!-- Classes Section Begin -->
-<section class="classes-section spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-title">
-                    <span>**********                    </span>
-                    <h2>مستجدات</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 col-md-6">
-                <div class="class-item">
-                    <div class="ci-pic">
-                        <img src="{{asset('img/boutiques/optigura.png')}}" alt="">
-                    </div>
-                    <div class="ci-text">
-                        <span>Boutique N°1</span>
-                        <h5>Optigura</h5>
-                        <a href="https://www.optigura.fr/"><i class="fa fa-angle-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="class-item">
-                    <div class="ci-pic">
-                        <img src="{{asset('img/boutiques/ozers1.png')}}" alt="">
-                    </div>
-                    <div class="ci-text">
-                        <span>Boutique N°2</span>
-                        <h5>ØZERS</h5>
-                        <a href="https://ozersnutrition.com"><i class="fa fa-angle-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="class-item">
-                    <div class="ci-pic">
-                        <img src="{{asset('img/boutiques/nutridiscount.png')}}" alt="">
-                    </div>
-                    <div class="ci-text">
-                        <span>Boutique N°3</span>
-                        <h5>Nutridiscount</h5>
-                        <a href="https://www.nutridiscount.fr/"><i class="fa fa-angle-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-                <div class="class-item">
-                    <div class="ci-pic">
-                        <img src="{{asset('img/boutiques/f_b1.png')}}" alt="">
-                    </div>
-                    <div class="ci-text">
-                        <span>Boutique N°4</span>
-                        <h4>FitnessBoutique</h4>
-                        <a href="https://www.fitnessboutique.fr/"><i class="fa fa-angle-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="class-item">
-                    <div class="ci-pic">
-                        <img src="{{asset('img/boutiques/biotechusa.png')}}" alt="">
-                    </div>
-                    <div class="ci-text">
-                        <span>Boutique N°5</span>
-                        <h4>BioTechUsa</h4>
-                        <a href="https://shop.biotechusa.fr/"><i class="fa fa-angle-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 <!-- ChoseUs Section End -->
 
 <!-- Banner Section Begin -->
-<section class="banner-section set-bg" data-setbg="{{asset('img/banner-bg.jpg')}}">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="bs-text">
-                    <h2>Inscrivez-vous maintenant pour obtenir plus d'avantages</h2>
-                    <div class="bt-tips">Là où la santé, la beauté et la forme physique se rencontrent.</div>
-                    <a href="/register" class="primary-btn  btn-normal">Rendez-vous!</a>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </section>
 <!-- Banner Section End -->
 
@@ -340,6 +256,7 @@
                 </div>
                 @endforeach
             </div>
+            
         </div>
     </div>
 </section>

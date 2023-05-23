@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Event;
-use App\Models\Image;
+use App\Models\Avis;
+use App\Models\Document;
 use Illuminate\Support\Facades\Validator;
-class EventController extends Controller
+class AvisController extends Controller
 {
     public function index()
     {
-        $events = Event::paginate(3);
+        $avis = Avis::paginate(3);
+        
         session()->put('menu', 'Event');
-        return view('auth.admin.events.index', compact('events'));
+        return view('auth.admin.avis.index', compact('avis'));
     }
 
     /**
@@ -71,12 +72,12 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function show(Event $event)
+    public function show(Reclamation $reclamation)
     {
         //RETURN VIEW Event DETAILS WITH IMAGES
-        $list_images = $event->images;
+        $list_images = $reclamation->documents;
 
-        return view('auth.admin.events.show', compact('event', 'list_images'));
+        return view('auth.admin.reclamation.show', compact('reclamation', 'list_images'));
     }
 
     /**
@@ -133,13 +134,13 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Event $event)
+    public function destroy(Reclamation $reclamation)
     {
-        $event->delete();
+        $reclamation->delete();
 
-        return redirect('/admin/events')->with([
+        return redirect('/admin/reclamations')->with([
             'type' => 'error',
-            'message' => 'Event supprimé avec succès',
+            'message' => 'reclamation supprimé avec succès',
         ]);
     }
     public function DetailsEvent($id)
@@ -156,6 +157,9 @@ class EventController extends Controller
             $events = Event::with('images')->Where('name',$request->get('namefilter'))->orWhere('name', 'like', '%' .$request->get('namefilter') . '%')->paginate(6);
 
             session()->put('menu', 'ListEvent');
+
+
+            
             return view('Home.listeEvent', compact('events'));
              }
         else{

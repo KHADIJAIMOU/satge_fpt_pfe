@@ -29,7 +29,7 @@ class ConversationRepository {
 
     public function getConversations (int $userId) {
         $conversations = $this->user->newQuery()
-        ->select('NOM_ETABL','role','CD_ETAB', 'id')
+        ->select('NOM_ETABL','role','CD_ETAB', 'id','image')
         ->where('id', '!=', $userId)
         ->get();
         $unread = $this->unreadCount($userId);

@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
 use App\Models\Rapport;
 use App\Models\User;
+use App\Models\Event;
+use App\Models\Avis;
+use App\Models\Reclamation;
+use App\Models\Message;
+
 
 class AdminController extends Controller
 {
@@ -57,37 +62,28 @@ class AdminController extends Controller
     public function register(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:admins',
+            'NOM_ETABL' => 'required|string|max:255',
+            'CD_ETAB' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        $admin = Admin::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
+        $admin = User::create([
+            'NOM_ETABL' => $validatedData['NOM_ETABL'],
+            'CD_ETAB' => $validatedData['CD_ETAB'],
             'password' => bcrypt($validatedData['password']),
+             'role' => 'visiteur',
+
         ]);
 
-        Auth::guard('admin')->login($admin);
-        session()->put("menu", "dashboard");
-
-        $user = Auth::user();
-        $NOM_ETABL = $user->NOM_ETABL;
-        $LL_CYCLE = $user->LL_CYCLE;
-        session()->put("menu", "dashboard");
+        Auth::guard('web')->login($admin);
+        
+        $evenements = Event::orderBy('date', 'desc')
+        ->limit(5)
+        ->get();
+        session()->put('menu', 'Home');
+        return view('Home.home', compact('evenements'));
     
-        $users = User::count();
-    
-     
-    
-    
-        $nbRapports = Rapport::count();
-    
-        session()->put("menu", "dashboard");
-    
-        return view('auth.user.dashboard', ['NOM_ETABL' => $NOM_ETABL,'LL_CYCLE' => $LL_CYCLE,'nbRapports'=> $nbRapports,'users'=>$users]);
-    
-        return redirect()->intended('/admin/dashboard');
+        return redirect()->intended('/');
     }
 
 // Handle the logout request
@@ -111,7 +107,11 @@ public function dashboard(Request $request)
     $LL_CYCLE = $user->LL_CYCLE;
     session()->put("menu", "dashboard");
     $users = User::count();
-
+    $avis = Avis::count();
+    $Reclamation = Reclamation::count();
+    $Message = Message::count();
+    $Event = Event::count();
+    
     $nbRapports = Rapport::count();
     $today = date('Y-m-d');
     session()->put("menu", "dashboard");
@@ -212,11 +212,15 @@ $assezbienquantity= Rapport::select('quantity')->where('quantity', 4)->whereDate
 $bienquantity= Rapport::select('quantity')->where('quantity', 5)->whereDate('created_at', $today)->count();
     $bts = !empty($absenceBTSTotal) ? $absenceBTSTotal : 0;
     $total=$primaire+$lycee+$college+$bts;
-    return view('auth.admin.dashboard', ['total'=>$total,'dateRange'=>$dateRange,'NOM_ETABL' => $NOM_ETABL,'LL_CYCLE' => $LL_CYCLE,'nbRapports'=> $nbRapports,'insuffisantR'=>$insuffisantR,'assezfaibleR'=>$assezfaibleR,'faibleR'=>$faibleR,'passableR'=>$passableR,'bienR'=>$bienR,'assezbienR'=>$assezbienR,'insuffisantquality'=>$insuffisantquality,'assezfaiblequality'=>$assezfaiblequality,'faiblequality'=>$faiblequality,'passablequality'=>$passablequality,'bienquality'=>$bienquality,'assezbienquality'=>$assezbienquality,'insuffisantquantity'=>$insuffisantquantity,'assezfaiblequantity'=>$assezfaiblequantity,'faiblequantity'=>$faiblequantity,'passablequantity'=>$passablequantity,'bienquantity'=>$bienquantity,'assezbienquantity'=>$assezbienquantity,'users'=>$users,'bts'=>$bts,'lycee'=>$lycee,'college'=>$college,'primaire'=>$primaire]);
+    return view('auth.admin.dashboard', ['Event'=>$Event,'Message'=>$Message,'avis'=>$avis,'Reclamation'=>$Reclamation,'total'=>$total,'dateRange'=>$dateRange,'NOM_ETABL' => $NOM_ETABL,'LL_CYCLE' => $LL_CYCLE,'nbRapports'=> $nbRapports,'insuffisantR'=>$insuffisantR,'assezfaibleR'=>$assezfaibleR,'faibleR'=>$faibleR,'passableR'=>$passableR,'bienR'=>$bienR,'assezbienR'=>$assezbienR,'insuffisantquality'=>$insuffisantquality,'assezfaiblequality'=>$assezfaiblequality,'faiblequality'=>$faiblequality,'passablequality'=>$passablequality,'bienquality'=>$bienquality,'assezbienquality'=>$assezbienquality,'insuffisantquantity'=>$insuffisantquantity,'assezfaiblequantity'=>$assezfaiblequantity,'faiblequantity'=>$faiblequantity,'passablequantity'=>$passablequantity,'bienquantity'=>$bienquantity,'assezbienquantity'=>$assezbienquantity,'users'=>$users,'bts'=>$bts,'lycee'=>$lycee,'college'=>$college,'primaire'=>$primaire]);
 
 }
 public function dashboard1(Request $request)
 {
+    $Event = Event::count();
+
+    $avis = Avis::count();
+    $Reclamation = Reclamation::count();
     session()->put("menu", "dashboard");
     $dateRange = $request->input('reservation');
 if ($dateRange) {
@@ -334,6 +338,8 @@ $assezbienquantity= Rapport::select('quantity')->where('quantity', 4)->whereDate
 $bienquantity= Rapport::select('quantity')->where('quantity', 5)->whereDate('created_at',[$startDate, $endDate])->count();
     $bts = !empty($absenceBTSTotal) ? $absenceBTSTotal : 0;
     $total=$primaire+$lycee+$college+$bts;
-    return view('auth.admin.dashboard', ['total'=>$total,'dateRange'=>$dateRange,'NOM_ETABL' => $NOM_ETABL,'LL_CYCLE' => $LL_CYCLE,'nbRapports'=> $nbRapports,'insuffisantR'=>$insuffisantR,'assezfaibleR'=>$assezfaibleR,'faibleR'=>$faibleR,'passableR'=>$passableR,'bienR'=>$bienR,'assezbienR'=>$assezbienR,'insuffisantquality'=>$insuffisantquality,'assezfaiblequality'=>$assezfaiblequality,'faiblequality'=>$faiblequality,'passablequality'=>$passablequality,'bienquality'=>$bienquality,'assezbienquality'=>$assezbienquality,'insuffisantquantity'=>$insuffisantquantity,'assezfaiblequantity'=>$assezfaiblequantity,'faiblequantity'=>$faiblequantity,'passablequantity'=>$passablequantity,'bienquantity'=>$bienquantity,'assezbienquantity'=>$assezbienquantity,'users'=>$users,'bts'=>$bts,'lycee'=>$lycee,'college'=>$college,'primaire'=>$primaire]);
+    $Message = Message::count();
+
+    return view('auth.admin.dashboard', ['Event'=>$Event,'Message'=>$Message,'avis'=>$avis,'Reclamation'=>$Reclamation,'total'=>$total,'dateRange'=>$dateRange,'NOM_ETABL' => $NOM_ETABL,'LL_CYCLE' => $LL_CYCLE,'nbRapports'=> $nbRapports,'insuffisantR'=>$insuffisantR,'assezfaibleR'=>$assezfaibleR,'faibleR'=>$faibleR,'passableR'=>$passableR,'bienR'=>$bienR,'assezbienR'=>$assezbienR,'insuffisantquality'=>$insuffisantquality,'assezfaiblequality'=>$assezfaiblequality,'faiblequality'=>$faiblequality,'passablequality'=>$passablequality,'bienquality'=>$bienquality,'assezbienquality'=>$assezbienquality,'insuffisantquantity'=>$insuffisantquantity,'assezfaiblequantity'=>$assezfaiblequantity,'faiblequantity'=>$faiblequantity,'passablequantity'=>$passablequantity,'bienquantity'=>$bienquantity,'assezbienquantity'=>$assezbienquantity,'users'=>$users,'bts'=>$bts,'lycee'=>$lycee,'college'=>$college,'primaire'=>$primaire]);
 
 }}

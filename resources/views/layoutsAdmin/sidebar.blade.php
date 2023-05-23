@@ -56,7 +56,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/admin/avis" class="nav-link {{ (Session::get('menu') == 'avis') ? 'active':'' }}">
+                                    <a href="/admin/reclamations" class="nav-link {{ (Session::get('menu') == 'avis') ? 'active':'' }}">
                                         <i class="fa-solid fa-circle-exclamation"></i>                                      Reclamatons
                                             </p>
                                         </a>

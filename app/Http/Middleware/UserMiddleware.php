@@ -31,7 +31,7 @@ class UserMiddleware
                 return redirect(route('admin.dashboard'));
             }
             else {
-                return redirect(route('visiteur.avi'));
+                return redirect(route('indexAvis'));
             }
         }
 

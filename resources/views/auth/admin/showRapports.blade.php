@@ -8,58 +8,17 @@
         @endif
 
         @if (count($repports) >= 1)
-            <div class="row">
-                <div class="col-md-8 offset-md-2">
-                    <form action="">
-                        <div class="input-group">
-                            <input type="search" class="form-control form-control-lg" placeholder="Tapez vos mots-clés ici">
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-lg btn-default">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+           
             <section class="content">
                 <div class="container-fluid">
                     <form action="enhanced-results.html">
                         <div class="row">
                             <div class="col-md-10 offset-md-1">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>Result Type:</label>
-                                            <select class="select2" style="width: 100%;">
-                                                <option>Text only</option>
-                                                <option>Images</option>
-                                                <option>Video</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label>Sort Order:</label>
-                                            <select class="select2" style="width: 100%;">
-                                                <option selected>ASC</option>
-                                                <option>DESC</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label>Order By:</label>
-                                            <select class="select2" style="width: 100%;">
-                                                <option selected>Title</option>
-                                                <option>Date</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                                
+                                
                                 <div class="form-group">
                                     <div class="input-group input-group-lg">
-                                        <input type="search" class="form-control form-control-lg" placeholder="Type your keywords here" value="Lorem ipsum">
+                                        <input type="search" class="form-control form-control-lg" placeholder="Tapez le mot" value="el massir">
                                         <div class="input-group-append">
                                             <button type="submit" class="btn btn-lg btn-default">
                                                 <i class="fa fa-search"></i>
@@ -79,8 +38,8 @@
                 <thead class="card-header text-white bg-dark">
                     <tr>
                         <th class="text-center" style="width: 20%;">Type class</th>
-                        <th class="text-center" style="width: 20%;">Rapport d'activite </th>
-                        <th class="text-center" style="width: 20%;">rapport des visites</th>
+                        <th class="text-center" style="width: 20%;">Date Etab </th>
+                        <th class="text-center" style="width: 20%;">Date Create</th>
                         <th class="text-center" style="width:20%;">totale des absences</th>
                         <th class="text-center" style="width:20%;">Actions</th>
                     </tr>
@@ -90,9 +49,9 @@
                     @foreach ($repports as $repport)
                         <tr>
                             <td class="text-center">{{ $repport->typeClass }}</td>
-                            <td class="text-center">{{ $repport->rapportActiviteEffectuer }}</td>
+                            <td class="text-center">{{ $repport->date }}</td>
                             <td class="text-center">
-                                {{ $repport->rapportVisit }}
+                                {{ $repport->created_at }}
                             </td>
                             <td class="text-center" >
                                 {{  $repport->total_absences}}

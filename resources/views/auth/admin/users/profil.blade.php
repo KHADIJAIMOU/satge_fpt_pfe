@@ -15,7 +15,7 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                <img class="profile-user-img img-fluid img-circle" src="/img/etab.jpg"
+                                <img class="profile-user-img img-fluid img-circle" src="{{ Storage::url($user->image) }}"
                                     alt="User profile picture">
                             </div>
 
@@ -82,7 +82,7 @@
                             <strong><i class="fa-solid fa-circle-check"></i> Confirmer mot de passe </strong>
 
                             <p class="text-muted">
-                                <input type="text">
+                                <input type="text"  name="password1" >
                             </p>
 
                             <hr>
@@ -96,7 +96,7 @@
                                             <div class="row">
 
                                                 <div class="col-12 text-center">
-                                                    <img src="/img/etab.jpg" alt="user-avatar" class="img-circle img-fluid">
+                                                    <img src="{{ Storage::url($user->image) }}" id="profile-image"  alt="user-avatar" class="img-circle img-fluid">
                                                 </div>
                                             </div>
                                         </div>
@@ -105,8 +105,11 @@
                                 </div>
                             </center>
                             <center>
-                                <button type="button" class="btn btn-info btn-block btn-flat"><i
-                                        class="fa-solid fa-upload"></i> Importer</button>
+                                {{-- <button type="button" class="btn btn-info btn-block btn-flat"><i
+                                        class="fa-solid fa-upload"></i> Importer</button> --}}
+                                        <button type="button" class="btn btn-info btn-block btn-flat"onclick="document.getElementById('image-input').click()"><i class="fa-solid fa-upload"></i> Importer</button>
+                                        <input type="file" id="image-input" style="display:none;"  name="image"  onchange="loadImage(event)">
+                                        
                                 <br>
                                 <br>
                                 <a class="btn btn-app">
@@ -127,4 +130,46 @@
             <!-- /.row -->
         </div><!-- /.container-fluid -->
     </section>
+@endsection
+@section('scripts')
+<script>
+   $(document).on('click', '.btn-info', function() {
+        $('#image').trigger('click');
+    });
+
+    // Show the selected file name in the button text
+    $(document).on('change', '#image', function() {
+        var fileName = $(this).val().split('\\').pop();
+        $('.btn-info').html('<i class="fa-solid fa-upload"></i> ' + fileName);
+    });
+   function validatePassword() {
+        var password = document.getElementById("password").value;
+        var confirm_password = document.getElementById("confirm_password").value;
+
+        var button = document.querySelector("button[type=submit]");
+
+        if (password == confirm_password) {
+            button.disabled = false;
+        } else {
+            button.disabled = true;
+        }
+    }
+  function validateForm() {
+      var password = document.getElementById("password").value;
+      var confirm_password = document.getElementById("confirm_password").value;
+
+      if (password != confirm_password) {
+          alert("Les mots de passe ne correspondent pas");
+          return false;
+      }
+
+      return true;
+  }
+  function loadImage(event) {
+  var image = document.getElementById('profile-image');
+  image.src = URL.createObjectURL(event.target.files[0]);
+}
+
+</script>
+
 @endsection

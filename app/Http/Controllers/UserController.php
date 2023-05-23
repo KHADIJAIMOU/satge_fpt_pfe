@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\Rapport;
+use App\Models\Avis;
+use App\Models\Reclamtion;
 
 class UserController extends Controller
 {
@@ -117,14 +119,15 @@ public function dashboard()
 
     $users = User::count();
 
- 
+    $avis = Avis::count();
+    $Reclamation = Reclamation::count();
 
 
     $nbRapports = Rapport::count();
 
     session()->put("menu", "dashboard");
 
-    return view('auth.user.dashboard', ['NOM_ETABL' => $NOM_ETABL,'LL_CYCLE' => $LL_CYCLE,'nbRapports'=> $nbRapports,'users'=>$users]);
+    return view('auth.user.dashboard', ['avis' => $avis,'Reclamation' => $Reclamation,'NOM_ETABL' => $NOM_ETABL,'LL_CYCLE' => $LL_CYCLE,'nbRapports'=> $nbRapports,'users'=>$users]);
 }
 
 public function rec()

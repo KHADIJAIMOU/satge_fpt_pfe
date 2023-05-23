@@ -35,7 +35,8 @@
   min-width: 300px;
 }
 
-input {
+
+.input {
   padding: 10px;
   width: 100%;
   font-size: 17px;
@@ -44,7 +45,7 @@ input {
 }
 
 /* Mark input boxes that gets an error on validation: */
-input.invalid {
+.input.invalid {
   background-color: #ffdddd;
 }
 

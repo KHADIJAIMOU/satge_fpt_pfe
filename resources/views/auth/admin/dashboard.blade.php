@@ -3,87 +3,124 @@
 @section('content')
 
 <section class="content">
-  <h1>{{$dateRange}} v</h1>
+  <h1>{{$dateRange}} </h1>
+  <div class="row">
+    <div class="col-lg-3 col-6">
+      <!-- small card -->
+      <div class="small-box bg-info">
+        <div class="inner">
+          <h3>{{$users}}</h3>
 
-    <div class="container-fluid">
-      <!-- Small boxes (Stat box) -->
-      <div class="row" >
-        <div class="col-lg-4 col-4">
-          <!-- small box -->
-          <div class="small-box bg-info">
-            <div class="inner">
-              <h3>{{$nbRapports}}<sup style="font-size: 20px"> Rapports</sup></h3>
-
-              <p>les rapports</p>
-            </div>
-            <div class="icon">
-                <i class="fa-regular fa-file"></i>            </div>
-            {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
-          </div>
+          <p>Utilisateurs</p>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-4 col-4">
-          <!-- small box -->
-          <div class="small-box bg-success">
-            <div class="inner">
-              <h3>{{$users}}<sup style="font-size: 20px"> Utilisateurs</sup></h3>
-
-              <p>les Utilisateurs</p>
-            </div>
-            <div class="icon">
-                <i class="fa-regular fa-user"></i>            </div>
-            {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
-          </div>
+        <div class="icon">
+          <i class="fas fa-users"></i>
         </div>
-        {{-- <!-- ./col -->
-        <div class="col-lg-3 col-6">
-          <!-- small box -->
-          <div class="small-box bg-warning">
-            <div class="inner">
-              <h3>44</h3>
-
-              <p>User Registrations</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> 
-          </div>
-        </div>
-        <!-- ./col --> --}}
-        <div class="col-lg-4 col-4">
-          <!-- small box -->
-          <div class="small-box bg-danger">
-            <div class="inner">
-              <h3>-<sup style="font-size: 20px"> ----------------------</sup></h3>
-
-              <p>--------------------</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-            {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
-          </div>
-        </div>
-        <!-- ./col -->
-       {{-- <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-orange">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
-  
-                <p>Bounce Rate</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          --}}
+        <a href="/admin/users" class="small-box-footer">
+          More info <i class="fas fa-arrow-circle-right"></i>
+        </a>
       </div>
-      <!-- /.row -->
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+      <!-- small card -->
+      <div class="small-box bg-success">
+        <div class="inner">
+          <h3>{{$nbRapports}}<sup style="font-size: 20px"></sup></h3>
+
+          <p>rapports</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-stats-bars"></i>
+        </div>
+        <a href="/admin/repports" class="small-box-footer">
+          More info <i class="fas fa-arrow-circle-right"></i>
+        </a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+      <!-- small card -->
+      <div class="small-box bg-warning">
+        <div class="inner">
+          <h3>{{$Reclamation}}</h3>
+
+          <p> Reclamations</p>
+        </div>
+        <div class="icon">
+          <i class="fa-solid fa-circle-exclamation"></i>
+        </div>
+        <a href="/admin/reclamations" class="small-box-footer">
+          More info <i class="fas fa-arrow-circle-right"></i>
+        </a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+      <!-- small card -->
+      <div class="small-box bg-danger">
+        <div class="inner">
+          <h3>{{$avis}}</h3>
+
+          <p>avis</p>
+        </div>
+        <div class="icon">
+          
+          <i class="fa-solid fa-lightbulb"></i>
+        </div>
+        <a href="/admin/avis" class="small-box-footer">
+          More info <i class="fas fa-arrow-circle-right"></i>
+        </a>
+      </div>
+    </div>
+    <!-- ./col -->
+  </div>
+  <!-- /.row -->
+
+  <!-- Small Box (Stat card) -->
+  
+  <div class="row">
+    <div class="col-lg-3 col-6">
+      <!-- small card -->
+      <div class="small-box bg-purple">
+        <div class="inner">
+          <h3>{{$Message}}</h3>
+
+          <p>Message</p>
+        </div>
+        <div class="icon">
+          <i class="fa-solid fa-message"></i>
+        </div>
+        <a href="/conversations" class="small-box-footer">
+          More info <i class="fas fa-arrow-circle-right"></i>
+        </a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+      <!-- small card -->
+      <div class="small-box bg-fuchsia">
+        <div class="inner">
+          <h3>{{$Event}}<sup style="font-size: 20px"></sup></h3>
+
+          <p>Evenements</p>
+        </div>
+        <div class="icon">
+          <i class="fa-solid fa-calendar-days"></i>
+        </div>
+        <a href="/admin/events" class="small-box-footer">
+          More info <i class="fas fa-arrow-circle-right"></i>
+        </a>
+      </div>
+    </div>
+  
+    <!-- ./col -->
+  </div>
+  <!-- /.row -->
+
+  <!-- Small Box (Stat card) -->
+  </div>
+  
       <!-- Main row -->
       <div class="row">
         <!-- Left col -->

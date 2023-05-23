@@ -19,33 +19,67 @@ class UsersController extends Controller
     }
     public function profileUpdate(Request $request)
     {
-        //validation rules
-
+        // Validation rules
         $request->validate([
             'password' => 'required|min:4|string|max:255',
         ]);
+    
         $user = Auth::user();
-        $user->password = $request['password'];
-        $user->save();
+    
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('images', 'public'); // Store the image in the storage folder
+    
+            // Update the user with the image path
+            $user->update([
+                'password' => $request->password,
+                'image' => $imagePath,
+            ]);
+        } else {
+            // Update the user without the image
+            $user->update([
+                'password' => $request->password,
+            ]);
+        }
+    
         return redirect('/admin/profil')->with([
             'type' => 'success',
             'message' => 'Profile modifié avec succès',
         ]);
     }
+    
+  
     public function profileUpdateUser(Request $request)
     {
         //validation rules
 
-        $request->validate([
-            'password' => 'required|min:4|string|max:255',
+       // Validation rules
+       $request->validate([
+        'password' => 'required|min:4|string|max:255',
+    ]);
+
+    $user = Auth::user();
+
+    if ($request->hasFile('image')) {
+        $image = $request->file('image');
+        $imagePath = $image->store('images', 'public'); // Store the image in the storage folder
+
+        // Update the user with the image path
+        $user->update([
+            'password' => $request->password,
+            'image' => $imagePath,
         ]);
-        $user = Auth::user();
-        $user->password = $request['password'];
-        $user->save();
-        return redirect('/user/profil')->with([
-            'type' => 'success',
-            'message' => 'Profile modifié avec succès',
+    } else {
+        // Update the user without the image
+        $user->update([
+            'password' => $request->password,
         ]);
+    }
+
+    return redirect('/admin/profil')->with([
+        'type' => 'success',
+        'message' => 'Profile modifié avec succès',
+    ]);
     }
     public function Base()
     {

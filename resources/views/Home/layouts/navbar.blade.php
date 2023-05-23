@@ -40,8 +40,8 @@
                                     href="">الشكايات</a></li>
                             <li class="{{ session()->get('menu') == '' ? 'active' : '' }}"><a
                                     href="">الاراء</a></li>
-                                    <li><a href="/vip/informationprofile">حساب شخصي</a></li>
-                                    <li><a href="/vip/changepassword">تغيير كلمة المرور</a></li>
+                                    <li><a href="/visiteur/informationprofile">حساب شخصي</a></li>
+                                    <li><a href="/visiteur/changepassword">تغيير كلمة المرور</a></li>
                             </ul>
                         </li>
                     @endif

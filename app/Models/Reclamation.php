@@ -30,6 +30,10 @@ class Reclamation extends Model
             'adressIp', 
             'mac_address','status'
     ];
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
     public function getStatus($num)
     {
         switch ($num) {

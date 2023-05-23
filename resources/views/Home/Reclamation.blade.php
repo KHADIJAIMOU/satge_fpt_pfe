@@ -75,7 +75,7 @@
                                         </td>
 
                                         <td class="hover-dp ts-meta">
-                                            <form action="" method="post">
+                                            <form action="{{route('destroyreclamation',$item->id)}}" method="post">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button target="_blank" type="submit"
@@ -119,25 +119,25 @@
                         <form method="post" id="regForm" action="{{ route('storereclamation', $idd) }}" enctype="multipart/form-data">
                             @csrf
 
-                    <input type="text" name="users_id" value="{{$idd}}">
+                    <input type="hidden" name="users_id" value="{{$idd}}">
 
     <!-- One "tab" for each step in the form: -->
     <div class="tab" style="text-align: right">الاسم الكامل
-        <p><input style="text-align: right" placeholder="الاسم الشخصي" oninput="this.className = ''"
+        <p><input class="input" style="text-align: right" placeholder="الاسم الشخصي" oninput="this.className = ''"
                 name="first_name"></p>
-        <p><input style="text-align: right" placeholder="الاسم العائلي"
+        <p><input class="input" style="text-align: right" placeholder="الاسم العائلي"
                 oninput="this.className = ''" name="last_name"></p>
     </div>
     <div class="tab" style="text-align: right"> معلومات للتواصل
-        <p><input style="text-align: right" placeholder=" بريد الكتروني"
+        <p><input class="input" style="text-align: right" placeholder=" بريد الكتروني"
                 oninput="this.className = ''" name="CNI"></p>
-        <p><input style="text-align: right" placeholder="رقم الهاتف " oninput="this.className = ''"
+        <p><input  class="input" style="text-align: right" placeholder="رقم الهاتف " oninput="this.className = ''"
                 name="phone"></p>
     </div>
     <div class="tab" style="text-align: center">المشتكي عليه
         <div class="form-group" style="text-align: right">
             <label style="text-align: right" for="ll_com">اختر الجماعة</label>
-            <select name="la_com" class="form-control">
+            <select name="ll_com" class="form-control">
                 <option style="text-align: right" value="تزنيت (البلدية)">تزنيت (البلدية)</option>
                 {{-- <option value="Simple">Simple</option> --}}
                 <option style="text-align: right" value="تافراوت (البلدية)">تافراوت (البلدية)
@@ -168,7 +168,7 @@
                 <option style="text-align: right" value="تفراوت المولود">تفراوت المولود</option>
             </select>
         </div>
-        <p><input style="text-align: right" placeholder="اسم المؤسسة"
+        <p><input class="input" style="text-align: right" placeholder="اسم المؤسسة"
                 oninput="this.className = ''" name="NOM_ETABL"></p>
 
     </div>
@@ -181,7 +181,7 @@
         </center>
         <label style="text-align: right" for="content"> مرفقات</label>
 
-        <p><input style="text-align: right" type="file" name="images[]" multiple class="form-control" accept="image/*" multiple
+        <p><input class="input" style="text-align: right" type="file" name="images[]" multiple class="form-control" accept="image/*" multiple
                 oninput="this.className = ''"></p>
     </div>
     <div style="overflow:auto;">

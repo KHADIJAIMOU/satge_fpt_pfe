@@ -10,6 +10,8 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VisiteurController;
+use App\Http\Controllers\ReclamtionController;
+use App\Http\Controllers\AvisController;
 
 // User Routes
 
@@ -24,6 +26,8 @@ Route::post('listEvent/', [EventController::class, 'ListEvent'])->name('ListEven
 Route::get('/login', [UserController::class, 'showLoginForm']);
 Route::post('/login', [UserController::class, 'login'])->name('user.login');
 Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
+Route::post('/register', [AdminController::class, 'register'])->name('register');
+Route::get('/register', [AdminController::class, 'showRegistrationForm'])->name('register');
 
 // Admin Routes
 /*
@@ -64,7 +68,12 @@ Route::prefix('/visiteur')->group(function () {
     Route::delete('avi/{id}', [VisiteurController::class, 'destroyAvis'])->name('destroyAvis');
     Route::match(['put', 'post'], '/reclamation/{id}', [VisiteurController::class, 'storereclamation'])->name('storereclamation');
     Route::delete('reclamation/{id}', [VisiteurController::class, 'destroyreclamation'])->name('destroyreclamation');
-  
+    Route::get('/informationprofile', [VisiteurController::class, 'indexinformationupdate'])->name('informationupdate');
+
+    Route::post('/informationprofile', [VisiteurController::class, 'profileUpdate'])->name('profileUpdateVisiteur');
+    Route::get('/changepassword', [VisiteurController::class, 'indexchangePasswordUpdate']);
+    Route::post('/changepassword', [VisiteurController::class, 'changePasswordUpdate'])->name('changePasswordUpdate');
+
 });
 });
 
@@ -80,6 +89,9 @@ Route::prefix('/admin')->group(function () {
     Route::get('/repports/{id}/print', [RapportAdminController::class, 'print'])->name('repports.print');
     Route::get('/repports/{id}/telecharger', [RapportAdminController::class, 'telecharger'])->name('repports.telecharger');
     Route::resource('/events', EventController::class);
+    Route::resource('/reclamations', ReclamtionController::class);
+    Route::resource('/avis', AvisController::class);
+
 });
 });
 
