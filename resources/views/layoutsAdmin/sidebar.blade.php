@@ -1,13 +1,25 @@
+@if (Illuminate\Support\Facades\Auth::user()->role == 'admin')
 <aside class="main-sidebar sidebar-dark-primary elevation-4" style="height:100%">
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image"> <span style="color:white">    </span>
+                <img src="{{ Storage::url(Illuminate\Support\Facades\Auth::user()->image) }}" class="img-circle elevation-2" alt="User Image"> 
+                <span class="status-circle online" style="width: 12px;
+                    width: 12px;
+    height: 12px;
+    background-color: #0ef40e;
+    border-radius: 50%;
+    position: absolute;
+    top: 20px;
+    right: 14px;
+    bottom: Opx;
+    left: 40px;"></span>
+
             </div>
             <div class="info">
-                <a href="#" class="d-block"><b></b></a>
+                <h6 style="color: whitesmoke ;">{{ Illuminate\Support\Facades\Auth::user()->NOM_ETABL }}</h6>
             </div>
         </div>
         <!-- Sidebar Menu -->
@@ -85,3 +97,71 @@
     </div>
     <!-- /.sidebar -->
 </aside>
+    
+@else
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="height:100%">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="{{ Storage::url(Illuminate\Support\Facades\Auth::user()->image) }}" class="img-circle elevation-2" alt="User Image"> 
+                <span class="status-circle online" style="width: 12px;
+                    width: 12px;
+    height: 12px;
+    background-color: #0ef40e;
+    border-radius: 50%;
+    position: absolute;
+    top: 20px;
+    right: 14px;
+    bottom: Opx;
+    left: 40px;"></span>
+            </div>
+            <br>
+            <br>
+            <div class="info" style="color:white">
+            </div>
+            <h6 style="color: whitesmoke ;">{{ Illuminate\Support\Facades\Auth::user()->NOM_ETABL }}</h6>
+
+        </div>
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                        with font-awesome or any other icon font library -->
+               
+            <li class="nav-item {{ (Session::get('menu') == 'profil') ? 'menu-open':''}}">
+            <a href="/user/repports" class="nav-link {{ (Session::get('menu') == 'repports') ? 'active':'' }}">
+                        <i class="fa-solid fa-file"></i>
+                        <p>
+                            Rapports
+                        </p>
+                    </a>
+              
+                </li>
+                <li class="nav-item">
+                    <a href="/conversations" class="nav-link {{ (Session::get('menu') == 'conversations') ? 'active':'' }}">
+                            <i class="fa-solid fa-message"></i>
+                            <p>
+                                Message 
+                            </p>
+                        </a>
+                    </li>
+                <li>
+              
+                <a href="/user/profil" class="nav-link {{ (Session::get('menu') == 'profil') ? 'active':'' }}">
+                        <i class="fa-solid fa-user"></i>
+                        <p>
+                            profil
+                        </p>
+                    </a>
+                </li>
+                
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
+@endif

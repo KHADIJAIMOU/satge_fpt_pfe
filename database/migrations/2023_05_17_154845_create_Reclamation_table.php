@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('NOM_ETABL')->nullable(); 
             $table->string('phone')->nullable(); 
             $table->string('content')->nullable(); 
+            $table->string('response')->nullable(); 
             $table->integer('status');
             $table->string('adressIp')->nullable(); 
             $table->string('mac_address')->nullable(); 

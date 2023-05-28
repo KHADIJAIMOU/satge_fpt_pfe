@@ -29,7 +29,7 @@ class ConversationRepository {
 
     public function getConversations (int $userId) {
         $conversations = $this->user->newQuery()
-        ->select('NOM_ETABL','role','CD_ETAB', 'id','image')
+        ->select('NOM_ETABL','status','role','CD_ETAB', 'id','image')
         ->where('id', '!=', $userId)
         ->get();
         $unread = $this->unreadCount($userId);
@@ -49,7 +49,10 @@ class ConversationRepository {
     public function getMessagesFor(int $from, int $to): Builder {
         return $this->message->newQuery()
         ->WhereRaw("(( from_id = $from AND to_id = $to) OR ( from_id = $to AND to_id = $from))")
-        ->orderBy('created_at', 'DESC');
+        ->orderBy('created_at', 'DESC')
+        ->with([
+            'from'=> function($query) { return $query->select('NOM_ETABL','status','role','CD_ETAB', 'id','image');}
+        ]);  
     }
     public function unreadCount(int $userId){
         return $this->message->newQuery()

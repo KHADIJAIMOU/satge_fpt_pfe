@@ -51,15 +51,17 @@ class ConversationsController extends Controller
         return view('conversations/show', [
             'users' => $this->r->getConversations($this->auth->user()->id),
             'user' => $user,
-            'messages' => $this->r->getMessagesFor($this->auth->user()->id,$user->id)->get()->reverse(),
+            'messages' => $messages,
             'unread'=> $unread
 
         ]);
     }
-    public function destroy(Request $request){
-
-       
-    }
+    
+        public function destroy(Message $message)
+        {
+           
+        }
+    
 
     public function store (User $user , StoreMessage $request) {
         $message = $this->r->createMessage(

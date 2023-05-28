@@ -18,7 +18,7 @@ class HomeController extends Controller
    
     public function changePasswordUpdate(Request $request)
     {
-        if (!Hash::check($request->get('current_password'), Auth::user()->password)) {
+        if ($request->get('current_password')!= Auth::user()->password){
             return back()
                 ->withErrors('Votre mot de passe actuel ne correspond pas à celui que vous avez fourni')
                 ->withInput();
@@ -35,7 +35,7 @@ class HomeController extends Controller
             'new_password' => 'required|string|min:6|confirmed',
         ]);
         $user = Auth::user();
-        $user->password = bcrypt($request->get('new_password'));
+        $user->password = $request->get('new_password');
         $user->save();
         return back()->with('message', 'Mot de passe modifié avec succès');
     }

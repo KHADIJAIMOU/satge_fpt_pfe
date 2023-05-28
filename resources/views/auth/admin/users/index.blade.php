@@ -16,6 +16,7 @@
                     <th class="text-center" style="width: 100px;">typeEtab</th>
                     <th class="text-center" style="width: 100px;">CD_GIPE</th>
                     <th class="text-center" style="width: 100px;">password</th>
+                    <th class="text-center"style="width: 100px;">role</th>
                     <th class="text-center"style="width: 100px;">Actions</th>
                 </tr>
             </thead>
@@ -28,6 +29,7 @@
                         <td class="text-center">{{ $user->typeEtab }}</td>
                         <td class="text-center">{{ $user->CD_GIPE }}</td>
                         <td class="text-center">{{ $user->password }}</td>
+                        <td class="text-center">{{ $user->role }}</td>
                         <td class="text-center">
                             <div class="d-flex flex-row justify-content-center">
                                 <div class="mr-2">

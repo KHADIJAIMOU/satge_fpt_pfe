@@ -42,16 +42,6 @@
                     <i class="fa-solid fa-pen-to-square"></i>
                 </a>
                 </div>
-                <div class="mr-2">
-                    <a href="{{ '/user/rapport/' . $repport->id . '/print' }}" target="_blank"
-                        class="btn btn-info btn-sm">
-                        <i class="fa-solid fa-print"></i> </a>
-                </div>
-                <div class="mr-2">
-                    <a href="{{ '/user/rapport/' . $repport->id . '/telecharger' }}" target="_blank"
-                        class="btn btn-warning btn-sm">
-                        <i class="fa-solid fa-download"></i> </a>
-                </div>
                 <div>
                 <form action="{{ route('rapport.destroy', $repport->id) }}" method="post">
                     @csrf

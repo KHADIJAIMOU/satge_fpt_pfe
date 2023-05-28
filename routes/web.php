@@ -89,7 +89,7 @@ Route::prefix('/admin')->group(function () {
     Route::get('/repports/{id}/print', [RapportAdminController::class, 'print'])->name('repports.print');
     Route::get('/repports/{id}/telecharger', [RapportAdminController::class, 'telecharger'])->name('repports.telecharger');
     Route::resource('/events', EventController::class);
-    Route::resource('/reclamations', ReclamtionController::class);
+    Route::resource('/reclamations',ReclamtionController::class);
     Route::resource('/avis', AvisController::class);
 
 });

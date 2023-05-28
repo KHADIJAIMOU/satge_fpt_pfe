@@ -28,7 +28,7 @@ class Reclamation extends Model
             'phone', 
             'content', 
             'adressIp', 
-            'mac_address','status'
+            'mac_address','status','response'
     ];
     public function documents()
     {

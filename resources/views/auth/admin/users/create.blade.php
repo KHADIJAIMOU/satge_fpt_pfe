@@ -8,6 +8,16 @@
         @csrf
         <div class="card-body">
             <div class="form-group">
+                <label for="role">role</label>
+
+                <select name="role" class="form-control"   >
+                    <option value="visiteur">visiteur</option>
+                    <option value="admin">admin</option>
+                    <option value="user">user</option>
+
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="name">CD_ETAB</label>
                 <input type="text" class="form-control" name="CD_ETAB" id="CD_ETAB" placeholder="Enter CD_ETAB"
                     value="{{ old('CD_ETAB') }}">

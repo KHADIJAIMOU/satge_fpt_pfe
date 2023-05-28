@@ -8,7 +8,11 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\Rapport;
 use App\Models\Avis;
+use App\Models\infoAuth;
+
 use App\Models\Reclamtion;
+use Illuminate\Support\Facades\Http;
+
 
 class UserController extends Controller
 {
@@ -19,7 +23,7 @@ class UserController extends Controller
     }
 
     // Handle the login form submission
-    public function login(Request $request)
+    public function login(Request $request,User $user)
     {
         $CD_ETAB = $request->input('CD_ETAB');
         $password = $request->input('password');
@@ -30,7 +34,23 @@ class UserController extends Controller
             foreach ($users as $user) {
                 if ($password === $user->password){
                     Auth::login($user);
-                    
+                    $user->update([
+                        'status' => 0,
+            
+                    ]);
+                    $user = Auth::user();
+
+                    $ipAddress = $_SERVER['REMOTE_ADDR'];
+                    $mac_address = exec('getmac');
+                    $ip = Http::get('https://api.ipify.org')->body();
+                    $macAddress = exec('getmac');
+                    $macAddress = strtok($macAddress, ' ');
+                    $event = infoAuth::create([
+                        'users_id' => $user->id,
+
+                        'adressIp'=>$ip,
+                'mac_address'=>$macAddress,
+                    ]);
                     // check user role
                     if ($user->role === 'admin') {
                         session()->put("menu", "dashboard");
@@ -47,7 +67,11 @@ class UserController extends Controller
                 }
             }
         }
-        
+  
+
+       
+
+       
         return back()->withErrors([
             'CD_ETAB' => 'The provided credentials do not match our records.',
         ]);
@@ -74,7 +98,7 @@ class UserController extends Controller
         $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
-            'password' => bcrypt($validatedData['password']),
+            'password' =>$validatedData['password'],
             'LL_CYCLE' => $validatedData['LL_CYCLE'],
         ]);
 
@@ -85,15 +109,23 @@ class UserController extends Controller
 
     // Handle the logout request
     public function logout(Request $request)
-    {
-        Auth::logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return redirect('/login');
+{
+    $user = Auth::user();
+    
+    if ($user) {
+        $user->status = 1;
+        $user->save();
     }
+    
+    Auth::logout();
+
+    $request->session()->invalidate();
+
+    $request->session()->regenerateToken();
+
+    return redirect('/login');
+}
+
   public function userReport()
 {
     if (!auth()->check()) {

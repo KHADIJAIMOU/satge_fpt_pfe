@@ -93,7 +93,8 @@ class UsersController extends Controller
                 $user = Auth::user();
                         session()->put("menu", "profil");
         
-                        return view('auth.user.baseUser', compact('user'));
+                        return view('aut
+                        h.user.baseUser', compact('user'));
                     }
     /**
      * Display a listing of the resource.
@@ -136,6 +137,7 @@ class UsersController extends Controller
         'typeEtab'=> 'required',
         'LL_CYCLE'=> 'required',
         'LA_CYCLE'=> 'required',
+        'role'=> 'required',
         'NetabFr'=> 'required',
         'CD_GIPE'=> 'required',
         'password'=> 'required',
@@ -150,8 +152,9 @@ class UsersController extends Controller
         $User = new User();
         $User->create([
             'CD_ETAB'=> $request->CD_ETAB,
-        'NOM_ETABL'=> $request->NOM_ETABL,
-        'NOM_ETABA'=> $request->NOM_ETABA,
+            'NOM_ETABL'=> $request->NOM_ETABL,
+            'role'=> $request->role,
+            'NOM_ETABA'=> $request->NOM_ETABA,
         'la_com'=> $request->la_com,
         'll_com'=> $request->ll_com,
         'typeEtab'=> $request->typeEtab,
@@ -317,7 +320,7 @@ class UsersController extends Controller
      */
     public function changePasswordUpdate(Request $request)
     {
-        if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
+        if ($request->get('current_password')!= Auth::user()->password) {
             return back()->with('error', 'Your current password does not match what you provided');
         }
         if (strcmp($request->get('current_password'), $request->get('new_password')) == 0) {
@@ -328,7 +331,7 @@ class UsersController extends Controller
             'new_password' => 'required|string|min:6|confirmed'
         ]);
         $user = Auth::user();
-        $user->password = bcrypt($request->get('new_password'));
+        $user->password = $request->get('new_password');
         $user->save();
         return back()->with('message', 'Mot de Passe Modifié');
     }

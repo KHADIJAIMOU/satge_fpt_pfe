@@ -25,7 +25,8 @@ return new class extends Migration
             $table->string('CD_GIPE'); 
             $table->string('password');
             $table->string('image');
-            
+            $table->integer('status');
+
             $table->string('role')->default('user');
             $table->timestamps();
         });

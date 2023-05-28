@@ -37,9 +37,9 @@
                         <li class="{{ session()->get('menu') == 'Vip' ? 'active' : '' }}"><a href="#">زائر</a>
                             <ul class="dropdown">
                                 <li class="{{ session()->get('menu') == '' ? 'active' : '' }}"><a
-                                    href="">الشكايات</a></li>
+                                    href="/visiteur/reclamation">الشكايات</a></li>
                             <li class="{{ session()->get('menu') == '' ? 'active' : '' }}"><a
-                                    href="">الاراء</a></li>
+                                    href="/visiteur/avi">الاراء</a></li>
                                     <li><a href="/visiteur/informationprofile">حساب شخصي</a></li>
                                     <li><a href="/visiteur/changepassword">تغيير كلمة المرور</a></li>
                             </ul>

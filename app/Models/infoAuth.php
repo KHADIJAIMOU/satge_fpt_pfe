@@ -8,10 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class infoAuth extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-    protected $table = 'users';
+    protected $table = 'infoAuth';
+    protected $primaryKey = 'id';
+
 
     /**
      * The attributes that are mass assignable.
@@ -19,20 +21,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-   
-        'CD_ETAB',
-        'NOM_ETABL',
-        'NOM_ETABA',
-        'la_com',
-        'll_com',
-        'typeEtab',
-        'LL_CYCLE',
-        'LA_CYCLE',
-        'NetabFr',
-        'CD_GIPE',
-        'password',
-        'role',
-        'image','status',
+        'users_id',
+        'adressIp',
+        'mac_address',
 
     ];
     public function hasRole(string $role): bool

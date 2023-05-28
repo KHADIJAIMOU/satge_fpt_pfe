@@ -82,7 +82,7 @@ class VisiteurController extends Controller
             'new_password' => 'required|string|min:6|confirmed'
         ]);
         $user = Auth::user();
-        $user->password = bcrypt($request->get('new_password'));
+        $user->password = $request->get('new_password');
         $user->save();
         return back()->with('message', 'Mot de Passe Modifié');
     }

@@ -6,7 +6,6 @@
 </a>
 <form method="post" action="{{ route('events.update', $event->id) }}">
     @csrf
-    @method("PUT")
     <div class="card-body">
         <div class="form-group">
             <label for="name">Titre</label>

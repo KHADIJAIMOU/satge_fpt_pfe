@@ -99,14 +99,13 @@ class ReclamtionController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(Request $request, Reclamation $reclamation)
     {
         //VALIDATION
         $validator = Validator::make(request()->all(), [
-            'name' => 'required',
-            'description' => 'required',
-            'short_description' => 'required',
-            'date' => 'required',
+            'response' => 'required',
+            'status' => 'required',
+            
         ]);
 
         if ($validator->fails()) {
@@ -115,17 +114,16 @@ class ReclamtionController extends Controller
                 ->withInput();
         }
 
-        $event->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'short_description' => $request->short_description,
-            'content' => $request->content,
-            'date' => $request->date,
+        $reclamation->update([
+            'response' => $request->response,
+            'status' => $request->status,
+
+           
         ]);
 
-        return redirect('/admin/events')->with([
+        return redirect('/admin/reclamations')->with([
             'type' => 'success',
-            'message' => 'Event modifié avec succès',
+            'message' => 'Reclamation modifié avec succès',
         ]);
     }
 

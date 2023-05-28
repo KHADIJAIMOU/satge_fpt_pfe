@@ -4,7 +4,6 @@
     <a href="/admin/reclamations" class="btn btn-secondary float-right">
         <i class="fa-solid fa-arrow-left"></i> précédent
     </a>
-    <form>
         <div class="card-body pt-5">
             {{-- IMAGES PART --}}
             @if (count($list_images))
@@ -77,17 +76,17 @@
 
         <div class="form-group">
             <label for="name">Nom Complete</label>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Enter name"
+            <input type="text" class="form-control" name="name" id="name" 
                 value="{{ $reclamation->first_name }}  {{ $reclamation->last_name }}" disabled>
         </div>
         <div class="form-group">
             <label for="date">Date</label>
-            <input type="text" class="form-control" name="date" id="date" placeholder="Enter date"
+            <input type="text" class="form-control" name="date" id="date" 
                 value="{{ $reclamation->created_at }}" disabled>
         </div>
         <div class="form-group">
             <label for="short_description">N° de téléphone </label>
-            <input type="text" class="form-control" name="date" id="date" placeholder="Enter date"
+            <input type="text" class="form-control" name="date" id="date" 
             value="{{ $reclamation->phone }}" disabled>        </div>
         <div class="form-group">
             <label for="content">CNI</label>
@@ -96,17 +95,38 @@
         
         <div class="form-group">
             <label for="description">ll_com</label>
-            <input type="text" class="form-control" name="date" id="date" placeholder="Enter date"
+            <input type="text" class="form-control" name="date" id="date" 
             value="{{ $reclamation->ll_com }}" disabled>      
                 </div>
-        <button type="button" class="btn btn-outline-info btn-block btn-flat"><i class="fa-solid fa-check"></i> Aceepter</button>
+               
+         <form method="post" action="{{ route('reclamations.update', $reclamation->id) }}">
+            @csrf
+            @method("PUT")
+            <div class="form-group">
+                {{-- <button type="button" class="btn btn-outline-info btn-block btn-flat"- ><i class="fa-solid fa-check"></i> Aceepter</button>
         <button type="button" class="btn btn-outline-danger btn-block btn-flat"><i class="fa fa-times"></i> Refuser</button>
         <button type="button" class="btn btn-outline-warning btn-block btn-flat"><i class="fa fa-clock"></i> Encours</button>
-        <div class="form-group">
+        --}}
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-light">
+                <input type="radio" name="status" id="status" value="1" autocomplete="off" {{ $reclamation->status == 1 ? 'checked' : '' }}> Accepter
+            </label>
+            <label class="btn btn-light ">
+                <input type="radio" name="status" id="status" value="2" autocomplete="off" {{ $reclamation->status == 2 ? 'checked' : '' }}> Refuser
+            </label>
+            <label class="btn btn-light">
+                <input type="radio" name="status" id="status" value="0" autocomplete="off" {{ $reclamation->status == 0 ? 'checked' : '' }}> En cours
+            </label>
+        </div>
+        
+            <br>
+            
             <label for="response">Reponse</label>
-            <textarea class="form-control" name="response" id="response" cols="30" rows="10" ></textarea>
-            <button type="button" class="btn btn-outline-warning btn-flat"> Envoyer</button>
-        </div>    
+            <textarea class="form-control" name="response" id="response" cols="30" rows="10" > {{$reclamation->response }}</textarea>
+            {{-- <input type="number" name="status" id="status"> --}}
+            <br>
+            <button type="submit" class="btn btn-lg btn-success float-right">Valider
+            </div>  
+                </form>  
     </div>
-    </form>
 @endsection

@@ -3,7 +3,6 @@
 @section('content')
 
 <section class="content">
-  <h1>{{$dateRange}} </h1>
   <div class="row">
     <div class="col-lg-3 col-6">
       <!-- small card -->
@@ -151,6 +150,8 @@
         <!-- /.Left col -->
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
         <section class="col-lg-12 connectedSortable">
+          <h1>{{$dateRange}} </h1>
+
           <form id="dashboard-form" action="{{ route('admin.dashboard') }}" method="post">
             @csrf
           <div class="form-group">
@@ -170,6 +171,7 @@
           </form>
   <!-- solid sales graph -->
           <div class="card bg-gradient-white">
+
             <div class="card-header border-0">
               
               <h1 class="card-title">
