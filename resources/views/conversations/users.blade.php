@@ -29,7 +29,6 @@
                 @endforeach
 
                 <!-- Pagination Links -->
-                {{ $users->links() }}
             </div>
         </div>
     </div>

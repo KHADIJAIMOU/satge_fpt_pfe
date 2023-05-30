@@ -15,7 +15,8 @@ use App\Http\Controllers\AvisController;
 
 // User Routes
 
-Route::get('/conversations', [App\Http\Controllers\ConversationsController::class,'index'])->name('conversations');
+Route::get('/conversations', [App\Http\Controllers\ConversationsController::class, 'index'])->name('conversations');
+Route::get('/search/users', [App\Http\Controllers\ConversationsController::class, 'searchUsers'])->name('search.users');
 Route::get('/conversations/{user}', [App\Http\Controllers\ConversationsController::class,'show'])->name('conversations.show')->middleware('can:talkTo,user');
 Route::post('/conversations/{user}', [App\Http\Controllers\ConversationsController::class,'store'])->middleware('can:talkTo,user');
 //Route::get('/', [RapportController::class, 'index']);
@@ -51,7 +52,7 @@ Route::prefix('/user')->group(function () {
 
 Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/repports', [RapportController::class, 'indexReport'])->name('rapport.indexReport');
-
+    Route::get('/action', [RapportController::class, 'action'])->name('action');
     Route::resource('/rapport', RapportController::class);
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
     Route::get('/profil', [RapportController::class,'profil'])->name('users.profil');
@@ -79,6 +80,8 @@ Route::prefix('/visiteur')->group(function () {
 
 Route::prefix('/admin')->group(function () {
     Route::middleware(['auth', 'admin'])->group(function () {
+        Route::get('/actions', [RapportAdminController::class, 'actions'])->name('actions');
+
         Route::match(['put', 'post'], '/profil', [UsersController::class, 'profileUpdate'])->name('profileUpdateAdmin');
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::match(['put', 'post'],'/dashboard', [AdminController::class, 'dashboard1'])->name('admin.dashboard');

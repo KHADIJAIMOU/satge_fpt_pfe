@@ -70,8 +70,9 @@ class AdminController extends Controller
         $admin = User::create([
             'NOM_ETABL' => $validatedData['NOM_ETABL'],
             'CD_ETAB' => $validatedData['CD_ETAB'],
-            'password' => validatedData['password'],
-             'role' => 'visiteur',
+            'password' => $validatedData['password'],
+            'role' => 'visiteur',
+            'status' => 1,
 
         ]);
 

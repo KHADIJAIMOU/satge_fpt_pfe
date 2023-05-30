@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Illuminate\Support\Facades\DB;
+
 use App;
 use PDF;
 use TCPDF;
@@ -342,7 +344,74 @@ class RapportController extends Controller
 }
 
     
-
+function action(Request $request)
+{
+    if($request->ajax())
+    {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '') {
+            $data = DB::table('rapport')
+                ->where('typeClass', 'like', '%'.$query.'%')
+                ->orWhere('rapportActiviteEffectuer', 'like', '%'.$query.'%')
+                ->orWhere('rapportVisit', 'like', '%'.$query.'%')
+                ->orderBy('id', 'desc')
+                ->get();
+                
+        } else {
+            $data = DB::table('rapport')
+                ->orderBy('id', 'desc')
+                ->get();
+        }
+         
+        $total_row = $data->count();
+        if($total_row > 0){
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr>
+                <td>'.$row->typeClass.'</td>
+                <td>'.$row->rapportActiviteEffectuer.'</td>
+                <td>'.$row->rapportVisit.'</td>
+                <td class="text-center">
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="mr-2">
+                        <a href="/user/rapport/' . $row->id . '" class="btn btn-primary btn-sm">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
+                    </div>
+                    <div class="mr-2">
+                        <a href="/user/rapport/' . $row->id . '/edit" class="btn btn-secondary btn-sm">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <form action="/user/rapport/' . $row->id . '" method="post">
+                            ' . csrf_field() . '
+                            ' . method_field('DELETE') . '
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </td>
+                </tr>
+                ';
+            }
+        } else {
+            $output = '
+            <tr>
+                <td align="center" colspan="5">No Data Found</td>
+            </tr>
+            ';
+        }
+        $data = array(
+            'table_data'  => $output,
+            'total_data'  => $total_row
+        );
+        echo json_encode($data);
+    }}
     public function show(Rapport $Rapport)
     {
         $user = Auth::user();

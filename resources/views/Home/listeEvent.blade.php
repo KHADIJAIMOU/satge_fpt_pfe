@@ -58,7 +58,7 @@
 	    		
                 
                     <div class="col-lg-4 col-sm-6">
-                        <div class="ts-item set-bg" data-setbg="{{ asset(count($event->images)?$event->images[0]['path']:'img/blog/no-image.png') }}"
+                        <div class="ts-item set-bg" data-setbg="{{ asset(count($event->images)?$event->images[0]['path']:'img/no-image.png') }}"
                             style="border-radius: 4%">
                             <div class="ts_text">
                                 <h4>{{ $event->name }}</h4>

@@ -28,7 +28,7 @@
                         <tr>
                             <th class="text-center" style="width: 100px;">reclamation</th>
                             <th class="text-center" style="width: 30px;">Date</th>
-                            <th class="text-center" style="width: 200px;">Content</th>
+                            <th class="text-center" style="width: 200px;">Nom Complete</th>
                             <th class="text-center" style="width: 100px;">Actions</th>
                         </tr>
                     </thead>
@@ -39,7 +39,7 @@
                             <td class="text-center">{{ $reclamation->id }}</td>
                             <td class="text-center">{{ $reclamation->created_at }}</td>
                             <td class="text-center">
-                                {{ $reclamation->content }}
+                                {{ $reclamation->first_name }}  {{ $reclamation->last_name }}
                             </td>
                             <td class="text-center">
                                 <div class="d-flex flex-row justify-content-center">
@@ -72,7 +72,7 @@
                         <tr>
                             <th class="text-center" style="width: 100px;">reclamation</th>
                             <th class="text-center" style="width: 30px;">Date</th>
-                            <th class="text-center" style="width: 200px;">Content</th>
+                            <th class="text-center" style="width: 200px;">Nom Complete</th>
                             <th class="text-center" style="width: 100px;">Actions</th>
                         </tr>
                     </thead>
@@ -83,7 +83,7 @@
                             <td class="text-center">{{ $reclamation->id }}</td>
                             <td class="text-center">{{ $reclamation->created_at }}</td>
                             <td class="text-center">
-                                {{ $reclamation->content }}
+                                {{ $reclamation->first_name }}  {{ $reclamation->last_name }}
                             </td>
                             <td class="text-center">
                                 <div class="d-flex flex-row justify-content-center">
@@ -115,7 +115,7 @@
                         <tr>
                             <th class="text-center" style="width: 100px;">reclamation</th>
                             <th class="text-center" style="width: 30px;">Date</th>
-                            <th class="text-center" style="width: 200px;">Content</th>
+                            <th class="text-center" style="width: 200px;">Nom Complete</th>
                             <th class="text-center" style="width: 100px;">Actions</th>
                         </tr>
                     </thead>
@@ -126,7 +126,7 @@
                             <td class="text-center">{{ $reclamation->id }}</td>
                             <td class="text-center">{{ $reclamation->created_at }}</td>
                             <td class="text-center">
-                                {{ $reclamation->content }}
+                                {{ $reclamation->first_name }}  {{ $reclamation->last_name }}
                             </td>
                             <td class="text-center">
                                 <div class="d-flex flex-row justify-content-center">

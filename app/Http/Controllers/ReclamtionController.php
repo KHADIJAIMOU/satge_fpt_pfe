@@ -11,9 +11,9 @@ class ReclamtionController extends Controller
 {
     public function index()
     {
-        $reclamations = Reclamation::where('status', 0)->paginate(4);
-        $reclamations1 = Reclamation::where('status', 1)->paginate(4);
-        $reclamations2 = Reclamation::where('status', 2)->paginate(4);
+        $reclamations = Reclamation::where('status', 1)->paginate(4);
+        $reclamations1 = Reclamation::where('status', 2)->paginate(4);
+        $reclamations2 = Reclamation::where('status', 0)->paginate(4);
         session()->put('menu', 'Event');
         return view('auth.admin.reclamation.index', compact('reclamations','reclamations1','reclamations2'));
     }

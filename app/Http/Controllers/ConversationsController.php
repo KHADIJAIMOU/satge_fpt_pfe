@@ -12,9 +12,6 @@ use Illuminate\Http\RedirectResponse;
 use App\Notifications\MessageReceived;
 use App\Repository\ConversationRepository;
 use App\Models\Message;
-// use App\Http\Controllers\Controller;
-// use App\Http\Requests\User\UserRequest;
-// use Illuminate\Support\Facades\Crypt;
 
 class ConversationsController extends Controller
 {
@@ -23,53 +20,77 @@ class ConversationsController extends Controller
      */
     private $r;
 
-    public function __construct (ConversationRepository $conversationRepository, AuthManager $auth) {
-        $this->middleware('auth'); /** renvoyer vers page de connexion si utilisateur déconnecté */
+    public function __construct(ConversationRepository $conversationRepository, AuthManager $auth)
+    {
+        $this->middleware('auth');
         $this->r = $conversationRepository;
         $this->auth = $auth;
     }
 
-    public function index() {
-
-        return view('conversations/index', [
+    public function index()
+    {
+        return view('conversations.index', [
             'users' => $this->r->getConversations($this->auth->user()->id),
-            'unread'=> $this->r->unreadCount($this->auth->user()->id)
-
+            'unread' => $this->r->unreadCount($this->auth->user()->id)
         ]);
     }
-    
-    public function show (User $user) {
+
+    public function searchUsers(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Perform the search query to retrieve users based on the input query
+        $users = User::where('id', 'like', '%' . $query . '%')
+            ->orWhere('CD_ETAB', 'like', '%' . $query . '%')
+            ->orWhere('NOM_ETABL', 'like', '%' . $query . '%')
+            ->orWhere('image', 'like', '%' . $query . '%')
+            ->orWhere('status', 'like', '%' . $query . '%')
+            ->get();
+
+        // You can perform additional logic or filtering if needed
+
+        // Prepare the response data
+        $response = [
+            'users' => $users,
+            // Include any other necessary data for updating the friends list
+        ];
+
+        return response()->json($response);
+    }
+
+    public function show(User $user)
+    {
         $me = $this->auth->user();
 
         $messages = $this->r->getMessagesFor($me->id, $user->id)->paginate(5);
         $unread = $this->r->unreadCount($me->id);
-        
+
         if (isset($unread[$user->id])) {
             $this->r->readAllFrom($user->id, $me->id);
-            unset($unread[$user->id]); /**car isset puis permet d'enlever le 0 lorsque pas de notifications */
+            unset($unread[$user->id]);
         }
-        return view('conversations/show', [
+
+        return view('conversations.show', [
             'users' => $this->r->getConversations($this->auth->user()->id),
             'user' => $user,
             'messages' => $messages,
-            'unread'=> $unread
-
+            'unread' => $unread
         ]);
     }
-    
-        public function destroy(Message $message)
-        {
-           
-        }
-    
 
-    public function store (User $user , StoreMessage $request) {
+    public function destroy(Message $message)
+    {
+        // Implement the logic to delete a message if needed
+    }
+
+    public function store(User $user, StoreMessage $request)
+    {
         $message = $this->r->createMessage(
             $request->get('content'),
             $this->auth->user()->id,
             $user->id
         );
+
         return redirect(route('conversations.show', [$user->id]));
-  
     }
 }

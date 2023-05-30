@@ -1,6 +1,6 @@
 @extends('auth.admin.base')
 
-@section('title', 'Liste des reclamations')
+@section('title', 'Liste des avis')
 
 @section('content')
 

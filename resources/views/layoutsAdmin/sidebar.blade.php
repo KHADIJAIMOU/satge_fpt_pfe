@@ -5,17 +5,8 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ Storage::url(Illuminate\Support\Facades\Auth::user()->image) }}" class="img-circle elevation-2" alt="User Image"> 
-                <span class="status-circle online" style="width: 12px;
-                    width: 12px;
-    height: 12px;
-    background-color: #0ef40e;
-    border-radius: 50%;
-    position: absolute;
-    top: 20px;
-    right: 14px;
-    bottom: Opx;
-    left: 40px;"></span>
+                <img src="{{ Storage::url(Illuminate\Support\Facades\Auth::user()->image) }}" class="img-circle elevation-2" alt="User Image"> <span style="color:white">    </span>
+                                <div class="status12 active"></div>
 
             </div>
             <div class="info">
@@ -105,17 +96,9 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ Storage::url(Illuminate\Support\Facades\Auth::user()->image) }}" class="img-circle elevation-2" alt="User Image"> 
-                <span class="status-circle online" style="width: 12px;
-                    width: 12px;
-    height: 12px;
-    background-color: #0ef40e;
-    border-radius: 50%;
-    position: absolute;
-    top: 20px;
-    right: 14px;
-    bottom: Opx;
-    left: 40px;"></span>
+                <img class="direct-chat-img" src="{{ Storage::url(Illuminate\Support\Facades\Auth::user()->image) }}" alt="message user image">
+                <div class="status12 active"></div>
+          
             </div>
             <br>
             <br>

@@ -90,7 +90,8 @@
             value="{{ $reclamation->phone }}" disabled>        </div>
         <div class="form-group">
             <label for="content">CNI</label>
-            <textarea class="form-control" cols="30" rows="10" disabled>{{ $reclamation->CNI }}</textarea>
+            <input type="text" class="form-control" name="date" id="date" 
+            value="{{ $reclamation->CNI }}" disabled>        </div>
         </div>
         
         <div class="form-group">

@@ -74,6 +74,9 @@
                             <a class="auth-btn" href="{{ route('user.login') }}">
                                 {{ __('تسجيل الدخول  ') }}
                             </a>
+                            <a class="auth-btn" href="{{ route('register') }}">
+                                {{ __(' انشاء حساب  ') }}
+                            </a>
                            
                     </div>
                     @endif

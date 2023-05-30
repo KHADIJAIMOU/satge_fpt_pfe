@@ -32,7 +32,96 @@ use Illuminate\Support\Facades\Storage;
 
 
       }
+      function actions(Request $request)
+{
+    if ($request->ajax()) {
+        $output = '';
+        $query = $request->get('query');
+        
+        if ($query != '') {
+            $data = Rapport::select('*', DB::raw('(absenceFirstPrimaire + absenceThirdPrimaire + absenceFourthPrimaire + absenceFifthPrimaire + absenceSixthPrimaire + absenceSecondPrimaire + absenceFirstCollege + absenceSecondCollege + absenceThirdCollege + absenceFirstComptabiliteGeneral + absenceSecondComptabiliteGeneral + absenceFirstManagementCommercial + absenceSecondManagementCommercial) as total_absences'))
+                ->where(function ($q) use ($query) {
+                    $q->where('typeClass', 'like', '%' . $query . '%')
+                        ->orWhere('date', 'like', '%' . $query . '%')
+                        ->orWhere('created_at', 'like', '%' . $query . '%')
+                        ->orWhere('total_absences', 'like', '%' . $query . '%');
+                })
+                ->orderBy('id', 'desc')
+                ->get();
+        } else {
+            $data = Rapport::select('*', DB::raw('(absenceFirstPrimaire + absenceThirdPrimaire + absenceFourthPrimaire + absenceFifthPrimaire + absenceSixthPrimaire + absenceSecondPrimaire + absenceFirstCollege + absenceSecondCollege + absenceThirdCollege + absenceFirstComptabiliteGeneral + absenceSecondComptabiliteGeneral + absenceFirstManagementCommercial + absenceSecondManagementCommercial) as total_absences'))
+                ->orderBy('total_absences', 'desc')
+                ->paginate(5);
+        }
 
+        $total_row = $data->count();
+        if ($total_row > 0) {
+            foreach ($data as $row) {
+                $output .= '
+                <tr>
+                    <td>' . $row->typeClass . '</td>
+                    <td>' . $row->date . '</td>
+                    <td>' . $row->created_at . '</td>
+                    <td>' . $row->total_absences . '</td>
+                    <td class="text-center">
+                        <div class="d-flex flex-row justify-content-center">
+                            <div class="mr-2">
+                                <a href="/admin/repports/' . $row->id . '" class="btn btn-primary btn-sm">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                            </div>
+                            <div class="mr-2">
+                                <a href="/admin/repports/' . $row->id . '/edit" class="btn btn-secondary btn-sm">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                            </div>
+                            <div class="mr-2">
+                                <a href="/conversations/' . $row->id . '/" target="_blank" class="btn btn-success btn-sm">
+                                    <i class="fa-solid fa-message"></i>
+                                </a>
+                            </div>
+                            <div class="mr-2">
+                                <a href="/admin/repports/' . $row->id . '/print" target="_blank" class="btn btn-info btn-sm">
+                                    <i class="fa-solid fa-print"></i>
+                                </a>
+                            </div>
+                            <div class="mr-2">
+                                <a href="/admin/repports/' . $row->id . '/telecharger" target="_blank" class="btn btn-warning btn-sm">
+                                    <i class="fa-solid fa-download"></i>
+                                </a>
+                            </div>
+                            <div>
+                                <form action="' . route('repports.destroy', $row->id) . '" method="post">
+                                ' . csrf_field() . '
+                                ' . method_field('DELETE') . '
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                ';
+            }
+        } else {
+            $output = '
+            <tr>
+                <td align="center" colspan="5">No Data Found</td>
+            </tr>
+            ';
+        }
+        
+        $data = array(
+            'table_data' => $output,
+            'total_data' => $total_row
+        );
+        
+        return json_encode($data);
+    }
+}
+
+      
         // public function print($id, Rapport $Rapport)
         // {
         //     App::setLocale('ar');
