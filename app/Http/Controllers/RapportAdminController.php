@@ -39,19 +39,23 @@ use Illuminate\Support\Facades\Storage;
         $query = $request->get('query');
         
         if ($query != '') {
-            $data = Rapport::select('*', DB::raw('(absenceFirstPrimaire + absenceThirdPrimaire + absenceFourthPrimaire + absenceFifthPrimaire + absenceSixthPrimaire + absenceSecondPrimaire + absenceFirstCollege + absenceSecondCollege + absenceThirdCollege + absenceFirstComptabiliteGeneral + absenceSecondComptabiliteGeneral + absenceFirstManagementCommercial + absenceSecondManagementCommercial) as total_absences'))
+            $data = DB::table('rapport')
+            ->select('*', DB::raw('(absenceFirstPrimaire + absenceThirdPrimaire + absenceFourthPrimaire + absenceFifthPrimaire + absenceSixthPrimaire + absenceSecondPrimaire + absenceFirstCollege + absenceSecondCollege + absenceThirdCollege + absenceFirstComptabiliteGeneral + absenceSecondComptabiliteGeneral + absenceFirstManagementCommercial + absenceSecondManagementCommercial) as total_absences'))
+
                 ->where(function ($q) use ($query) {
                     $q->where('typeClass', 'like', '%' . $query . '%')
                         ->orWhere('date', 'like', '%' . $query . '%')
                         ->orWhere('created_at', 'like', '%' . $query . '%')
-                        ->orWhere('total_absences', 'like', '%' . $query . '%');
-                })
+;                })
                 ->orderBy('id', 'desc')
                 ->get();
         } else {
-            $data = Rapport::select('*', DB::raw('(absenceFirstPrimaire + absenceThirdPrimaire + absenceFourthPrimaire + absenceFifthPrimaire + absenceSixthPrimaire + absenceSecondPrimaire + absenceFirstCollege + absenceSecondCollege + absenceThirdCollege + absenceFirstComptabiliteGeneral + absenceSecondComptabiliteGeneral + absenceFirstManagementCommercial + absenceSecondManagementCommercial) as total_absences'))
-                ->orderBy('total_absences', 'desc')
-                ->paginate(5);
+            $data = DB::table('rapport')
+            ->select('*', DB::raw('(absenceFirstPrimaire + absenceThirdPrimaire + absenceFourthPrimaire + absenceFifthPrimaire + absenceSixthPrimaire + absenceSecondPrimaire + absenceFirstCollege + absenceSecondCollege + absenceThirdCollege + absenceFirstComptabiliteGeneral + absenceSecondComptabiliteGeneral + absenceFirstManagementCommercial + absenceSecondManagementCommercial) as total_absences'))
+
+            ->orderBy('total_absences', 'desc')
+            ->get();
+
         }
 
         $total_row = $data->count();

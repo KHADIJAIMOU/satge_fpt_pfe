@@ -124,6 +124,95 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    function actions(Request $request)
+    {
+        if ($request->ajax()) {
+            if($request->ajax())
+    {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '') {
+            $data = User::select('*')
+            ->orWhere('CD_ETAB', 'like', '%'.$query.'%')
+            ->orWhere('NOM_ETABL', 'like', '%'.$query.'%')
+            ->orWhere('typeEtab', 'like', '%'.$query.'%')
+            ->orWhere('CD_GIPE', 'like', '%'.$query.'%')
+            ->orWhere('password', 'like', '%'.$query.'%')
+            ->orWhere('role', 'like', '%'.$query.'%')
+            ->orderBy('id', 'desc')
+                ->get();
+                
+        } else {
+            $data = User::select('*')
+                ->orderBy('id', 'desc')
+                ->get();
+        }
+        $total_row = $data->count();
+
+            
+            if ($total_row > 0) {
+                foreach ($data as $row) {
+                    $output .= '
+                    <tr>
+                        <td>' . $row->CD_ETAB . '</td>
+                        <td>' . $row->NOM_ETABL . '</td>
+                        <td>' . $row->typeEtab . '</td>
+                        <td>' . $row->CD_GIPE . '</td>
+                        <td>' . $row->password . '</td>
+                        <td>' . $row->role . '</td>
+                        <td class="text-center">
+                            <div class="d-flex flex-row justify-content-center">
+                               
+                                <div class="mr-2">
+                                    <a href="/admin/users/'. $row->id .'" class="btn btn-primary btn-sm">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                </div>
+                                <div class="mr-2">
+                                    <a href="/admin/users/' . $row->id . '/edit" class="btn btn-secondary btn-sm">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                </div>
+                                <div class="mr-2">
+                                    <a href="#" class="btn btn-warning btn-sm update-password" data-user-id="' . $row->id . '">
+                                        <i class="fa-sharp fa-solid fa-unlock-keyhole"></i>
+                                    </a>
+                                </div>
+                                <div class="mr-2">
+                                    <a href="/admin/events/' . $row->id . '/edit" class="btn btn-secondary btn-sm">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                </div>
+                                <div>
+                                    <form action="' . route('events.destroy', $row->id) . '" method="post">
+                                        ' . csrf_field() . '
+                                        ' . method_field('DELETE') . '
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>';
+                    
+                }
+            } else {
+                $output = '
+                <tr>
+                    <td align="center" colspan="5">No Data Found</td>
+                </tr>
+                ';
+            }
+    
+            $data = array(
+                'table_data' => $output,
+                'total_data' => $total_row
+            );
+    
+            return json_encode($data);
+        }
+    }}
     public function store(Request $request)
     {
         //VALIDATION

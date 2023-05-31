@@ -31,7 +31,6 @@
         </table>
 
         {{-- pagination --}}
-        {{ $repports->links() }}
         @endif
 
     </div>
@@ -63,5 +62,6 @@ $(document).ready(function(){
      fetch_customer_data(query);
  });
 });
+
 </script>
 @endsection

@@ -80,6 +80,8 @@ Route::prefix('/visiteur')->group(function () {
 
 Route::prefix('/admin')->group(function () {
     Route::middleware(['auth', 'admin'])->group(function () {
+        Route::get('/actionsEvent', [EventController::class, 'actionsEvent'])->name('actionsEvent');
+        Route::get('/actionsA', [UsersController::class, 'actions'])->name('actionsUser');
         Route::get('/actions', [RapportAdminController::class, 'actions'])->name('actions');
 
         Route::match(['put', 'post'], '/profil', [UsersController::class, 'profileUpdate'])->name('profileUpdateAdmin');

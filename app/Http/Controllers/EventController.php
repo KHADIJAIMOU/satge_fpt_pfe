@@ -97,6 +97,79 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
+    function actionsEvent(Request $request)
+    {
+        if ($request->ajax()) {
+            if($request->ajax())
+    {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '') {
+            $data = Event::select('*')
+            ->orWhere('name', 'like', '%'.$query.'%')
+            ->orWhere('date', 'like', '%'.$query.'%')
+            ->orWhere('short_description', 'like', '%'.$query.'%')
+            ->orderBy('id', 'desc')
+                ->get();
+                
+        } else {
+            $data = Event::select('*')
+                ->orderBy('id', 'desc')
+                ->get();
+        }
+        $total_row = $data->count();
+
+            
+            if ($total_row > 0) {
+                foreach ($data as $row) {
+                    $output .= '
+                    <tr>
+                        <td>' . $row->name . '</td>
+                        <td>' . $row->date . '</td>
+                        <td>' . $row->short_description . '</td>
+                        <td class="text-center">
+                            <div class="d-flex flex-row justify-content-center">
+                                <div class="mr-2">
+                                    <a href="/admin/events/' . $row->id . '" class="btn btn-primary btn-sm">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                </div>
+                                <div class="mr-2">
+                                    <a href="/admin/events/' . $row->id . '/edit" class="btn btn-secondary btn-sm">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                </div>
+                                <div>
+                                    <form action="' . route('events.destroy', $row->id) . '" method="post">
+                                        ' . csrf_field() . '
+                                        ' . method_field('DELETE') . '
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    ';
+                }
+            } else {
+                $output = '
+                <tr>
+                    <td align="center" colspan="5">No Data Found</td>
+                </tr>
+                ';
+            }
+    
+            $data = array(
+                'table_data' => $output,
+                'total_data' => $total_row
+            );
+    
+            return json_encode($data);
+        }
+    }}
+    
     public function update(Request $request, Event $event)
     {
         //VALIDATION
