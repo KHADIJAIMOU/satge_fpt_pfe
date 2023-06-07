@@ -8,13 +8,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin;
+use App\Models\infoAuth;
+
 class UsersController extends Controller
 {
     public function profil()
     {
         $user = Auth::user();
+        $infoAuths = infoAuth::select('mac_address', 'adressIp')
+    ->where('users_id', $user->id)
+    ->orderBy('created_at', 'desc')
+    ->limit(9)
+    ->get();
+
                 session()->put("menu", "profil");
-                return view('auth.admin.users.profil', compact('user'));
+                return view('auth.admin.users.profil', compact('user', 'infoAuths'));
 
     }
     public function profileUpdate(Request $request)
@@ -178,11 +186,7 @@ class UsersController extends Controller
                                         <i class="fa-sharp fa-solid fa-unlock-keyhole"></i>
                                     </a>
                                 </div>
-                                <div class="mr-2">
-                                    <a href="/admin/events/' . $row->id . '/edit" class="btn btn-secondary btn-sm">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </a>
-                                </div>
+                                
                                 <div>
                                     <form action="' . route('events.destroy', $row->id) . '" method="post">
                                         ' . csrf_field() . '

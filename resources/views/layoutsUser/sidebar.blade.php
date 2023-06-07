@@ -6,8 +6,7 @@
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <img src="{{ Storage::url(Illuminate\Support\Facades\Auth::user()->image) }}" class="img-circle elevation-2" alt="User Image"> <span style="color:white">    </span>
-                                <div class="status12 active"></div>
-
+                                            
             </div>
             <div class="info">
                 <h6 style="color: whitesmoke ;">{{ Illuminate\Support\Facades\Auth::user()->NOM_ETABL }}</h6>
@@ -97,8 +96,7 @@
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <img class="direct-chat-img" src="{{ Storage::url(Illuminate\Support\Facades\Auth::user()->image) }}" alt="message user image">
-                <div class="status12 active"></div>
-          
+                                      
             </div>
             <br>
             <br>

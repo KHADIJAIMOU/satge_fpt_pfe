@@ -101,16 +101,7 @@
         
         
     @endphp
-    <center>
-        <br>
-
-        <div>Etablissement: {{$rapport->LL_CYCLE }} </div>
-        <br>
-
-        <div>Type: {{ $text }} </div>
-        <br>
-    </center>
-    <a href="#"> <i class="fas fa-print"></i></a>
+   
 
     <center>
         <form onsubmit="return validateForms()" method="POST" action="{{ route('user.logout') }}">
@@ -121,6 +112,9 @@
             </button>
         </form>
     </center>
+    <a href="/admin/repports" class="btn btn-secondary float-right  ">
+        <i class="fa-solid fa-xmark"></i> précédent
+    </a>
     <form id="regForm" enctype="multipart/form-data" method="post"
         action="{{ route('repports.update', $rapport->id) }}">
         @csrf

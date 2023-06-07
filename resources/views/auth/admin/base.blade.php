@@ -28,7 +28,6 @@
                         <div class="col-sm-6">
                             <h1 class="m-0">
                                 @if (Illuminate\Support\Facades\Auth::user()->password === 'password1')
-                                <h1>changer</h1>
                                 <script>
                                     $(document).ready(function() {
                                         $(document).Toasts('create', {
@@ -36,17 +35,19 @@
                                             body: "Votre compte n'est pas sécurisé, veuillez essayer de le changer. <a href='/admin/profil'>Cliquez ici</a>.",
                                             class: 'bg-white', 
                                             autohide: true, // Enable autohide
-            delay: 5000, // Set delay in milliseconds (e.g., 5000 = 5 seconds)
+            delay: 50000, // Set delay in milliseconds (e.g., 5000 = 5 seconds)
             width: '100%',
             iconClass: 'col-12',
             // Add the col-12 class to the bodyClass as well, if needed
-            bodyClass: 'col-12'
+            bodyClass: 'col-12',
+            css: {
+        'margin-right': '50%' // Add margin-right style
+    }
 
                                         });
                                     });
                                 </script>
-                            @else
-                                <h1>no</h1>
+                           
                             @endif
                             
                             </h1>

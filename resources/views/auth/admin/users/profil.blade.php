@@ -8,10 +8,7 @@
                 <div class="col-md-3">
 
                     <!-- Profile Image -->
-                    <br>
-                    <br><br>
-                    <br><br>
-                    <br>
+                   
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
@@ -22,18 +19,17 @@
                             <h3 class="profile-username text-center">{{ $user->NOM_ETABL }}</h3>
 
                             <p class="text-muted text-center">Chef de service informatique</p>
+                            <h6>Last 10 IP Addresses:</h6>
 
                             <ul class="list-group list-group-unbordered mb-3">
-                                <li class="list-group-item">
-                                    <b>Y</b> <a class="float-right">Y</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Y</b> <a class="float-right">Y</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Y</b> <a class="float-right">Y</a>
-                                </li>
+                                @foreach ($infoAuths as $infoAuth)
+                                    <li class="list-group-item">
+                                        <b>{{ $infoAuth->mac_address }}</b>
+                                        <a class="float-right">{{ $infoAuth->adressIp }}</a>
+                                    </li>
+                                @endforeach
                             </ul>
+                            
 
                             <a href="/admin/repports" class="btn btn-primary btn-block"><b>Rapports</b></a>
                         </div>

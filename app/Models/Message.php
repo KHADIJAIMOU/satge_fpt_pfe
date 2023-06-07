@@ -33,6 +33,7 @@ class Message extends Model
     public function from() {
         return $this->belongsTo(User::class, 'from_id');
     }
+    
     // public function fromMessage() {
     //     return $this->belongsTo(Message::class, 'id');
     // }

@@ -20,15 +20,12 @@
                             <p class="text-muted text-center">Directeur d'établissement scolaire</p>
 
                             <ul class="list-group list-group-unbordered mb-3">
-                                <li class="list-group-item">
-                                    <b>Y</b> <a class="float-right">Y</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Y</b> <a class="float-right">Y</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Y</b> <a class="float-right">Y</a>
-                                </li>
+                                @foreach ($infoAuths as $infoAuth)
+                                    <li class="list-group-item">
+                                        <b>{{ $infoAuth->mac_address }}</b>
+                                        <a class="float-right">{{ $infoAuth->adressIp }}</a>
+                                    </li>
+                                @endforeach
                             </ul>
 
                             <a href="/user/repports" class="btn btn-primary btn-block"><b>Rapports</b></a>

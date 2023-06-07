@@ -32,7 +32,7 @@
                         <label class="text-white" for="name"><strong>Nom et Prénom :</strong></label>
                         <input type="text" class="form-control" id="name" name="NOM_ETABL" value="{{ Auth::user()->NOM_ETABL }}"
                             placeholder="Nom et Prénom">
-                        <label class="text-white" for="email"><strong>Email:</strong></label>
+                        <label class="text-white" for="email"><strong>CODE:</strong></label>
                         <input type="text" class="form-control" id="email" value="{{ Auth::user()->CD_ETAB }}"
                             name="CD_ETAB" placeholder="Email">
                         <button type="submit">Mise à jour du profil</button>
