@@ -1,92 +1,50 @@
 # **Application de Gestion des Absences et des Commémorations**
-Application of Absences and Commemorations
-📌 Application of Absences and Commemorations
-📌 Description du Projet
 
-Ce projet est une Application Laravel destinée à la gestion des absences des enseignants, des commémorations scolaires, ainsi que des rapports des élèves dans les établissements scolaires.
-Les visiteurs peuvent également soumettre des réclamations, donner des avis, et contacter l’administration via un formulaire.
+## 📌 **À propos de ce projet**
 
-Fonctionnalités principales
+Ce projet est une **application Laravel** développée pour la gestion des absences des enseignants, des commémorations scolaires, et des rapports des élèves dans les établissements scolaires. Les visiteurs peuvent également signaler des réclamations et donner des avis via un formulaire.
 
-🧑‍🏫 Gestion des absences des enseignants
+### **Fonctionnalités principales**
 
-🎉 Commémoration des événements scolaires
+- 🎓 **Gestion des absences** : Permet aux responsables de saisir et de suivre les absences des enseignants.
+- 🗓 **Commémoration des événements scolaires** : Permet de gérer les commémorations des événements scolaires (journées, cérémonies, etc.).
+- 📝 **Rapports des élèves** : Les responsables peuvent générer des rapports sur les performances des élèves.
+- 🧑‍🏫 **Espace pour les visiteurs** : Les visiteurs peuvent soumettre des réclamations et faire des commentaires.
+- 📧 **Contactez-nous** : Formulaire de contact via e-mail.
+- 🔒 **Administration sécurisée** : Un espace administrateur pour gérer les données (via Laravel Admin Panel).
 
-📄 Rapports des élèves (pédagogiques / disciplinaires)
+### **Technologies utilisées**
 
-📨 Espace visiteurs : réclamations & commentaires
+| Technologie            | Utilisation                                      |
+|------------------------|-------------------------------------------------|
+| **Laravel**            | Framework PHP pour la gestion de la logique backend |
+| **MySQL**              | Base de données pour gérer les absences et les rapports |
+| **Blade**              | Moteur de templates pour générer des vues dynamiques |
+| **Bootstrap**          | Framework CSS pour la mise en page et la responsivité |
+| **Email (SMTP)**       | Pour la gestion de la fonctionnalité de contact via email |
 
-📧 Contactez-nous via email (SMTP)
+### **Structure du projet**
 
-🔒 Administration sécurisée via un Laravel Admin Panel
+- **app/** : Contient toute la logique de l'application (contrôleurs, modèles, etc.).
+- **routes/** : Définit toutes les routes pour l'application.
+- **resources/views/** : Contient les vues Blade pour l'interface utilisateur.
+- **database/migrations/** : Contient les fichiers de migration pour la base de données.
+- **storage/** : Utilisé pour les fichiers de stockage (comme les images ou les fichiers téléchargés).
 
-🧩 Liste + CRUD complet (Admin) :
+---
 
-Absences
+### **Captures d'écran**
 
-Rapports
-
-Commémorations
-
-Actualités
-
-Classes, élèves, enseignants
-
-📊 Page Dashboard (statistiques)
-
-💬 Messagerie interne entre établissements
-
-👤 Profils utilisateurs (admin / enseignant / établissement)
-
-🔧 Technologies utilisées
-Technologie	Utilisation
-Laravel	Backend, logique métier
-MySQL	Base de données
-Blade	Templates front-end
-Email (SMTP)	Formulaire de contact
-Admin Panel Laravel	Gestion des données (CRUD)
-📁 Structure du projet
-
-resources/views/ : contient les vues Blade
-
-database/migrations/ : contient les migrations de données
-
-storage/ : stockage des images et fichiers
-
-📸 Captures d'écran
-🏠 Page d'accueil
+#### Page d'accueil
 ![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/aj1an-f5d32.jpg)
 
-📰 Page des actualités
+#### Page d'actualités
+![News List Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/aw5np-plevd.jpg)
 
-📝 Page de réclamation (visiteurs)
+#### Page de réclamation des visiteurs
+![Visitor Complaint Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/a6r2q-74qon.jpg)
 
-⭐ Liste des avis
+#### Page des avis
+![Reviews List Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/adzpd-yjmfp.jpg)
 
-🔐 Captures d'écran - Espace Administration
-
-(Tu peux ajouter ici tes images admin : liste absences, dashboard, CRUD, messages…)
-
-📊 Dashboard Administrateur
-
-(Add image here)
-
-📝 CRUD - Absences
-
-(Add image here)
-
-📄 CRUD - Rapports des élèves
-
-(Add image here)
-
-🎉 CRUD - Commémorations
-
-(Add image here)
-
-💬 Messagerie entre établissements
-
-(Add image here)
-
-👤 Profil utilisateur
-
-(Add image here)
+---
