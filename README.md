@@ -36,8 +36,13 @@ Ce projet est une **application Laravel** développée pour la gestion des absen
 #### Page d'accueil
 ![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/aj1an-f5d32.jpg)
 
-#### Page de gestion des absences
-![Absence Management Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/aw5np-plevd.jpg)
+#### Page d'actualites
+![news list Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/aw5np-plevd.jpg)
 
 #### Page de réclamation des visiteurs
-![Visitor Complaint Screenshot](https://example.com/complaint-page.jpg)
+![Visitor Complaint Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/a6r2q-74qon.jpg)
+
+#### Page de reviews list
+![Visitor Complaint Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/adzpd-yjmfp.jpg)
+
+
