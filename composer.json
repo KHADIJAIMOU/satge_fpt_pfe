@@ -16,6 +16,7 @@
         "laravel/ui": "^4.2",
         "mikehaertl/php-shellcommand": "^1.7",
         "mpdf/mpdf": "*",
+        "munafio/chatify": "^1.6",
         "phpoffice/phpword": "^1.0",
         "tecnickcom/tcpdf": "^6.6"
     },

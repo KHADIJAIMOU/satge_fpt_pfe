@@ -1,76 +1,78 @@
 @extends('Home.base')
-{{-- @section('title', 'listproduct') --}}
 @section('content')
-    <!-- =============== HEADER-TITLE =============== -->
-    <section class="breadcrumb-section set-bg" data-setbg="{{ asset('img/breadcrumb-bg.jpg') }}">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="breadcrumb-text">
-                        <h2>لائحة الاخبار المحلية </h2>
-                        <div class="bt-option">
-                            <a href="/">  الرئيسية</a>
-                            <span>كل الاخبار</span>
-                        </div>
+
+<!-- Hero Section (Mini) -->
+<section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb-bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb-text">
+                    <h1 class="penn-hero-title" style="font-size: 3rem;">لائحة الاخبار المحلية</h1>
+                    <div class="penn-hero-subtitle mt-3">
+                        <a href="/" class="text-white">الرئيسية</a>
+                        <span class="mx-2">/</span>
+                        <span>كل الاخبار</span>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Breadcrumb Section End -->
-    <!-- Team Section Begin -->
-    <section class="team-section team-page spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="team-title">
-                        <div class="section-title">
+    </div>
+</section>
+<!-- Hero Section End -->
 
-                            
-                        </div>
+<!-- Events List Section -->
+<section class="penn-events" style="background: #f8f9fa;">
+    <div class="container">
+
+        <!-- Search Filter -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8">
+                <div class="penn-service-card p-4">
+                    <form action="{{ route('ListEvent')}}" method="post" class="d-flex flex-column flex-md-row gap-3 align-items-center justify-content-center" dir="rtl">
+                        @csrf
+                        <input name="namefilter" id="namefilter" type="text" class="form-control p-3" placeholder="بحث عن خبر..." style="border-radius: 50px; border: 1px solid #ddd;">
+                        <button type="submit" class="penn-btn mt-3 mt-md-0 px-5">فرز</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Events Grid -->
+        <div class="row" dir="rtl">
+            @if (count($events) == 0)
+            <div class="col-12">
+                <div class="alert alert-warning w-100 text-center p-4" role="alert" style="border-radius: 15px; font-weight: bold;">
+                    لا نملك اي خبر حاليا
+                </div>
+            </div>
+            @endif
+
+            @foreach ($events as $event)
+            @php
+            $imagePath = count($event->images) ? $event->images[0]['path'] : 'img/no-image.png';
+            @endphp
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="penn-event-card h-100">
+                    <div class="penn-event-img" style="background-image: url('{{ asset($imagePath) }}'); height: 250px;">
+                        <div class="penn-event-date">{{ $event->date }}</div>
+                    </div>
+                    <div class="penn-event-content text-right">
+                        <h4 class="penn-event-title">{{ $event->name }}</h4>
+                        <a href="/detailsEvent/{{ $event->id }}" class="penn-btn btn-sm mt-3">شاهد المزيد</a>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                @if (count($events) == 0)
-                    <div class="alert alert-warning w-100 text-center" role="alert">
-                        لا نملك اي خبر حاليا 
-                    </div>
-                @endif
-                
-<div class="col-lg-12">
-                    <div class="team-title">
-                        <div class="section-title">
-                 <form action="{{ route('ListEvent')}}" method="post" style=" width: 500px;height: 100px;position:relative;left: 100%;">
-                @csrf  <center>        
-
-                    <input name="namefilter" id="namefilter" type="text">
-                        
-                    
-                    <input type="submit" class="primary-btn" value="فرز "style="height: 30px;padding-top: 0px;padding-bottom: 0px;">
-                   </center>        </form>
-               </div>
-               </div>
-               </div>
-                @foreach ($events as $event)
-              
-                
-	    		
-                
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="ts-item set-bg" data-setbg="{{ asset(count($event->images)?$event->images[0]['path']:'img/no-image.png') }}"
-                            style="border-radius: 4%">
-                            <div class="ts_text">
-                                <h4>{{ $event->name }}</h4>
-                                <p class="text-danger fw-bold">{{ $event->date }} </p>
-                                <a class="btn btn-primary" href="/detailsEvent/{{ $event->id }}"> شاهد المزيد </a>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-            {{ $events->links() }}
+            @endforeach
         </div>
-    </section>
-    <!-- Team Section End -->
+
+        <!-- Pagination -->
+        <div class="row mt-5">
+            <div class="col-12 d-flex justify-content-center">
+                {{ $events->links() }}
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Events List Section End -->
+
 @endsection

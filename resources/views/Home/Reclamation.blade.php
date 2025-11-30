@@ -1,290 +1,149 @@
-@extends('Home.base')
-{{-- @section('title', 'progress details') --}}
+@extends("Home.base")
 @section('content')
-    <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb-bg.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="breadcrumb-text">
-                        <h2> Liste de reclamation</h2>
-                        <div class="bt-option">
-                            <a href="/">Accueil</a>
-                            <a href="#">Listes</a>
+<section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb-bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb-text">
+                    <h2 style="color: black">لائحة الشكايات</h2>
+                    <div class="bt-option">
+                        <a href="/" style="color: black">الرئيسية</a>
+                        <a href="#" style="color: black">القوائم</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
+<!-- Class Timetable Section Begin -->
+<section class="class-timetable-section class-details-timetable spad">
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="class-details-timetable_title text-right mb-4">
+                    <button type="button" class="penn-btn-teal" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-plus ml-2"></i> إضافة شكاية جديدة
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="penn-table-wrapper" dir="rtl">
+                    <table class="penn-table">
+                        <thead>
+                            <tr>
+                                <th>الاسم الكامل</th>
+                                <th>المؤسسة</th>
+                                <th width="40%">المحتوى</th>
+                                <th>الحالة</th>
+                                <th>التاريخ</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($reclamation as $item)
+                            <tr id="reclamation_id_{{ $item->users_id }}">
+                                <td><strong>{{ $item->first_name }} {{ $item->last_name }}</strong></td>
+                                <td>{{ $item->NOM_ETABL }}</td>
+                                <td>{{ $item->content }}</td>
+                                <td>
+                                    <span class="penn-badge penn-badge-{{ ($item->status == 2) ? 'danger' : (($item->status == 0) ? 'warning' : 'success') }}">
+                                        {{$item->getStatus($item->status)}}
+                                    </span>
+                                </td>
+                                <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                                <td>
+                                    <form action="{{route('destroyreclamation',$item->id)}}" method="post" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="penn-action-btn penn-action-btn-danger" onclick="return confirm('هل أنت متأكد؟')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="mt-4 d-flex justify-content-center">
+                        {!! $reclamation->links() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Adding Complaint -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" dir="rtl">
+                    <h5 class="modal-title" id="exampleModalLabel">إضافة شكاية جديدة</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin: -1rem auto -1rem -1rem;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" dir="rtl">
+                    <form method="post" action="{{ route('storereclamation', $idd) }}" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="users_id" value="{{$idd}}">
+
+                        <div class="form-group mb-3">
+                            <label for="first_name" class="mb-2 text-muted">الاسم الشخصي</label>
+                            <input type="text" class="penn-input" name="first_name" placeholder="الاسم الشخصي" value="{{ old('first_name') }}" required>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Breadcrumb Section End -->
 
-    <!-- Class Details Section Begin -->
-
-
-    <!-- Class Timetable Section Begin -->
-    <section class="class-timetable-section class-details-timetable spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="class-details-timetable_title">
-                        <button type="button" class="primary-btn  btn-normal mt-3" data-toggle="modal"
-                            data-target="#exampleModal"> Nouvelle réclamation</button>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-100">
-                    <div class="class-timetable details-timetable">
-                        <table>
-                            <thead>
-                                <tr>
-
-                                    <th >Nom Complete</th>
-                                    <th>NOM_ETABL</th>
-                                    <th width="500px">content</th>
-                                    <th  >Statut</th>
-
-                                    <th>Date</th>
-                                    <th>Actions</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($reclamation as $item)
-                                    <tr id="reclamation_id_{{ $item->users_id }}">
-                                        <td class="class-time">{{ $item->first_name  }}  {{ $item->last_name }}</td>
-                                        <td class="dark-bg hover-dp ts-meta">
-                                            <h5>{{ $item->NOM_ETABL }} </h5>
-
-                                        <td class="hover-dp ts-meta">
-                                            <h5>{{ $item->content }} </h5>
-
-                                        </td>
-                                        <td class="dark-bg hover-dp ts-meta" >
-                                            <h5> 
-                                                <span class="badge rounded-pill mx-4 bg-{{ ($item->status == 2) ? 'danger' : (($item->status == 0) ? 'warning' : 'success') }} text-dark text-center">
-                                                    {{$item->getStatus($item->status)}}    
-                                            </span></h5>
-    
-                                           </td>    
-
-                                        <td class="hover-dp ts-meta">
-                                            <h5>{{ $item->created_at->format('d-m-Y') }}</h5>
-
-                                        </td>
-
-                                        <td class="hover-dp ts-meta">
-                                            <form action="{{route('destroyreclamation',$item->id)}}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button target="_blank" type="submit"
-                                                    class="btn btn-outline-danger waves-effect"><i class="fa fa-trash"
-                                                        aria-hidden="true"></i></button>
-                                            </form>
-
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-                        <div class="mt-3">
-                            {!! $reclamation->links() !!}
+                        <div class="form-group mb-3">
+                            <label for="last_name" class="mb-2 text-muted">الاسم العائلي</label>
+                            <input type="text" class="penn-input" name="last_name" placeholder="الاسم العائلي" value="{{ old('last_name') }}" required>
                         </div>
 
+                        <div class="form-group mb-3">
+                            <label for="CNI" class="mb-2 text-muted">رقم البطاقة الوطنية</label>
+                            <input type="text" class="penn-input" name="CNI" placeholder="رقم البطاقة الوطنية" value="{{ old('CNI') }}" required>
+                        </div>
 
-                    </div>
+                        <div class="form-group mb-3">
+                            <label for="phone" class="mb-2 text-muted">رقم الهاتف</label>
+                            <input type="text" class="penn-input" name="phone" placeholder="رقم الهاتف" value="{{ old('phone') }}" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="content" class="mb-2 text-muted">محتوى الشكاية</label>
+                            <textarea class="penn-input" name="content" id="content" rows="4" placeholder="أدخل المحتوى" required>{{ old('content') }}</textarea>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="ll_com" class="mb-2 text-muted">اختيار الجماعة</label>
+                            <select name="ll_com" class="penn-input" required>
+                                <option value="تزنيت (البلدية)">تزنيت (البلدية)</option>
+                                <option value="تافراوت (البلدية)">تافراوت (البلدية)</option>
+                                <!-- Add other options here -->
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="NOM_ETABL" class="mb-2 text-muted">اسم المؤسسة</label>
+                            <input type="text" class="penn-input" name="NOM_ETABL" placeholder="اسم المؤسسة" value="{{ old('NOM_ETABL') }}" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="images" class="mb-2 text-muted">المرفقات</label>
+                            <input type="file" class="penn-input" name="images[]" multiple accept="image/*" required>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="button" class="btn btn-secondary ml-2" data-dismiss="modal">إلغاء</button>
+                            <button type="submit" class="penn-btn-teal" style="width: auto; padding: 10px 30px;">حفظ</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"> خدمة الشكاية الالكترونية </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <br><br><br>
-
-                    <div class="modal-body">
-
-
-
-                          
-                        <form method="post" id="regForm" action="{{ route('storereclamation', $idd) }}" enctype="multipart/form-data">
-                            @csrf
-
-                    <input type="hidden" name="users_id" value="{{$idd}}">
-
-    <!-- One "tab" for each step in the form: -->
-    <div class="tab" style="text-align: right">الاسم الكامل
-        <p><input class="input" style="text-align: right" placeholder="الاسم الشخصي" oninput="this.className = ''"
-                name="first_name"></p>
-        <p><input class="input" style="text-align: right" placeholder="الاسم العائلي"
-                oninput="this.className = ''" name="last_name"></p>
     </div>
-    <div class="tab" style="text-align: right"> معلومات للتواصل
-        <p><input class="input" style="text-align: right" placeholder=" بريد الكتروني"
-                oninput="this.className = ''" name="CNI"></p>
-        <p><input  class="input" style="text-align: right" placeholder="رقم الهاتف " oninput="this.className = ''"
-                name="phone"></p>
-    </div>
-    <div class="tab" style="text-align: center">المشتكي عليه
-        <div class="form-group" style="text-align: right">
-            <label style="text-align: right" for="ll_com">اختر الجماعة</label>
-            <select name="ll_com" class="form-control">
-                <option style="text-align: right" value="تزنيت (البلدية)">تزنيت (البلدية)</option>
-                {{-- <option value="Simple">Simple</option> --}}
-                <option style="text-align: right" value="تافراوت (البلدية)">تافراوت (البلدية)
-                </option>
-                <option style="text-align: right" value="الركادة">الركادة</option>
-                <option style="text-align: right" value="تارسوات">تارسوات</option>
-                <option style="text-align: right" value="تاسريرت">تاسريرت</option>
-                <option style="text-align: right" value="أفلا  اغير">أفلا اغير</option>
-                <option style="text-align: right" value="ايريغ  نتاهلة">ايريغ نتاهلة</option>
-                <option style="text-align: right" value="أيت وافقا"> أيت وافقا</option>
-                <option style="text-align: right" value="اثنين أداي">اثنين أداي</option>
-                <option style="text-align: right" value="انزي">انزي</option>
-                <option style="text-align: right" value="تيغمي">تيغمي</option>
-                <option style="text-align: right" value="اربعاء أيت أحمد">اربعاء أيت أحمد</option>
-                <option style="text-align: right" value="تيزغران">تيزغران</option>
-                <option style="text-align: right" value="أيت ايسافن">أيت ايسافن</option>
-                <option style="text-align: right" value="إد او كوكمار">إد او كوكمار</option>
-                <option style="text-align: right" value="سيدي أحمد أو موسى">سيدي أحمد أو موسى
-                </option>
-                <option style="text-align: right" value="أربعاء رسموكة">أربعاء رسموكة</option>
-                <option style="text-align: right" value="المعدر الكبير">المعدر الكبير</option>
-                <option style="text-align: right" value="سيدي بوعبد اللي">سيدي بوعبد اللي</option>
-                <option style="text-align: right" value="بونعمان">بونعمان</option>
-                <option style="text-align: right" value="ويجان">ويجان</option>
-                <option style="text-align: right" value="اثنين اكلو">اثنين اكلو</option>
-                <option style="text-align: right" value="أربعاء الساحل">أربعاء الساحل</option>
-                <option style="text-align: right" value="املن">املن</option>
-                <option style="text-align: right" value="تفراوت المولود">تفراوت المولود</option>
-            </select>
-        </div>
-        <p><input class="input" style="text-align: right" placeholder="اسم المؤسسة"
-                oninput="this.className = ''" name="NOM_ETABL"></p>
+</section>
 
-    </div>
-    <div class="tab" style="text-align: right">تضمين ملخص الشكاية و تحميل المرفقات :
-        <label style="text-align: right" for="content"> ملخص الشكاية</label>
-        <center>
-            <p>
-                <textarea style="text-align: right" name="content" id="content" cols="30" rows="10"></textarea>
-            </p>
-        </center>
-        <label style="text-align: right" for="content"> مرفقات</label>
-
-        <p><input class="input" style="text-align: right" type="file" name="images[]" multiple class="form-control" accept="image/*" multiple
-                oninput="this.className = ''"></p>
-    </div>
-    <div style="overflow:auto;">
-      <div style="float:right;">
-        <button  class="button" type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-        <button class="button" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-      </div>
-    </div>
-    <!-- Circles which indicates the steps of the form: -->
-    <div style="text-align:center;margin-top:40px;">
-      <span class="step"></span>
-      <span class="step"></span>
-      <span class="step"></span>
-      <span class="step"></span>
-    </div>
-  </form>
-
-                    </div>
-                    <div class="modal-footer">
-                        {{-- <button  type="button" class="btn btn-secondary " data-dismiss="modal">Fermé</button>
-        <button type="submit" class="primary-btn  btn-normal rounded-pill ">enregistrer les modifications</button> --}}
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    </section>
-@endsection
-@section('scripts')
-   
-<script>
-    var currentTab = 0; // Current tab is set to be the first tab (0)
-    showTab(currentTab); // Display the current tab
-    
-    function showTab(n) {
-      // This function will display the specified tab of the form...
-      var x = document.getElementsByClassName("tab");
-      x[n].style.display = "block";
-      //... and fix the Previous/Next buttons:
-      if (n == 0) {
-        document.getElementById("prevBtn").style.display = "none";
-      } else {
-        document.getElementById("prevBtn").style.display = "inline";
-      }
-      if (n == (x.length - 1)) {
-        document.getElementById("nextBtn").innerHTML = "Submit";
-      } else {
-        document.getElementById("nextBtn").innerHTML = "Next";
-      }
-      //... and run a function that will display the correct step indicator:
-      fixStepIndicator(n)
-    }
-    
-    function nextPrev(n) {
-      // This function will figure out which tab to display
-      var x = document.getElementsByClassName("tab");
-      // Exit the function if any field in the current tab is invalid:
-      if (n == 1 && !validateForm()) return false;
-      // Hide the current tab:
-      x[currentTab].style.display = "none";
-      // Increase or decrease the current tab by 1:
-      currentTab = currentTab + n;
-      // if you have reached the end of the form...
-      if (currentTab >= x.length) {
-        // ... the form gets submitted:
-        document.getElementById("regForm").submit();
-        return false;
-      }
-      // Otherwise, display the correct tab:
-      showTab(currentTab);
-    }
-    
-    function validateForm() {
-      // This function deals with validation of the form fields
-      var x, y, i, valid = true;
-      x = document.getElementsByClassName("tab");
-      y = x[currentTab].getElementsByTagName("input");
-      // A loop that checks every input field in the current tab:
-      for (i = 0; i < y.length; i++) {
-        // If a field is empty...
-        if (y[i].value == "") {
-          // add an "invalid" class to the field:
-          y[i].className += " invalid";
-          // and set the current valid status to false
-          valid = false;
-        }
-      }
-      // If the valid status is true, mark the step as finished and valid:
-      if (valid) {
-        document.getElementsByClassName("step")[currentTab].className += " finish";
-      }
-      return valid; // return the valid status
-    }
-    
-    function fixStepIndicator(n) {
-      // This function removes the "active" class of all steps...
-      var i, x = document.getElementsByClassName("step");
-      for (i = 0; i < x.length; i++) {
-        x[i].className = x[i].className.replace(" active", "");
-      }
-      //... and adds the "active" class on the current step:
-      x[n].className += " active";
-    }
-    </script>
 @endsection

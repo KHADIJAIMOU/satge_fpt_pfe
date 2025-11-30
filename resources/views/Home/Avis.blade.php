@@ -1,152 +1,132 @@
 @extends("Home.base")
 {{--@section('title', 'progress details')--}}
 @section('content')
- <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb-bg.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="breadcrumb-text">
-                        <h2> Liste d'Avis</h2>
-                        <div class="bt-option">
-                            <a href="/">Accueil</a>
-                            <a href="#">Listes</a>
-                            
-                        </div>
+<section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb-bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb-text">
+                    <h2 style="color: black"> لائحة الاراء</h2>
+                    <div class="bt-option">
+                        <a href="/" style="color: black">الرئيسية</a>
+                        <a href="#" style="color: black">القوائم</a>
+
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Breadcrumb Section End -->
-
-    <!-- Class Details Section Begin -->
-   
-
-    <!-- Class Timetable Section Begin -->
-    <section class="class-timetable-section class-details-timetable spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="class-details-timetable_title">
-                       <button type="button" class="primary-btn  btn-normal mt-3"  data-toggle="modal" data-target="#exampleModal"> Nouvelle avis</button>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-100">
-                    <div class="class-timetable details-timetable">
-                        <table >
-                            <thead>
-                                <tr>
-                                    
-                                    <th >objet</th>
-                                    <th  >type</th>
-                                    <th  width="500px"  >detail</th>
-                                
-                                    <th  >Date</th>
-                                    <th  >Actions</th>
-                                   
-                                </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($avis as $avi)
-                                <tr id="avi_id_{{ $avi->users_id }}">
-                                    <td class="class-time">{{ $avi->objet }}</td>
-                                    <td class="dark-bg hover-dp ts-meta" >
-                                        <h5>{{ $avi->type }} </h5>
-                                        
-                                    <td class="hover-dp ts-meta" >
-                                        <h5>{{ $avi->detail }} </h5>
-                                        
-                                    </td>
-                                         
-                                      
-        <td class="hover-dp ts-meta" >
-                                        <h5>{{($avi->created_at)->format('d-m-Y') }}</h5>
-                                        
-                                    </td>
-                                    <td class="hover-dp ts-meta" >
-                                 <form action="{{route('destroyAvis', $avi->id) }}"  method="post">
-                        @csrf
-                        @method("DELETE")
-                        <button  target="_blank"  type="submit" class="btn btn-outline-danger waves-effect"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                    </form>
-                                       
-                                    </td>
-                                 
-                                </tr>
-                               @endforeach
-		
-                            </tbody>
-                        </table>
-                        <div class="mt-3">
-                            {!! $avis->links() !!}
-                        </div>
-                         
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nouvelle ligne Avis </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form method="post" action="{{route('storeAvis',$idd)}}">
-            @csrf
-            @method('POST')
-        <div class="card-body"> 
-            <div class="form-group">
-            
-
-               
-            </div>
-            <div class="form-group">
-                <label for="objet">Objet</label>
-                <input type="text" class="form-control" name="objet" id="objet" placeholder="Entrer l'objet"
-                    value="{{ old('objet') }}">
-            </div>
-            <div class="form-group">
-                <label for="detail">detail</label>
-                <input type="text" class="form-control" name="detail" id="detail" placeholder="Entrer le detail"
-                    value="{{ old('detail') }}">
-            </div>
-
-            <div class="form-group">
-                <label for="date">Date</label>
-                <input type="date" class="form-control" name="date" id="date" placeholder="Entrer la date"
-                    value="{{ old('date') }}">
-            </div>
-             <div class="form-group">
-
-                <label for="type">Type </label>
-                  <select name="type" class="form-control"   >
-                    <option value="Etablissement">Etablissement </option>
-                    <option value="Direction provinciale">Direction provinciale</option>
-                </select>
-            </div>
-           
-
-               
-           
-        </div>
-         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary " data-dismiss="modal">Fermé</button>
-        <button type="submit" class="primary-btn  btn-normal rounded-pill ">enregistrer les modifications</button>
-      </div>
-      
-    </form>
-      </div>
-     
     </div>
-  </div>
-</div>
-    </section>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Class Details Section Begin -->
+
+
+<!-- Class Timetable Section Begin -->
+<!-- Class Timetable Section Begin -->
+<section class="class-timetable-section class-details-timetable spad">
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="class-details-timetable_title text-right mb-4">
+                    <button type="button" class="penn-btn-teal" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-plus ml-2"></i> إضافة رأي جديد
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="penn-table-wrapper" dir="rtl">
+                    <table class="penn-table">
+                        <thead>
+                            <tr>
+                                <th>الموضوع</th>
+                                <th>النوع</th>
+                                <th width="40%">التفاصيل</th>
+                                <th>التاريخ</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($avis as $avi)
+                            <tr id="avi_id_{{ $avi->users_id }}">
+                                <td><strong>{{ $avi->objet }}</strong></td>
+                                <td>
+                                    <span class="penn-badge penn-badge-success">{{ $avi->type }}</span>
+                                </td>
+                                <td>{{ $avi->detail }}</td>
+                                <td>{{($avi->created_at)->format('d-m-Y') }}</td>
+                                <td>
+                                    <form action="{{route('destroyAvis', $avi->id) }}" method="post" style="display:inline;">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="submit" class="penn-action-btn penn-action-btn-danger" onclick="return confirm('هل أنت متأكد؟')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="mt-4 d-flex justify-content-center">
+                        {!! $avis->links() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header" dir="rtl">
+                    <h5 class="modal-title" id="exampleModalLabel">إضافة رأي جديد</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin: -1rem auto -1rem -1rem;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" dir="rtl">
+                    <form method="post" action="{{route('storeAvis',$idd)}}">
+                        @csrf
+                        @method('POST')
+
+                        <div class="form-group mb-3">
+                            <label for="objet" class="mb-2 text-muted">الموضوع</label>
+                            <input type="text" class="penn-input" name="objet" id="objet" placeholder="أدخل الموضوع" value="{{ old('objet') }}" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="type" class="mb-2 text-muted">النوع</label>
+                            <select name="type" class="penn-input">
+                                <option value="Etablissement">المؤسسة</option>
+                                <option value="Direction provinciale">المديرية الإقليمية</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="detail" class="mb-2 text-muted">التفاصيل</label>
+                            <textarea class="penn-input" name="detail" id="detail" rows="4" placeholder="أدخل التفاصيل" required>{{ old('detail') }}</textarea>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="date" class="mb-2 text-muted">التاريخ</label>
+                            <input type="date" class="penn-input" name="date" id="date" value="{{ old('date') }}" required>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="button" class="btn btn-secondary ml-2" data-dismiss="modal">إلغاء</button>
+                            <button type="submit" class="penn-btn-teal" style="width: auto; padding: 10px 30px;">حفظ</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 @endsection

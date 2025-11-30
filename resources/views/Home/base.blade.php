@@ -19,7 +19,7 @@
 
 
     <!-- ================== FOOTER ================== -->
-    
+
 
 
 
@@ -47,18 +47,7 @@
 
     @yield('scripts')
 
-    <script>
-    @if($errors->any())
-    @foreach($errors->all() as $error)
-    toastr.error("{{ $error }}");
-    @endforeach
-    @endif
-    @if(session()->has('message'))
-    toastr.success("{{ session()->get('message') }}");
-    @endif
 
-    
-    </script> 
 </body>
 
 

@@ -1,96 +1,68 @@
-<!-- Offcanvas Menu Section Begin -->
-<div class="offcanvas-menu-overlay"></div>
-<div class="offcanvas-menu-wrapper">
-    <div class="canvas-close">
-        <i class="fa fa-close"></i>
-    </div>
-    <div class="canvas-search search-switch">
-        <i class="fa fa-search"></i>
-    </div>
-   
-    <div id="mobile-menu-wrap"></div>
-    <div class="canvas-social">
-        <a href="#"><i class="fa fa-facebook"></i></a>
-        <a href="#"><i class="fa fa-twitter"></i></a>
-        <a href="#"><i class="fa fa-youtube-play"></i></a>
-        <a href="#"><i class="fa fa-instagram"></i></a>
-    </div>
-</div>
-<!-- Offcanvas Menu Section End -->
+<!-- Modern Navbar -->
+<nav class="navbar navbar-expand-lg modern-navbar">
+    <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand modern-logo" href="/">
+            <img src="{{ asset('img/logo.jpg') }}" alt="Logo">
+        </a>
 
-<!-- Header Section Begin -->
-<header class="header-section">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="logo">
-                    <a href="/">
-                        <img style="margin-left: -30px ; margin-top: -70px;" src="{{ asset('img/logo.jpg') }}" alt="">
+        <!-- Mobile Toggle -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#modernNav" aria-controls="modernNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="fa fa-bars" style="color: var(--penn-dark);"></span>
+        </button>
+
+        <!-- Menu -->
+        <div class="collapse navbar-collapse" id="modernNav">
+            <ul class="navbar-nav ml-auto align-items-center" style="margin-right: auto; margin-left: 0;">
+
+                <!-- Home -->
+                <li class="nav-item">
+                    <a class="nav-link modern-nav-link {{ session()->get('menu') == 'Home' ? 'active' : '' }}" href="/">الرئيسية</a>
+                </li>
+
+                <!-- News -->
+                <li class="nav-item">
+                    <a class="nav-link modern-nav-link {{ session()->get('menu') == 'ListEvent' ? 'active' : '' }}" href="/listEvent">الاخبار المحلية</a>
+                </li>
+
+                <!-- Visitor Dropdown -->
+                @if (Auth::user())
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle modern-nav-link {{ session()->get('menu') == 'Vip' ? 'active' : '' }}" href="#" id="visitorDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        زائر
                     </a>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <nav class="nav-menu">
-                    <ul>
-                        <li><a href="">تواصل معنا </a></li>
-                        @if (Auth::user())
-                        <li class="{{ session()->get('menu') == 'Vip' ? 'active' : '' }}"><a href="#">زائر</a>
-                            <ul class="dropdown">
-                                <li class="{{ session()->get('menu') == '' ? 'active' : '' }}"><a
-                                    href="/visiteur/reclamation">الشكايات</a></li>
-                            <li class="{{ session()->get('menu') == '' ? 'active' : '' }}"><a
-                                    href="/visiteur/avi">الاراء</a></li>
-                                    <li><a href="/visiteur/informationprofile">حساب شخصي</a></li>
-                                    <li><a href="/visiteur/changepassword">تغيير كلمة المرور</a></li>
-                            </ul>
-                        </li>
-                    @endif
-                       
-                                <li class="{{ session()->get('menu') == 'ListEvent' ? 'active' : '' }}"><a
-                                    href="/listEvent">الاخبار المحلية</a></li>
-                        <li class="{{ session()->get('menu') == 'Home' ? 'active' : '' }}"><a href="/">الرئيسية</a></li>
-
-                    </ul>
-                </nav>
-            </div>
-            <div class="col-lg-3">
-                <div class="top-option">
-
-                    <div class="to-search search-switch">
-                        <i class="fa fa-search"></i>
-
+                    <div class="dropdown-menu text-right" aria-labelledby="visitorDropdown">
+                        <a class="dropdown-item" href="/visiteur/reclamation">الشكايات</a>
+                        <a class="dropdown-item" href="/visiteur/avi">الاراء</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/visiteur/informationprofile">حساب شخصي</a>
+                        <a class="dropdown-item" href="/visiteur/changepassword">تغيير كلمة المرور</a>
                     </div>
-                    <div class="to-social">
+                </li>
+                @endif
 
+                <!-- Contact -->
+                <li class="nav-item">
+                    <a class="nav-link modern-nav-link" href="#gettouch-section">تواصل معنا</a>
+                </li>
 
-                        @if (Auth::user())
-                            <form method="POST" action="{{ route('user.logout') }}">
-                                @csrf
-                                <a class="auth-btn" onclick="this.closest('form').submit();">
-                                    {{ __('تسجيل الخروج') }}
-                                </a>
-                            </form>
-                        @else
-                            <a class="auth-btn" href="{{ route('user.login') }}">
-                                {{ __('تسجيل الدخول  ') }}
-                            </a>
-                            <a class="auth-btn" href="{{ route('register') }}">
-                                {{ __(' انشاء حساب  ') }}
-                            </a>
-                           
-                    </div>
-                    @endif
+            </ul>
 
-
-                </div>
-
+            <!-- Auth Buttons -->
+            <div class="form-inline my-2 my-lg-0 mr-3">
+                @if (Auth::user())
+                <form method="POST" action="{{ route('user.logout') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-4" style="font-family: 'Tajawal'">
+                        تسجيل الخروج
+                    </button>
+                </form>
+                @else
+                <a href="{{ route('user.login') }}" class="btn btn-outline-primary btn-sm rounded-pill px-4 ml-2" style="font-family: 'Tajawal'">تسجيل الدخول</a>
+                <a href="{{ route('register') }}" class="btn btn-primary btn-sm rounded-pill px-4" style="font-family: 'Tajawal'; background: var(--penn-gradient-primary); border: none;">انشاء حساب</a>
+                @endif
             </div>
         </div>
     </div>
-    <div class="canvas-open">
-        <i class="fa fa-bars"></i>
-    </div>
-    </div>
-</header>
-</div>
-<!-- Header End -->
+</nav>
+<!-- Navbar End -->

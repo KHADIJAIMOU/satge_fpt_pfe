@@ -3,86 +3,93 @@
 @extends('layoutsAdmin.app')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <center> <div class="card-header" style="background-color: #cfe7d0">{{  __(' Register') }}</div></center>
-
-                    <div class="card-body">
-                        <div class="row mb-3">
-                            <img  class="mx-auto d-block" style="margin-bottom: 30px;margin-top: 30px;padding-right: 50px;padding-left: 50px;" src="{{asset('/img/logo.jpg')}}">
-                        </div> 
-                        <form method="POST" action="{{ route('register') }}">
-                            @csrf
-
-                            <div class="form-group row">
-                                <label for="NOM_ETABL" class="col-md-4 col-form-label text-md-right">{{ __('NOM COMPLETE') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="NOM_ETABL" type="text" class="form-control @error('NOM_ETABL') is-invalid @enderror" name="NOM_ETABL" value="{{ old('NOM_ETABL') }}" required autocomplete="NOM_ETABL" autofocus>
-
-                                    @error('NOM_ETABL')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for='CD_ETAB' class="col-md-4 col-form-label text-md-right">{{ __('CODE') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id='CD_ETAB' type='text' class="form-control @error('CD_ETAB') is-invalid @enderror" name='CD_ETAB' value="{{ old('CD_ETAB') }}" required autocomplete='CD_ETAB'>
-
-                                    @error('CD_ETAB')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                                </div>
-                            </div>
-
-                            <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit"  class="btn btn-primary">
-                                        <a class="underline text-sm text-gray-600 hover:text-gray-900"  style="color: white" href="{{ route('user.login') }}">
-                                            {{ __('Déjà inscrit?') }}
-                                        </a>
-                                    </button>
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Register') }}
-                                    </button>
-                                    
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+<div class="login-split-screen">
+    <!-- Left Side (Image & Text) -->
+    <div class="login-left">
+        <div class="login-left-content fade-in-up">
+            <h1>إدارة المؤسسة <br> التعليمية</h1>
+            <p>سجل مؤسستك الآن واستفد من أدوات إدارة متطورة وفعالة.</p>
+            <img src="{{ asset('img/study.jpg') }}" alt="Admin Register Illustration" class="login-left-img">
         </div>
     </div>
+
+    <!-- Right Side (Form) -->
+    <div class="login-right" dir="rtl">
+        <div class="login-form-container fade-in-up" style="animation-delay: 0.2s;">
+            <div class="login-logo text-center">
+                <img src="{{ asset('img/logo.jpg') }}" alt="Logo">
+            </div>
+
+            <h2 class="login-title text-center">تسجيل مؤسسة جديدة</h2>
+
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
+
+                <div class="form-group mb-3">
+                    <label for="NOM_ETABL" class="mb-2 text-muted">{{ __('اسم المؤسسة') }}</label>
+                    <input id="NOM_ETABL" type="text" class="penn-input @error('NOM_ETABL') is-invalid @enderror" name="NOM_ETABL" value="{{ old('NOM_ETABL') }}" required autocomplete="NOM_ETABL" autofocus placeholder="أدخل اسم المؤسسة">
+                    @error('NOM_ETABL')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="CD_ETAB" class="mb-2 text-muted">{{ __('رمز المؤسسة') }}</label>
+                    <input id="CD_ETAB" type="text" class="penn-input @error('CD_ETAB') is-invalid @enderror" name="CD_ETAB" value="{{ old('CD_ETAB') }}" required autocomplete="CD_ETAB" placeholder="أدخل رمز المؤسسة">
+                    @error('CD_ETAB')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="password" class="mb-2 text-muted">{{ __('كلمة المرور') }}</label>
+                    <input id="password" type="password" class="penn-input @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="••••••••">
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="password-confirm" class="mb-2 text-muted">{{ __('تأكيد كلمة المرور') }}</label>
+                    <input id="password-confirm" type="password" class="penn-input" name="password_confirmation" required autocomplete="new-password" placeholder="••••••••">
+                </div>
+
+                <button type="submit" class="penn-btn-teal mb-3">
+                    {{ __('تسجيل') }}
+                </button>
+
+                <div class="text-center">
+                    <span class="text-muted">مسجل بالفعل؟</span>
+                    <a href="{{ route('user.login') }}" style="color: var(--penn-teal); font-weight: 700;">تسجيل الدخول</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Hide default navbar/footer for this page only if they exist in layout */
+    .navbar,
+    footer {
+        display: none !important;
+    }
+
+    body {
+        background: #fff !important;
+    }
+
+    #app {
+        padding: 0 !important;
+    }
+
+    main {
+        padding: 0 !important;
+    }
+</style>
 @endsection

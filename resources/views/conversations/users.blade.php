@@ -9,7 +9,8 @@
                 @foreach($users as $user)
                     <a href="/conversations/{{ $user->id }}">
                         <div class="friend">
-                            <img class="direct-chat-img" src="{{ asset('storage/' . $user->image) }}" alt="message user image">
+                            <img class="direct-chat-img" src="https://s10.aconvert.com/convert/p3r68-cdx67/aofce-9rrty.jpg" alt="message user image">
+                            <!-- <img class="direct-chat-img" src="{{ asset('storage/' . $user->image) }}" alt="message user image"> -->
                             @if($user->status == 0)
                                 <div class="status active"></div>
                             @elseif ($user->status == 1)
