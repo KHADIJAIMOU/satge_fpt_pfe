@@ -46,5 +46,7 @@ Ce projet est une **application Laravel** développée pour la gestion des absen
 
 #### Page des avis
 ![Reviews List Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/adzpd-yjmfp.jpg)
+#### admin pannel 
+![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/alsrr-a4obu-001.jpg)
 
 ---
