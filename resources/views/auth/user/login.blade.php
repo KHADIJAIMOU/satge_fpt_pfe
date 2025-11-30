@@ -25,7 +25,7 @@
                     @csrf
             </center>
             <div class="form-group mb-4">
-                <label for="CD_ETAB" class="mb-2 text-muted">{{ __('Login') }}</label>
+                <label for="CD_ETAB" class="mb-2 text-muted">{{ __('كود المستخدم') }}</label>
                 <input id="CD_ETAB" type="text" class="penn-input @error('CD_ETAB') is-invalid @enderror" name="CD_ETAB" value="{{ old('CD_ETAB') }}" required autofocus placeholder="أدخل اسم المستخدم">
                 @error('CD_ETAB')
                 <span class="invalid-feedback" role="alert">
@@ -35,7 +35,7 @@
             </div>
 
             <div class="form-group mb-4">
-                <label for="password" class="mb-2 text-muted">{{ __('Mot de passe') }}</label>
+                <label for="password" class="mb-2 text-muted">{{ __('كلمة المرور') }}</label>
 
                 <input id="password" type="password" class="penn-input @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="••••••••">
                 @error('password')
