@@ -46,7 +46,19 @@ Ce projet est une **application Laravel** développée pour la gestion des absen
 
 #### Page des avis
 ![Reviews List Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/adzpd-yjmfp.jpg)
-#### admin pannel 
+
+#### Panneau d’administration
 ![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/alsrr-a4obu-001.jpg)
+
+#### Affichage des rapports – Administrateur
+![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/akyqr-gmrl1.jpg)
+
+#### Affichage des rapports – Impression (Administrateur)
+![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/a5da7-ucxp6.jpg) 
+
+#### Messagerie – Chat avec les établissements scolaires (Administrateur)
+![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/a2mdj-wm7gj.jpg) 
+
+
 
 ---
