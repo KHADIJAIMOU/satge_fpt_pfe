@@ -58,7 +58,12 @@ Ce projet est une **application Laravel** développée pour la gestion des absen
 
 #### Messagerie – Chat avec les établissements scolaires (Administrateur)
 ![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/a2mdj-wm7gj.jpg) 
+####  قثلهسفثق – Chat avec les établissements scolaires (Administrateur)
+#### Register
+![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/aov4u-g1s46.jpg) 
 
+#### login
+![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/a9l5b-htb4n.jpg) 
 
 
 ---
