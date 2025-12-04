@@ -44,10 +44,10 @@ Ce projet est une **application Laravel** développée pour la gestion des absen
 ![News List Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/newsdelegation.png)
 
 #### Page de réclamation des visiteurs
-![Visitor Complaint Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/reclamation.png)
+![Visitor Complaint Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/reclamation.PNG)
 
 #### Page des avis
-![Reviews List Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/avis.png)
+![Reviews List Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/avis.PNG)
 
 #### Register
 ![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/registerdelegation.png) 
