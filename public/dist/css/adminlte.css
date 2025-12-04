@@ -44749,7 +44749,7 @@ select.form-control-sm ~ .select2-container--default .select2-selection--multipl
   top: 10px;
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
-  width: 90px;
+  width: 120px;
 }
 
 .ribbon-wrapper .ribbon::before, .ribbon-wrapper .ribbon::after {

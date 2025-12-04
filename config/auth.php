@@ -43,7 +43,11 @@ return [
     
         'admin' => [
             'driver' => 'session',
-            'provider' => 'admins',
+            'provider' => 'users',
+        ],
+        'visiteur' => [
+            'driver' => 'session',
+            'provider' => 'users',
         ],
     ],
 

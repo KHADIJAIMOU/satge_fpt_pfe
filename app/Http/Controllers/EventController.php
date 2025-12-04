@@ -1,0 +1,262 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use App\Models\Event;
+use App\Models\Image;
+use Illuminate\Support\Facades\Validator;
+class EventController extends Controller
+{
+    public function index()
+    {
+        $events = Event::paginate(3);
+        session()->put('menu', 'Event');
+        return view('auth.admin.events.index', compact('events'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //REDIRECT TO CREATE PAGE OF Event
+        return view('auth.admin.events.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function store(Request $request)
+    {
+        //VALIDATION
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required',
+            'description' => 'required',
+            'short_description' => 'required',
+            'date' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect('admin/events/create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $event = Event::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'short_description' => $request->short_description,
+            'content' => $request->content,
+            'date' => $request->date,
+        ]);
+
+        $this->uploadImage($request, $event->id);
+
+        return redirect('/admin/events')->with([
+            'type' => 'success',
+            'message' => 'Event créée avec succès',
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Event  $event
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Event $event)
+    {
+        //RETURN VIEW Event DETAILS WITH IMAGES
+        $list_images = $event->images;
+
+        return view('auth.admin.events.show', compact('event', 'list_images'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Event  $event
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Event $event)
+    {
+        return view('auth.admin.events.edit', compact('event'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Event  $event
+     * @return \Illuminate\Http\Response
+     */
+    function actionsEvent(Request $request)
+    {
+        if ($request->ajax()) {
+            if($request->ajax())
+    {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '') {
+            $data = Event::select('*')
+            ->orWhere('name', 'like', '%'.$query.'%')
+            ->orWhere('date', 'like', '%'.$query.'%')
+            ->orWhere('short_description', 'like', '%'.$query.'%')
+            ->orderBy('id', 'desc')
+                ->get();
+                
+        } else {
+            $data = Event::select('*')
+                ->orderBy('id', 'desc')
+                ->get();
+        }
+        $total_row = $data->count();
+
+            
+            if ($total_row > 0) {
+                foreach ($data as $row) {
+                    $output .= '
+                    <tr>
+                        <td>' . $row->name . '</td>
+                        <td>' . $row->date . '</td>
+                        <td>' . $row->short_description . '</td>
+                        <td class="text-center">
+                            <div class="d-flex flex-row justify-content-center">
+                                <div class="mr-2">
+                                    <a href="/admin/events/' . $row->id . '" class="btn btn-primary btn-sm">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                </div>
+                                <div class="mr-2">
+                                    <a href="/admin/events/' . $row->id . '/edit" class="btn btn-secondary btn-sm">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                </div>
+                                <div>
+                                    <form action="' . route('events.destroy', $row->id) . '" method="post">
+                                        ' . csrf_field() . '
+                                        ' . method_field('DELETE') . '
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    ';
+                }
+            } else {
+                $output = '
+                <tr>
+                    <td align="center" colspan="5">No Data Found</td>
+                </tr>
+                ';
+            }
+    
+            $data = array(
+                'table_data' => $output,
+                'total_data' => $total_row
+            );
+    
+            return json_encode($data);
+        }
+    }}
+    
+    public function update(Request $request, Event $event)
+    {
+        //VALIDATION
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required',
+            'description' => 'required',
+            'short_description' => 'required',
+            'date' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $event->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'short_description' => $request->short_description,
+            'content' => $request->content,
+            'date' => $request->date,
+        ]);
+
+        return redirect('/admin/events')->with([
+            'type' => 'success',
+            'message' => 'Event modifié avec succès',
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Event  $event
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Event $event)
+    {
+        $event->delete();
+
+        return redirect('/admin/events')->with([
+            'type' => 'error',
+            'message' => 'Event supprimé avec succès',
+        ]);
+    }
+    public function DetailsEvent($id)
+    {
+        $event = Event::find($id);
+        $list_images = $event->images;
+
+        //TODO variable contains images list
+        return view('Home.detailsEvent', compact('event','list_images'));
+    }
+    public function ListEvent(Request $request)
+    {//
+        if($request->isMethod('post')){
+            $events = Event::with('images')->Where('name',$request->get('namefilter'))->orWhere('name', 'like', '%' .$request->get('namefilter') . '%')->paginate(6);
+
+            session()->put('menu', 'ListEvent');
+            return view('Home.listeEvent', compact('events'));
+             }
+        else{
+        $events = Event::with('images')->orderBy('date', 'desc')->paginate(6);
+        
+  session()->put('menu', 'ListEvent');
+  return view('Home.listeEvent', compact('events'));
+        }
+    }
+    private function uploadImage(Request $request, $event_id)
+    {
+        $validator = $request->validate([
+            'images .*' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ]);
+
+        if ($request->hasfile('images')) {
+            $images = $request->file('images');
+
+            foreach ($images as $image) {
+                $name = $image->getClientOriginalName();
+                $path = $image->storeAs('/images', $name, 'public');
+
+                Image::create([
+                    'event_id' => $event_id,
+                    'name' => $name,
+                    'path' => 'storage/' . $path,
+                ]);
+            }
+        }
+    }
+}

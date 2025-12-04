@@ -7,7 +7,13 @@
             <i class="fa-solid fa-plus"></i>
             Ajouter Un Nouvel Utilisateur
         </a>
-
+        <div class="form-group">
+                        <input type="text" name="search" id="search" class="form-control" placeholder="Recherche" />
+                    </div>
+            <h2>Resultat: 
+            <span class="badge badge-pill badge-primary" id="total_records"></span>
+    
+        </h2>
         <table class="table table-bordered">
             <thead class="card-header text-white bg-dark">
                 <tr>
@@ -16,53 +22,76 @@
                     <th class="text-center" style="width: 100px;">typeEtab</th>
                     <th class="text-center" style="width: 100px;">CD_GIPE</th>
                     <th class="text-center" style="width: 100px;">password</th>
+                    <th class="text-center"style="width: 100px;">role</th>
                     <th class="text-center"style="width: 100px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
 
-                @foreach ($users as $user)
-                    <tr>
-                        <td class="text-center">{{ $user->CD_ETAB }}</td>
-                        <td class="text-center">{{ $user->NOM_ETABL }}</td>
-                        <td class="text-center">{{ $user->typeEtab }}</td>
-                        <td class="text-center">{{ $user->CD_GIPE }}</td>
-                        <td class="text-center">{{ $user->password }}</td>
-                        <td class="text-center">
-                            <div class="d-flex flex-row justify-content-center">
-                                <div class="mr-2">
-                                    <a href="{{ '/admin/users/'. $user->id }}" class="btn btn-primary btn-sm">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
-                                </div>
-                                <div class="mr-2">
-                                    <a href="{{ '/admin/users/' . $user->id . '/edit' }}" class="btn btn-secondary btn-sm">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </a>
-                                </div>
-                                <div class="mr-2">
-                                    <a href="#" class="btn btn-warning btn-sm update-password" data-user-id="{{ $user->id }}">
-                                        <i class="fa-sharp fa-solid fa-unlock-keyhole"></i> </a>
-                                </div>
-                                
-                                <div>
-                                    <form action="{{ route('users.destroy', $user->id) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm"><i
-                                                class="fa-solid fa-trash"></i></button>
-                                    </form>
-                                </div>
-
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
 
             </tbody>
+            
         </table>
-
-        {{-- pagination --}}
-        {{ $users->links() }}
+        
+        <div class="container-fluid">
+            <!-- ... your existing code ... -->
+        
+            {{-- pagination --}}
+          
+        </div>        
     </div>
+@endsection
+
+@section('scripts')
+<script>
+    $(document).on('click', '.update-password', function(e) {
+            e.preventDefault();
+            var userId = $(this).data('user-id');
+            var password = Math.random().toString(36).slice(-8);
+
+            $.ajax({
+                url: '/admin/users/' + userId + '/updatePassword',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    password: password
+                },
+                success: function(response) {
+                    toastr.success(response.message); // Show success message
+                    setTimeout(function() {
+                        location.reload();
+                    }, 5000);
+                },
+                error: function(response) {
+                    toastr.error(response.responseJSON.message); // Show error message
+                }
+            });
+        });
+   
+$(document).ready(function(){
+ 
+ fetch_customer_data();
+
+ function fetch_customer_data(query = '')
+ {
+     $.ajax({
+         url:"{{ route('actionsUser') }}",
+         method:'GET',
+         data:{query:query},
+         dataType:'json',
+         success:function(data)
+         {
+             $('tbody').html(data.table_data);
+             $('#total_records').text(data.total_data);
+
+         }
+     })
+ }
+
+ $(document).on('keyup', '#search', function(){
+     var query = $(this).val();
+     fetch_customer_data(query);
+ });
+});
+</script>
 @endsection

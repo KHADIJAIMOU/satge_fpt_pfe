@@ -27,7 +27,34 @@
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1 class="m-0">
+                                @if (Illuminate\Support\Facades\Auth::user()->password === 'password1')
+                                <script>
+                                    $(document).ready(function() {
+                                        $(document).Toasts('create', {
+                                            title: 'Attention',
+                                            body: "Votre compte n'est pas sécurisé, veuillez essayer de le changer. <a href='/admin/profil'>Cliquez ici</a>.",
+                                            class: 'bg-white', 
+                                            autohide: true, // Enable autohide
+            delay: 50000, // Set delay in milliseconds (e.g., 5000 = 5 seconds)
+            width: '100%',
+            iconClass: 'col-12',
+            // Add the col-12 class to the bodyClass as well, if needed
+            bodyClass: 'col-12',
+            css: {
+        'margin-right': '50%' // Add margin-right style
+    }
+
+                                        });
+                                    });
+                                </script>
+                           
+                            @endif
+                            
+                            </h1>
+                            
+            
                                 @yield("title")
+
                             </h1>
                         </div>
                         <!-- /.col -->
@@ -45,7 +72,10 @@
 
             <!-- Main content -->
             <section class="content">
+                
                 <div class="container-fluid">
+                    @yield('header')
+
                     @yield('content')
                 </div><!-- /.container-fluid -->
             </section>

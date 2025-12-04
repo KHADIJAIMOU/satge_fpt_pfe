@@ -32,6 +32,7 @@ class User extends Authenticatable
         'CD_GIPE',
         'password',
         'role',
+        'image','status',
 
     ];
     public function hasRole(string $role): bool

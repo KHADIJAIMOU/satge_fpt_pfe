@@ -1,62 +1,67 @@
-@extends("auth.admin.base")
+@extends('auth.admin.base')
 @section('title', 'Liste des rapports')
 @section('content')
-<div class="container-fluid">
+    <div class="container-fluid">
 
-@if (count($repports)==0)
-<div> Aucun rapport pour le moment </div>
-    
-@endif
+        @if (count($repports) == 0)
+            <div> Aucun rapport pour le moment </div>
+        @endif
 
-@if (count($repports)>=1)
-<table class="table table-bordered">
-    <thead class="card-header text-white bg-dark">
-        <tr>
-            <th class="text-center" style="width: 100px;">Type class</th>
-            <th class="text-center" style="width: 100px;">Rapport d'activite </th>
-            <th class="text-center" style="width: 220px;">rapport des visites</th>
-            <th class="text-center" style="width: 40px;">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
+        @if (count($repports) >= 1)
+           
+        <div class="form-group">
+            <input type="text" name="search" id="search" class="form-control" placeholder="Recherche" />
+        </div>
+        <h2>Resultat: 
+            <span class="badge badge-pill badge-primary" id="total_records"></span>
+        </h2>
+        <br>
+        <br>
+        <table class="table table-bordered">
+            <thead class="card-header text-white bg-dark">
+                <tr>
+                    <th class="text-center" style="width: 20%;">Type class</th>
+                    <th class="text-center" style="width: 20%;">Date Etab </th>
+                    <th class="text-center" style="width: 20%;">Date Create</th>
+                    <th class="text-center" style="width:20%;">totale des absences</th>
+                    <th class="text-center" style="width:20%;">Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
-        @foreach ($repports as $repport)
-        <tr>
-            <td class="text-center">{{ $repport->typeClass }}</td>
-            <td class="text-center">{{ $repport->rapportActiviteEffectuer }}</td>
-            <td class="text-center">
-                {{ $repport->rapportVisit }}
-            </td>
-            <td class="text-center">
-                <div class="d-flex flex-row justify-content-center">
-                <div  class="mr-2">
-                <a href="{{ '/admin/repports/' . $repport->id }}" class="btn btn-primary btn-sm">
-                    <i class="fa-solid fa-eye"></i>
-                </a>
-                </div>
-                <div class="mr-2">
-                <a href="{{ '/admin/repports/' . $repport->id . '/edit' }}" class="btn btn-secondary btn-sm">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </a>
-                </div>
-                <div>
-                <form action="{{ route('repports.destroy', $repport->id) }}" method="post">
-                    @csrf
-                    @method("DELETE")
-                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
-                </form>
-                </div>
-                </div>
-            </td>
-        </tr>
-        @endforeach
+        {{-- pagination --}}
+        @endif
 
-    </tbody>
-</table>
+    </div>
+@endsection
 
-{{-- pagination --}}
-{{ $repports->links() }}    
-@endif
+@section('scripts')
+<script>
+$(document).ready(function(){
+ 
+ fetch_customer_data();
 
-</div>
+ function fetch_customer_data(query = '')
+ {
+     $.ajax({
+         url:"{{ route('actions') }}",
+         method:'GET',
+         data:{query:query},
+         dataType:'json',
+         success:function(data)
+         {
+             $('tbody').html(data.table_data);
+             $('#total_records').text(data.total_data);
+         }
+     })
+ }
+
+ $(document).on('keyup', '#search', function(){
+     var query = $(this).val();
+     fetch_customer_data(query);
+ });
+});
+
+</script>
 @endsection

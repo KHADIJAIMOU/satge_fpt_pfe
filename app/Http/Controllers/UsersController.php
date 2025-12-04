@@ -8,16 +8,102 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin;
+use App\Models\infoAuth;
+
 class UsersController extends Controller
 {
     public function profil()
     {
         $user = Auth::user();
+        $infoAuths = infoAuth::select('mac_address', 'adressIp')
+    ->where('users_id', $user->id)
+    ->orderBy('created_at', 'desc')
+    ->limit(9)
+    ->get();
+
+                session()->put("menu", "profil");
+                return view('auth.admin.users.profil', compact('user', 'infoAuths'));
+
+    }
+    public function profileUpdate(Request $request)
+    {
+        // Validation rules
+        $request->validate([
+            'password' => 'required|min:4|string|max:255',
+        ]);
+    
+        $user = Auth::user();
+    
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('images', 'public'); // Store the image in the storage folder
+    
+            // Update the user with the image path
+            $user->update([
+                'password' => $request->password,
+                'image' => $imagePath,
+            ]);
+        } else {
+            // Update the user without the image
+            $user->update([
+                'password' => $request->password,
+            ]);
+        }
+    
+        return redirect('/admin/profil')->with([
+            'type' => 'success',
+            'message' => 'Profile modifié avec succès',
+        ]);
+    }
+    
+  
+    public function profileUpdateUser(Request $request)
+    {
+        //validation rules
+
+       // Validation rules
+       $request->validate([
+        'password' => 'required|min:4|string|max:255',
+    ]);
+
+    $user = Auth::user();
+
+    if ($request->hasFile('image')) {
+        $image = $request->file('image');
+        $imagePath = $image->store('images', 'public'); // Store the image in the storage folder
+
+        // Update the user with the image path
+        $user->update([
+            'password' => $request->password,
+            'image' => $imagePath,
+        ]);
+    } else {
+        // Update the user without the image
+        $user->update([
+            'password' => $request->password,
+        ]);
+    }
+
+    return redirect('/admin/profil')->with([
+        'type' => 'success',
+        'message' => 'Profile modifié avec succès',
+    ]);
+    }
+    public function Base()
+    {
+        $user = Auth::user();
                 session()->put("menu", "profil");
 
-        return view('auth.admin.users.profil', compact('user'));
-    }
-   
+                return view('auth.admin.base', compact('user'));
+            }
+            public function Base1()
+            {
+                $user = Auth::user();
+                        session()->put("menu", "profil");
+        
+                        return view('aut
+                        h.user.baseUser', compact('user'));
+                    }
     /**
      * Display a listing of the resource.
      *
@@ -46,6 +132,91 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    function actions(Request $request)
+    {
+        if ($request->ajax()) {
+            if($request->ajax())
+    {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '') {
+            $data = User::select('*')
+            ->orWhere('CD_ETAB', 'like', '%'.$query.'%')
+            ->orWhere('NOM_ETABL', 'like', '%'.$query.'%')
+            ->orWhere('typeEtab', 'like', '%'.$query.'%')
+            ->orWhere('CD_GIPE', 'like', '%'.$query.'%')
+            ->orWhere('password', 'like', '%'.$query.'%')
+            ->orWhere('role', 'like', '%'.$query.'%')
+            ->orderBy('id', 'desc')
+                ->get();
+                
+        } else {
+            $data = User::select('*')
+                ->orderBy('id', 'desc')
+                ->get();
+        }
+        $total_row = $data->count();
+
+            
+            if ($total_row > 0) {
+                foreach ($data as $row) {
+                    $output .= '
+                    <tr>
+                        <td>' . $row->CD_ETAB . '</td>
+                        <td>' . $row->NOM_ETABL . '</td>
+                        <td>' . $row->typeEtab . '</td>
+                        <td>' . $row->CD_GIPE . '</td>
+                        <td>' . $row->password . '</td>
+                        <td>' . $row->role . '</td>
+                        <td class="text-center">
+                            <div class="d-flex flex-row justify-content-center">
+                               
+                                <div class="mr-2">
+                                    <a href="/admin/users/'. $row->id .'" class="btn btn-primary btn-sm">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                </div>
+                                <div class="mr-2">
+                                    <a href="/admin/users/' . $row->id . '/edit" class="btn btn-secondary btn-sm">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                </div>
+                                <div class="mr-2">
+                                    <a href="#" class="btn btn-warning btn-sm update-password" data-user-id="' . $row->id . '">
+                                        <i class="fa-sharp fa-solid fa-unlock-keyhole"></i>
+                                    </a>
+                                </div>
+                                
+                                <div>
+                                    <form action="' . route('events.destroy', $row->id) . '" method="post">
+                                        ' . csrf_field() . '
+                                        ' . method_field('DELETE') . '
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>';
+                    
+                }
+            } else {
+                $output = '
+                <tr>
+                    <td align="center" colspan="5">No Data Found</td>
+                </tr>
+                ';
+            }
+    
+            $data = array(
+                'table_data' => $output,
+                'total_data' => $total_row
+            );
+    
+            return json_encode($data);
+        }
+    }}
     public function store(Request $request)
     {
         //VALIDATION
@@ -59,6 +230,7 @@ class UsersController extends Controller
         'typeEtab'=> 'required',
         'LL_CYCLE'=> 'required',
         'LA_CYCLE'=> 'required',
+        'role'=> 'required',
         'NetabFr'=> 'required',
         'CD_GIPE'=> 'required',
         'password'=> 'required',
@@ -73,8 +245,9 @@ class UsersController extends Controller
         $User = new User();
         $User->create([
             'CD_ETAB'=> $request->CD_ETAB,
-        'NOM_ETABL'=> $request->NOM_ETABL,
-        'NOM_ETABA'=> $request->NOM_ETABA,
+            'NOM_ETABL'=> $request->NOM_ETABL,
+            'role'=> $request->role,
+            'NOM_ETABA'=> $request->NOM_ETABA,
         'la_com'=> $request->la_com,
         'll_com'=> $request->ll_com,
         'typeEtab'=> $request->typeEtab,
@@ -233,27 +406,14 @@ class UsersController extends Controller
         session()->put("submenu", "password");
         return view('/admin/profil/password');
     }
-    public function profileUpdate(Request $request)
-    {
-        //validation rules
-
-        $request->validate([
-            'name' => 'required|min:4|string|max:255',
-            'email' => 'required|email|string|max:255'
-        ]);
-        $user = Auth::user();
-        $user->name = $request['name'];
-        $user->email = $request['email'];
-        $user->save();
-        return back()->with('message', 'Profile Modifié');
-    }
+    
 
     /**
      * 
      */
     public function changePasswordUpdate(Request $request)
     {
-        if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
+        if ($request->get('current_password')!= Auth::user()->password) {
             return back()->with('error', 'Your current password does not match what you provided');
         }
         if (strcmp($request->get('current_password'), $request->get('new_password')) == 0) {
@@ -264,7 +424,7 @@ class UsersController extends Controller
             'new_password' => 'required|string|min:6|confirmed'
         ]);
         $user = Auth::user();
-        $user->password = bcrypt($request->get('new_password'));
+        $user->password = $request->get('new_password');
         $user->save();
         return back()->with('message', 'Mot de Passe Modifié');
     }

@@ -107,15 +107,7 @@
         }
         
     @endphp
-    <center>
-        <br>
-
-        <div>Etablissement: {{ $NOM_ETABL }} </div>
-        <br>
-
-        <div>Type: {{ $text }} </div>
-        <br>
-    </center>
+    
     <center>
         <form onsubmit="return validateForms()" method="POST" action="{{ route('user.logout') }}">
             @csrf
@@ -125,6 +117,9 @@
             </button>
         </form>
     </center>
+    <a href="/user/rapport" class="btn btn-secondary float-right  ">
+        <i class="fa-solid fa-xmark"></i> précédent
+    </a>
     <form id="regForm" enctype="multipart/form-data" method="post"
         action="{{ route('rapport.update', $Rapport->id) }}">
 
@@ -907,39 +902,38 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><input type="radio" name="RespectProgrammeNutritional" value="5"></td>
-                                    <td><input type="radio" name="RespectProgrammeNutritional" value="4"></td>
-                                    <td><input type="radio" name="RespectProgrammeNutritional" value="3"></td>
-                                    <td><input type="radio" name="RespectProgrammeNutritional" value="2"></td>
-                                    <td><input type="radio" name="RespectProgrammeNutritional" value="1"></td>
+                                    <td><input     type="radio" name="RespectProgrammeNutritional" @if ($Rapport->RespectProgrammeNutritional == '5') checked @endif value="5"></td>
+                                    <td><input     type="radio" name="RespectProgrammeNutritional" @if ($Rapport->RespectProgrammeNutritional == '4') checked @endif value="4"></td>
+                                    <td><input     type="radio" name="RespectProgrammeNutritional" @if ($Rapport->RespectProgrammeNutritional == '3') checked @endif value="3"></td>
+                                    <td><input     type="radio" name="RespectProgrammeNutritional" @if ($Rapport->RespectProgrammeNutritional == '2') checked @endif value="2"></td>
+                                    <td><input     type="radio" name="RespectProgrammeNutritional" @if ($Rapport->RespectProgrammeNutritional == '1') checked @endif value="1"></td>
                                     <td style="text-align: center;"> مدى احترام البرنامج الغذائي </td>
 
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
-                                    <td><input type="radio" name="quality" value="5"></td>
-                                    <td><input type="radio" name="quality" value="4"></td>
-                                    <td><input type="radio" name="quality" value="3"></td>
-                                    <td><input type="radio" name="quality" value="2"></td>
-                                    <td><input type="radio" name="quality"value="1"></td>
+                                    <td><input     type="radio" name="quality" @if ($Rapport->quality == '5') checked @endif value="5"></td>
+                                    <td><input     type="radio" name="quality" @if ($Rapport->quality == '4') checked @endif value="4"></td>
+                                    <td><input     type="radio" name="quality" @if ($Rapport->quality == '3') checked @endif value="3"></td>
+                                    <td><input     type="radio" name="quality" @if ($Rapport->quality == '2') checked @endif value="2"></td>
+                                    <td><input     type="radio" name="quality" @if ($Rapport->quality == '1') checked @endif value="1"></td>
                                     <td style="text-align: center;"> من حيث الجودة </td>
 
                                 </tr>
                             </tbody>
                             <tbody>
                                 <tr>
-                                    <td><input type="radio" name="quantity" value="5"></td>
-                                    <td><input type="radio" name="quantity" value="4"></td>
-                                    <td><input type="radio" name="quantity" value="3"></td>
-                                    <td><input type="radio" name="quantity" value="2"></td>
-                                    <td><input type="radio" name="quantity" value="1"></td>
+                                    <td><input     type="radio" name="quantity" @if ($Rapport->quantity == '5') checked @endif value="5"></td>
+                                    <td><input     type="radio" name="quantity" @if ($Rapport->quantity == '4') checked @endif value="4"></td>
+                                    <td><input     type="radio" name="quantity" @if ($Rapport->quantity == '3') checked @endif value="3"></td>
+                                    <td><input     type="radio" name="quantity" @if ($Rapport->quantity == '2') checked @endif value="2"></td>
+                                    <td><input     type="radio" name="quantity" @if ($Rapport->quantity == '1') checked @endif value="1"></td>
                                     <td style="text-align: center;"> من حيث الكمية </td>
 
                                 </tr>
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>

@@ -22,13 +22,16 @@ class UserMiddleware
             $user = Auth::user();
 
             // if user is not admin take him to his dashboard
-            if ( $user->hasRole('admin') ) {
-                return redirect(route('admin.users'));
+            if ( $user->hasRole('user') ) {
+                return redirect(route('user.dashboard'));
             }
 
             // allow admin to proceed with request
-            else if ( $user->hasRole('user') ) {
-                return $next($request);
+            else if ( $user->hasRole('admin') ) {
+                return redirect(route('admin.dashboard'));
+            }
+            else {
+                return redirect(route('indexAvis'));
             }
         }
 

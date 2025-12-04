@@ -1,78 +1,171 @@
 @extends('auth.admin.base')
-@section('title', "Liste D'utilisateurs")
+
+@section('title', 'Edit profil')
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Edit Profile</div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
 
-                    <div class="panel-body">
-                        <form class="form-horizontal" method="POST" action="{{ route('users.profil') }}">
-                            {{ csrf_field() }}
-                            {{ method_field('PUT') }}
-
-                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-4 control-label">Name</label>
-
-                                <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name', $user->name) }}" required autofocus>
-
-                                    @if ($errors->has('name'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('name') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
+                    <!-- Profile Image -->
+                   
+                    <div class="card card-primary card-outline">
+                        <div class="card-body box-profile">
+                            <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle" src="{{ Storage::url($user->image) }}"
+                                    alt="User profile picture">
                             </div>
 
-                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                            <h3 class="profile-username text-center">{{ $user->NOM_ETABL }}</h3>
 
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email', $user->email) }}" required>
+                            <p class="text-muted text-center">Chef de service informatique</p>
+                            <h6>Last 10 IP Addresses:</h6>
 
-                                    @if ($errors->has('email'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
+                            <ul class="list-group list-group-unbordered mb-3">
+                                @foreach ($infoAuths as $infoAuth)
+                                    <li class="list-group-item">
+                                        <b>{{ $infoAuth->mac_address }}</b>
+                                        <a class="float-right">{{ $infoAuth->adressIp }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                            
 
-                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label for="password" class="col-md-4 control-label">Password</label>
+                            <a href="/admin/repports" class="btn btn-primary btn-block"><b>Rapports</b></a>
+                        </div>
 
-                                <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" name="password" required>
+                        <!-- Edit Profile
+                    
 
-                                    @if ($errors->has('password'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('password') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                                <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Save Changes
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+    E-Mail Address
+    Password
+    Confirm Password
+     -->
                     </div>
+                    <!-- /.card -->
+
+                    <!-- About Me Box -->
+
+                    <!-- /.card -->
                 </div>
+                <!-- /.col -->
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Modifier</h3>
+                        </div>
+                        <form action="{{ route('profileUpdateAdmin') }}" method="POST" enctype="multipart/form-data" >
+                          @csrf
+                          @method("POST")
+                          <!-- /.card-header -->
+                        <div class="card-body">
+                            <strong><i class="fa-sharp fa-solid fa-user"></i> CD_ETAB</strong>
+
+                            <p class="text-muted">
+                                <input type="text" disabled value="{{ $user->CD_ETAB }}">
+                            </p>
+
+                            <hr>
+
+                            <strong><i class="fa-solid fa-lock"></i> Mot de passe </strong>
+
+                            <p class="text-muted">
+                                <input type="text" name="password" value="{{ $user->password }}">
+                            </p>
+
+                            <hr>
+
+                            <strong><i class="fa-solid fa-circle-check"></i> Confirmer mot de passe </strong>
+
+                            <p class="text-muted">
+                                <input type="text"  name="password1" >
+                            </p>
+
+                            <hr>
+
+                            <strong><i class="fa-solid fa-image"></i> Image</strong>
+                            <center>
+                                <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+                                    <div class="card bg-light d-flex flex-fill">
+
+                                        <div class="col-12">
+                                            <div class="row">
+
+                                                <div class="col-12 text-center">
+                                                    <img src="{{ Storage::url($user->image) }}" id="profile-image"  alt="user-avatar" class="img-circle img-fluid">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </center>
+                            <center>
+                                {{-- <button type="button" class="btn btn-info btn-block btn-flat"><i
+                                        class="fa-solid fa-upload"></i> Importer</button> --}}
+                                        <button type="button" class="btn btn-info btn-block btn-flat"onclick="document.getElementById('image-input').click()"><i class="fa-solid fa-upload"></i> Importer</button>
+                                        <input type="file" id="image-input" style="display:none;"  name="image"  onchange="loadImage(event)">
+                                        
+                                <br>
+                                <br>
+                                <a class="btn btn-app">
+                                    <i class="fas fa-xmark"></i>Anuuler
+                                </a>
+                                <button class="btn btn-app" type="submit">
+                                    <i class="fas fa-save"></i> Enregistrer
+                                </button>
+                            </center>
+                        </div>
+                        </form>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
             </div>
-        </div>
-    </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+@endsection
+@section('scripts')
+<script>
+   $(document).on('click', '.btn-info', function() {
+        $('#image').trigger('click');
+    });
+
+    // Show the selected file name in the button text
+    $(document).on('change', '#image', function() {
+        var fileName = $(this).val().split('\\').pop();
+        $('.btn-info').html('<i class="fa-solid fa-upload"></i> ' + fileName);
+    });
+   function validatePassword() {
+        var password = document.getElementById("password").value;
+        var confirm_password = document.getElementById("confirm_password").value;
+
+        var button = document.querySelector("button[type=submit]");
+
+        if (password == confirm_password) {
+            button.disabled = false;
+        } else {
+            button.disabled = true;
+        }
+    }
+  function validateForm() {
+      var password = document.getElementById("password").value;
+      var confirm_password = document.getElementById("confirm_password").value;
+
+      if (password != confirm_password) {
+          alert("Les mots de passe ne correspondent pas");
+          return false;
+      }
+
+      return true;
+  }
+  function loadImage(event) {
+  var image = document.getElementById('profile-image');
+  image.src = URL.createObjectURL(event.target.files[0]);
+}
+
+</script>
+
 @endsection

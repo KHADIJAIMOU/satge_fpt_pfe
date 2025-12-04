@@ -30,6 +30,9 @@ class AdminMiddleware
             else if ( $user->hasRole('admin') ) {
                 return $next($request);
             }
+            else if ( $user->hasRole('visiteur') ) {
+                return redirect(route('indexAvis'));
+            }
         }
 
         abort(403);  // permission denied error

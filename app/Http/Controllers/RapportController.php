@@ -8,7 +8,15 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Illuminate\Support\Facades\DB;
 
+use App;
+use PDF;
+use TCPDF;
+use View;
+use Illuminate\Support\Facades\Storage;
 class RapportController extends Controller
 {
     public function profil()
@@ -18,6 +26,115 @@ class RapportController extends Controller
 
         return view('auth.user.profil', compact('user'));
     }
+    public function print($id, Rapport $Rapport)
+        {
+            App::setLocale('ar');
+        
+            $rapport = Rapport::find($id);
+            $users = User::where('CD_ETAB', $rapport->CD_ETAB)->get();
+            $rapport1 = User::select('NOM_ETABL','CD_ETAB','ll_com','NetabFr')
+            ->where('id', $rapport->users_id)
+            ->get();
+            $imagePath = public_path('img/logo.jpg');
+            $image = base64_encode(file_get_contents($imagePath));
+            $image = base64_encode(file_get_contents(public_path('img/logo.jpg')));
+            $image0 = base64_encode(file_get_contents(public_path('img/image0.jpg')));
+            $image1 = base64_encode(file_get_contents(public_path('img/image1.jpg')));
+            $image2= base64_encode(file_get_contents(public_path('img/image2.jpg')));
+            $image3= base64_encode(file_get_contents(public_path('img/image3.jpg')));
+            $image4= base64_encode(file_get_contents(public_path('img/image4.jpg')));
+            $image5= base64_encode(file_get_contents(public_path('img/image5.jpg')));
+        
+            // Pass data to the view as an array
+            $data = [
+                'rapport' => $rapport,
+                'rapport1' => $rapport1,
+                'users' => $users,
+                'image' => $image,
+                'image0' => $image0,
+                'image1' => $image1,
+                'image2' => $image2,
+                'image3' => $image3,
+                'image4' => $image4,
+                'image5' => $image5,
+                
+
+            ];
+        
+            // generate the PDF file from a Blade template
+            $html = view('auth.user.rapport.print', compact('data'))->render();
+        
+            // instantiate Dompdf class
+            $dompdf = new Dompdf();
+        
+            // load HTML content into Dompdf
+            $dompdf->loadHtml($html, 'UTF-8');
+        
+            // (Optional) Set paper size and orientation
+            $dompdf->setPaper('A4', 'portrait');
+        
+            // Render the HTML as PDF
+            $dompdf->render();
+        
+            // Output the generated PDF (forced download)
+            return $dompdf->stream('report.pdf', ['Attachment' => false]);
+        }
+        public function telecharger($id, Rapport $Rapport)
+        {
+            App::setLocale('ar');
+        
+            $rapport = Rapport::find($id);
+            $users = User::where('CD_ETAB', $rapport->CD_ETAB)->get();
+            $rapport1 = User::select('NOM_ETABL','CD_ETAB','ll_com','NetabFr')
+            ->where('id', $rapport->users_id)
+            ->get();
+            $imagePath = public_path('img/logo.jpg');
+            $image = base64_encode(file_get_contents($imagePath));
+            $image = base64_encode(file_get_contents(public_path('img/logo.jpg')));
+            $image0 = base64_encode(file_get_contents(public_path('img/image0.jpg')));
+            $image1 = base64_encode(file_get_contents(public_path('img/image1.jpg')));
+            $image2= base64_encode(file_get_contents(public_path('img/image2.jpg')));
+            $image3= base64_encode(file_get_contents(public_path('img/image3.jpg')));
+            $image4= base64_encode(file_get_contents(public_path('img/image4.jpg')));
+            $image5= base64_encode(file_get_contents(public_path('img/image5.jpg')));
+        
+            // Pass data to the view as an array
+            $data = [
+                'rapport' => $rapport,
+                'rapport1' => $rapport1,
+                'users' => $users,
+                'image' => $image,
+                'image0' => $image0,
+                'image1' => $image1,
+                'image2' => $image2,
+                'image3' => $image3,
+                'image4' => $image4,
+                'image5' => $image5,
+
+            ];
+        
+            // generate the PDF file from a Blade template
+            $html = view('auth.user.rapport.print', compact('data'))->render();
+        
+            // instantiate Dompdf class
+            $dompdf = new Dompdf();
+        
+            // load HTML content into Dompdf
+            $dompdf->loadHtml($html, 'UTF-8');
+        
+            // (Optional) Set paper size and orientation
+            $dompdf->setPaper('A4', 'portrait');
+        
+            // Render the HTML as PDF
+            $dompdf->render();
+        
+            // Output the generated PDF (forced download)
+            $filename = 'report.pdf';
+            $dompdf->stream($filename);
+            return response($dompdf->output(), 200)
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');        }
+ 
     public function indexReport()
     {
 
@@ -26,6 +143,7 @@ class RapportController extends Controller
         session()->put("menu", "repports");
         return view('auth.user.repports', compact('lists'));
     }
+    
     public function index()
     {
         $rapports = Rapport::all();
@@ -219,16 +337,92 @@ class RapportController extends Controller
             'mac_address'=>$macAddress,
              ]);
         $admin->save();
-    return redirect()->route('rapport.index')->with('success', 'Rapport added successfully.')->withErrors($validatedData)
-        ->withInput();
+        return redirect('/user/repports')->with([
+            'type' => 'success',
+            'message' => 'Rapport ajouter avec succès',
+        ]);
 }
 
     
-
-    public function show(Rapport $rapport)
+function action(Request $request)
+{
+    if($request->ajax())
     {
-        return view('rapports.show', compact('rapport'));
-    }
+        $output = '';
+        $query = $request->get('query');
+        if($query != '') {
+            $data = DB::table('rapport')
+                ->where('typeClass', 'like', '%'.$query.'%')
+                ->orWhere('rapportActiviteEffectuer', 'like', '%'.$query.'%')
+                ->orWhere('rapportVisit', 'like', '%'.$query.'%')
+                ->orderBy('id', 'desc')
+                ->get();
+                
+        } else {
+            $data = DB::table('rapport')
+                ->orderBy('id', 'desc')
+                ->get();
+        }
+         
+        $total_row = $data->count();
+        if($total_row > 0){
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr>
+                <td>'.$row->typeClass.'</td>
+                <td>'.$row->rapportActiviteEffectuer.'</td>
+                <td>'.$row->rapportVisit.'</td>
+                <td class="text-center">
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="mr-2">
+                        <a href="/user/rapport/' . $row->id . '" class="btn btn-primary btn-sm">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
+                    </div>
+                    <div class="mr-2">
+                        <a href="/user/rapport/' . $row->id . '/edit" class="btn btn-secondary btn-sm">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <form action="/user/rapport/' . $row->id . '" method="post">
+                            ' . csrf_field() . '
+                            ' . method_field('DELETE') . '
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </td>
+                </tr>
+                ';
+            }
+        } else {
+            $output = '
+            <tr>
+                <td align="center" colspan="5">No Data Found</td>
+            </tr>
+            ';
+        }
+        $data = array(
+            'table_data'  => $output,
+            'total_data'  => $total_row
+        );
+        echo json_encode($data);
+    }}
+    public function show(Rapport $Rapport)
+    {
+        $user = Auth::user();
+        $LL_CYCLE = $user->LL_CYCLE;
+        $NetabFr = $user->NetabFr;
+        $CD_ETAB = $user->CD_ETAB;
+        $users = User::where('CD_ETAB', $CD_ETAB)->get();
+    
+
+        
+        return view('auth.user.rapport.show', compact('LL_CYCLE','NetabFr','user','Rapport','users'));    }
 
     public function edit(Rapport $Rapport)
     {
