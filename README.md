@@ -35,34 +35,50 @@ Ce projet est une **application Laravel** développée pour la gestion des absen
 
 ### **Captures d'écran**
 
+
+# 🛡️ COTE VISITEUR – 
 #### Page d'accueil
-![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/aj1an-f5d32.jpg)
+![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/homedelegation.png)
 
 #### Page d'actualités
-![News List Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/aw5np-plevd.jpg)
+![News List Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/newsdelegation.png)
 
 #### Page de réclamation des visiteurs
-![Visitor Complaint Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/a6r2q-74qon.jpg)
+![Visitor Complaint Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/reclamation.png)
 
 #### Page des avis
-![Reviews List Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/adzpd-yjmfp.jpg)
+![Reviews List Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/avis.png)
 
-#### Panneau d’administration
-![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/alsrr-a4obu-001.jpg)
-
-#### Affichage des rapports – Administrateur
-![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/akyqr-gmrl1.jpg)
-
-#### Affichage des rapports – Impression (Administrateur)
-![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/a5da7-ucxp6.jpg) 
-
-#### Messagerie – Chat avec les établissements scolaires (Administrateur)
-![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/a2mdj-wm7gj.jpg) 
 #### Register
-![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/aov4u-g1s46.jpg) 
+![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/registerdelegation.png) 
 
 #### login
-![Home Page Screenshot](https://s10.aconvert.com/convert/p3r68-cdx67/a9l5b-htb4n.jpg) 
+![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/logindelegation.png) 
 
+# 🛡️ COTE ADMIN – 
+
+#### Panneau d’administration
+![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/dashbord.jpg)
+
+#### Affichage des rapports – Administrateur
+![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/rapports.png)
+
+#### Affichage des rapports – Impression (Administrateur)
+![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/printrapport.png) 
+
+#### Messagerie – Chat avec les établissements scolaires (Administrateur)
+![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/message.png) 
+
+#### Listes d'avis – CRUD
+![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/listes%20eventes.png) 
+
+#### Listes de réclamations
+![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/listes%20reclamation.png) 
+
+#### Listes des utilisateurs
+![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/usescrud.png) 
+
+#### Profile
+![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/profildelegation.png) 
 
 ---
