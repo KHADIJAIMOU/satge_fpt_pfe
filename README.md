@@ -67,7 +67,7 @@ Ce projet est une **application Laravel** développée pour la gestion des absen
 ![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/printrapport.png) 
 
 #### Messagerie – Chat avec les établissements scolaires (Administrateur)
-![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/message.png) 
+![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/message.PNG) 
 
 #### Listes d'avis – CRUD
 ![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/listes%20eventes.png) 
