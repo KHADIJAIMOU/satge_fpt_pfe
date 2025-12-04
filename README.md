@@ -79,6 +79,6 @@ Ce projet est une **application Laravel** développée pour la gestion des absen
 ![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/usescrud.png) 
 
 #### Profile
-![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/profildelegation.png) 
+![Home Page Screenshot](https://github.com/KHADIJAIMOU/satge_fpt_pfe/blob/main/public/dist/img/images/profildelegation.PNG) 
 
 ---
